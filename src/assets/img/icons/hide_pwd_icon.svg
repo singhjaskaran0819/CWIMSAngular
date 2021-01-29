@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="28" height="23.984" viewBox="0 0 28 23.984">
+  <g id="pswd_disable" transform="translate(-1052 -1441.508)">
+    <g id="visibility_1_" data-name="visibility (1)" transform="translate(1052 1369.332)">
+      <g id="Group_9283" data-name="Group 9283" transform="translate(0 74.667)">
+        <g id="Group_9282" data-name="Group 9282" transform="translate(0 0)">
+          <path id="Path_14469" data-name="Path 14469" d="M174.485,170.667a3.818,3.818,0,1,0,3.818,3.818A3.821,3.821,0,0,0,174.485,170.667Z" transform="translate(-160.485 -164.94)" fill="#2aa6f0"/>
+          <path id="Path_14470" data-name="Path 14470" d="M14,74.667A15.052,15.052,0,0,0,0,84.212a15.039,15.039,0,0,0,28,0A15.046,15.046,0,0,0,14,74.667Zm0,15.909a6.364,6.364,0,1,1,6.364-6.364A6.366,6.366,0,0,1,14,90.576Z" transform="translate(0 -74.667)" fill="#2aa6f0"/>
+        </g>
+      </g>
+    </g>
+    <g id="Group_9804" data-name="Group 9804" transform="translate(0.5 0.5)">
+      <line id="Line_85" data-name="Line 85" x1="20" y2="23" transform="translate(1054.5 1441.5)" fill="none" stroke="#fff" stroke-width="1.5"/>
+      <line id="Line_86" data-name="Line 86" x1="20" y2="23" transform="translate(1056.5 1441.5)" fill="none" stroke="#2aa6f0" stroke-width="1.5"/>
+    </g>
+  </g>
+</svg>

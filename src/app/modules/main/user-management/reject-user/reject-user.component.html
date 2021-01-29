@@ -1,0 +1,29 @@
+<div class="modal-content">
+  <div class="modal_div">
+    <form [formGroup]="rejectForm">
+      <div class="card-body">
+        <div class="header-title text-center">
+          <h5>Reject</h5>
+        </div>
+        <div class="form-row">
+          <div class="col-12">
+            <label>Reason?</label>
+            <div class="form-group">
+              <textarea rows="6" class="form-control" formControlName="rejectionReason"
+                placeholder="Write reason here"></textarea>
+              <div class="input-errors" *ngIf="submitted && controls?.rejectionReason?.errors?.required"> Please enter
+                the reason for rejection. </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="btn_group text-center">
+          <button class="btn btn-md btn-outline-primary" (click)="cancel()">Cancel</button>
+          <button type="submit" class="btn btn-md btn-primary" data-dismiss="modal"
+            (click)="rejectUser()">Reject</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

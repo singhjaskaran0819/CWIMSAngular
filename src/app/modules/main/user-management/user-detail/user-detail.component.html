@@ -1,0 +1,103 @@
+<div class="card-body">
+    <div class="page-wrapper">
+
+        <div class="page-breadcrumb">
+            <div class="d-flex justify-content-between align-items-center flex-md-row flex-column-reverse">
+                <ol class="list-unstyled d-flex align-items-center breadcrumb">
+                    <li class="breadcrumb-item">
+                        <h3 class="page-title text-capitalize">User Details</h3>
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <!-- Breadcrumb -->
+
+        <div class="panel_box">
+            <div class="user_detail">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div
+                            class="pd_div profile_block text-center d-flex align-items-center justify-content-center flex-column">
+                            <div class="w-100">
+                                <div class="pic_outer">
+                                    <div class="profile_pic">
+                                        <img [src]="userDetails?.profilePicture || 'assets/img/user.png'"
+                                            alt="Profile Picture" />
+                                    </div>
+                                </div>
+                                <div class="short_info">
+                                    <h6>{{ userDetails?.firstName | titlecase }} {{ userDetails?.lastName | titlecase }}
+                                    </h6>
+                                    <span> {{userDetails?.userrole?.title | titlecase}}</span>
+                                </div>
+                                <span class="badge status_badge"
+                                    [ngClass]="userDetails?.status =='1' ?'badge-success': (userDetails?.status =='2' ? 'badge-danger': 'badge-secondary')">{{userDetails?.status
+                                    | approvalStatus | titlecase}}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-8">
+                        <div class="pd_div personal_detail">
+                            <h6>Personal Detail</h6>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>First Name</label>
+                                        <span>{{ userDetails?.firstName | titlecase }}</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>last Name</label>
+                                        <span>{{ userDetails?.lastName | titlecase }}</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Warehouse Code</label>
+                                        <span>{{ userDetails?.warehouse?.code }}</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Phone</label>
+                                        <span>{{ userDetails?.phoneNumber }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Address</label>
+                                        <span>{{ userDetails?.street | titlecase }}, {{ userDetails?.city | titlecase
+                                            }}, {{
+                                            userDetails?.country | titlecase }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h6>Others Detail</h6>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="pd_div other_details">
+                            <div class="row">
+                                <div class="col-4"><label>Warehouse</label></div>
+                                <!-- <div class="col-8"><label>Company</label></div> -->
+                            </div>
+                            <div class="row">
+                                <div class="col-4"><span> {{ userDetails?.warehouse?.name }}</span></div>
+                                <!-- <div class="col-8"><span>SLU01, ABV12, HR123, JHF45</span></div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="btn_group text-center mt-3">
+                    <button class="btn btn-md btn-outline-primary" (click)="close()"> Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,205 @@
+@import '../../../../assets/css/base.scss';
+
+.hamburger_btn {
+	border:0; background:$transparent; cursor:$pointer; 
+	padding:0 15px; width: 56px;
+	@media (max-width:1230px){
+		padding:0 10px;
+	}
+	img{width:100%;}
+}
+.navbar-custom {
+	position:$fixed; top:0; left:270px; 
+	@include border-radius (30px 0 0); 
+	background:$blue-light-color; 
+	width:calc(100% - 270px); 
+	z-index:111; 
+	padding:0 15px;
+	min-height: 60px; 
+	border-bottom:1px solid rgba(42,166,240,.4); 
+	@include transition(all, 0.3s, ease-in-out);	
+	@media(max-width:1230px){
+		width:100%; left:0; 
+		@include border-radius (0);
+	}
+}
+.header_full {
+	left:0; width:100%; 
+	@include transition(all, 0.3s, ease-in-out);
+} 
+.navbar-brand {
+	display:$inline-block; margin-right:1rem; 
+	line-height: inherit; white-space: nowrap; padding: 11px 20px; 
+	font-size: $f30; text-transform: $uppercase; font-weight: $f-bold; 
+	color: #007bff;
+}
+.navbar-right-top>li {
+	position:$relative; margin-left:10px;
+}
+.navbar-right-top li {
+	@media (max-width:575px){
+		margin-left:5px;
+	}
+}
+.navbar-right-top .nav-item {
+	.nav-link {padding:13px 28px; font-size: $f16; line-height: 2;}
+}
+.indicator {
+	content: ''; 
+    background-color: $dark-skyblue-color;
+	position: $absolute; 
+	top: -5px; 
+	right:-10px; 
+	width: 14px;
+	height: 14px;
+	padding: 7px;
+	font-size: 8px;
+	animation: .9s infinite beatHeart;
+	transform-origin: $center;
+	-webkit-transform-origin: $center;
+	@include justify-content (center);
+	@include border-radius (100%);
+	@include align-items (center);
+	@include flexbox;
+	text-align: $center;
+	color: $white-color;
+	font-weight:$f-regular;
+	border: 2px solid $white-color;
+}
+.noti_icon img {width:24px;} 
+
+.hd_pic {
+	width:60px; height:60px; border:2px solid $primary-color; overflow:$hidden;
+	@media (max-width:767px){
+		width:50px; height:50px; border-width:1px;
+	}
+}
+.drop_icon {
+	position:$absolute; right:6px; top:28px;
+	@media (max-width:767px){
+		top:22px;
+	}
+}
+
+/** Notification **/
+.notification-dropdown {
+	min-width:320px; max-width:320px; padding:15px 10px 15px 15px; border:0; 
+	@include box-shadow(0, 0, 10px, rgba(0, 0, 0, 0.3));
+	@include border-radius (10px 0 10px 10px); 
+	//box-shadow:0 0 10px rgba(0,0,0,.3);
+}
+.notification-title {font-weight:$f-bold; text-align: $left; padding:0; margin:0 0 15px; line-height: 1.5;}
+.notification-list {
+	overflow-x:$hidden; overflow-y: auto; max-height: 280px; padding-right:5px;
+	&::-webkit-scrollbar {
+		width: 4px;
+	}
+	&::-webkit-scrollbar-track {
+		background: $white-color;
+	}
+	&::-webkit-scrollbar-thumb {
+		background: $primary-color;
+	}
+	.list-group-item {
+		position:$relative; @include border-radius (0px); padding:15px 0; margin:0; 
+		border-width:0 0 1px; border-style:solid; border-color:$grey-light-color2; 
+		@include transition(all, 0.3s, ease-in-out);		
+		&:last-child {border-bottom:0;}
+		&.unread {padding-left:20px; }
+		.list-group-item.unread .notification-name {font-weight:$f-semibold;}
+	}
+}
+.notification-name {color:$black-light-color1; font-size:$f12+3; font-weight:$f-regular; }
+.unread:before {
+	content:'';
+	background-color:$primary-color;
+	@include border-radius (100%);
+	width:8px; height:8px;
+	position:$absolute;
+	left:0;
+	top:28px;
+}
+.month_cat {margin:0 0 15px}
+.notification-date {display: $block; font-size: $f12; color: $black-light-color1;}
+.notification-timer {
+	margin:5px 0;
+	a {color:$primary-color; font-size:$f12+2; font-weight:$f-semibold;}
+}
+
+.nav-user-dropdown { 
+	min-width:220px; padding:0; margin:0;
+	.dropdown-item {
+		width: 100%; 
+		padding:6px 15px;
+		font-size: $f12+3; 
+		border-bottom:1px solid $grey-light-color2;
+		&:hover {
+			background-color: $grey-light-color5;
+		}
+	}
+}
+.nav-user-info {
+	line-height: 1.4;
+	font-size: $f12+1; 
+	margin-right: 12px;
+	@include border-radius (2px 2px 0 0); 
+	@media (max-width:767px){
+		margin-right:5px;
+	}
+	h5 {
+		font-size:$f16+1;	
+		@media (max-width:767px){
+			font-size:$f16;
+		}
+		@media (max-width:575px){
+			font-size: $f12;
+		}
+	}
+}
+.dropdown-item {
+	width: 100%; 
+	clear: both; 
+	display: $block; 
+	padding:.25rem 1.5rem;
+	font-weight: $f-regular; 
+	color: $black-light-color1; 
+	text-align: inherit; white-space: nowrap; 
+	background-color: $transparent; border: 0;
+}
+.address {
+	padding-left:15px; font-size:$f16; font-weight:$f-regular;
+	@media (max-width:768px){
+		display:$none;
+	}
+	span {
+		margin-left:20px;
+		&:first-child {font-weight:$f-medium; margin-left:0;}
+		i {
+			margin-right:7px;
+			img {height:22px;}
+		}
+	}
+}
+
+.imageSize{
+	height: 100% !important;
+	width: 100% !important;
+}
+
+@keyframes beatHeart {
+    0% {
+        transform: scale(0.9);
+    }
+    25% {
+        transform: scale(1.1);
+    }
+    40% {
+        transform: scale(0.9);
+    }
+    60% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(0.9);
+    }
+}

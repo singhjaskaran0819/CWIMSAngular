@@ -1,0 +1,225 @@
+<div class="page-wrapper">
+    <div class="page-breadcrumb">
+        <div class="d-flex justify-content-between align-items-center flex-md-row flex-column-reverse">
+            <ol class="list-unstyled d-flex align-items-center breadcrumb">
+                <li class="breadcrumb-item">
+                    <h3 class="page-title text-capitalize">My Profile</h3>
+                </li>
+            </ol>
+            <div class="d-flex justify-content-end top_btns">
+                <button [class]="edit?'btn btn-md btn-outline-primary':'btn btn-md btn-primary'"
+                    (click)="editDetail()">{{edit?'Cancel':'Edit'}}</button>
+                <div *ngIf="edit">
+                    <button class="btn btn-md btn-primary" (click)="updateProfile()">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb -->
+
+    <div class="panel_box">
+        <div class="user_detail">
+            <div class="row">
+                <div class="col-md-4">
+                    <div
+                        class="pd_div profile_block text-center d-flex align-items-center justify-content-center flex-column">
+                        <div class="w-100">
+                            <div class="pic_outer">
+                                <div class="profile_pic">
+                                    <img
+                                        [src]="formForProfile.controls['profilePicture'].value || 'assets/img/user.png'">
+                                    <span
+                                        [class]="formForProfile.controls['profilePicture'].value ? 'onHoverRemove' : 'no-display'">
+                                        <span class="crossIcon" title="Remove Picture"
+                                            (click)="removeProfilePicture()">&times;</span>
+                                        <!-- *ngIf="edit" -->
+                                        <span class="removeText" *ngIf="edit">Remove</span>
+                                    </span>
+                                </div>
+                                <div class="upload_pic">
+                                    <input type="file" accept="image/*" title="Change Photo"
+                                        (change)="uploadNewProfile($event)" />
+                                    <span><img src="../../../../../assets/img/icons/photo.png" alt=""
+                                            width="20" /></span>
+                                </div>
+                            </div>
+                            <div class="short_info">
+                                <h6>{{userInfo?.firstName}} {{userInfo?.lastName}}</h6>
+                                <!-- <span>{{roles[userInfo?.role]}}</span> -->
+                                <span>{{userInfo?.userrole?.title | titlecase}}</span>
+                                <span><i class="mr-2"><img src="../../../../../assets/img/icons/location_icon1.svg"
+                                            alt="" /></i>{{userInfo?.street}} {{userInfo?.city}}
+                                    {{userInfo?.postalCode}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-8">
+                    <div class="pd_div personal_detail">
+                        <h6>Personal Detail</h6>
+                        <form [formGroup]="formForProfile" (submit)="updateProfile()">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>First Name</label>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" formControlName="firstName"
+                                            [readOnly]='!edit'>
+                                        <div *ngIf="
+                                    formForProfile.controls['firstName'].hasError('required') &&
+                                    formForProfile.controls['firstName'].touched && edit" class="text-danger">
+                                            Please enter first name.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>last Name</label>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" formControlName="lastName"
+                                            [readOnly]='!edit'>
+                                        <div *ngIf="formForProfile.controls['lastName'].hasError('required') && 
+                                        formForProfile.controls['lastName'].touched && edit" class="text-danger">
+                                            Please enter last name.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Mobile</label>
+                                    <div class="form-group">
+                                        <input type="number" class="form-control" formControlName="phoneNumber"
+                                            placeholder="+9115054991" [readOnly]='!edit'>
+                                        <div *ngIf="
+                                            formForProfile.controls['phoneNumber'].hasError('required') &&
+                                            formForProfile.controls['phoneNumber'].touched && edit"
+                                            class="text-danger">
+                                            Please enter mobile number.
+                                        </div>
+                                        <div *ngIf="
+                                            formForProfile.controls['phoneNumber'].hasError('pattern') &&
+                                            formForProfile.controls['phoneNumber'].touched && edit"
+                                            class="text-danger">
+                                            Please enter valid mobile number.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Street</label>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" formControlName="street"
+                                            [readOnly]='!edit'>
+                                        <div *ngIf="
+                                        formForProfile.controls['street'].hasError('required') &&
+                                        formForProfile.controls['street'].touched && edit" class="text-danger">
+                                            Please enter street.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>City</label>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" formControlName="city"
+                                            [readOnly]='!edit'>
+                                        <div *ngIf="
+                                        formForProfile.controls['city'].hasError('required') &&
+                                        formForProfile.controls['city'].touched && edit" class="text-danger">
+                                            Please enter city.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Postal Code</label>
+                                    <div class="form-group">
+                                        <input type="number" class="form-control" formControlName="postalCode"
+                                            [readOnly]='!edit'>
+                                        <div *ngIf="
+                                        formForProfile.controls['postalCode'].hasError('required') &&
+                                        formForProfile.controls['postalCode'].touched && edit" class="text-danger">
+                                            Please enter postal code.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Country</label>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" formControlName="country"
+                                            [readOnly]='!edit'>
+                                        <div *ngIf="
+                                    formForProfile.controls['country'].hasError('required') &&
+                                    formForProfile.controls['country'].touched && edit" class="text-danger">
+                                            Please enter postal country.
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex sub_title">
+                <h6>Change Password
+                    <span *ngIf="userInfo?.lastPasswordUpdated"> Last updated {{userInfo?.lastPasswordUpdated}}</span>
+                </h6>
+            </div>
+            <div class="pwd_block">
+                <form [formGroup]="updatePassword" (submit)="updatePasswordSubmit()">
+                    <div class="form-row">
+                        <div class="col-md-6 col-lg-3">
+                            <label>Old Password</label>
+                            <div class="form-group">
+                                <input type="password" class="form-control" formControlName="oldPassword" />
+                                <div *ngIf="
+                            updatePassword.controls['oldPassword'].hasError('required') && submitNewPassword"
+                                    class="text-danger">
+                                    Please enter old password.
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                            <label>New Password</label>
+                            <div class="form-group">
+                                <input type="password" class="form-control" formControlName="newPassword" />
+                                <div *ngIf="
+                            updatePassword.controls['newPassword'].hasError('required') && submitNewPassword "
+                                    class="text-danger">
+                                    Please enter new password.
+                                </div>
+                                <div *ngIf="
+                            updatePassword.controls['newPassword'].hasError('pattern') && submitNewPassword"
+                                    class="text-danger">
+                                    Please enter valid password. <small>(Password should contain 1 number, 1 alphabet, 1
+                                        special character.)</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                            <label>Confirm New Password</label>
+                            <div class="form-group">
+                                <input type="password" class="form-control" formControlName="confirmPassword" />
+                                <div *ngIf="
+                            updatePassword.controls['confirmPassword'].hasError('required') && submitNewPassword"
+                                    class="text-danger">
+                                    Please confirm new password.
+                                </div>
+                                <div *ngIf="
+                            updatePassword.controls['confirmPassword'].hasError('pattern') && submitNewPassword"
+                                    class="text-danger">
+                                    Please enter valid password. <small>Your pasword must contain one uppercase
+                                        ,lowercase,number & speicial case letter</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                            <label class="d-none d-md-block">&nbsp;</label>
+                            <div class="form-group">
+                                <button class="btn btn-md btn-primary w-100" type="submit">Update Password</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

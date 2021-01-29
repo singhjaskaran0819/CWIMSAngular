@@ -1,0 +1,93 @@
+<nav class="navbar navbar-expand navbar-custom" id="top_header">
+    <div class="navbar-collapse">
+        <div class="mr-auto d-flex">
+            <button class="hamburger_btn" (click)="hamburger_menu()"><img
+                    src="../../../assets/img/icons/hamburger_icon.svg" alt="" /></button>
+            <div class="address" *ngIf="roleCode == '3' || roleCode == '4'">
+                <span><i><img src="../../../assets/img/icons/home_icon.svg" alt="" /></i>
+                    {{userDetails?.warehouse?.name}}
+                </span>
+                <span><i><img src="../../../assets/img/icons/location_icon.svg" alt="" /></i>
+                    {{userDetails?.warehouse?.street}}, {{userDetails?.warehouse?.city}},
+                    {{userDetails?.warehouse?.country}}, {{userDetails?.warehouse?.postalCode}} </span>
+            </div>
+        </div>
+
+        <ul class="navbar-nav flex-row ml-auto align-items-center navbar-right-top">
+            <!-- <li class="nav-item dropdown notification">
+                <a class="noti_icon" href="#" id="navbarDropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
+                    <img src="../assets/img/icons/notification_icon.svg" alt="Inventory" />
+                    <span class="indicator">11</span>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-right notification-dropdown">
+                    <li>
+                        <h5 class="notification-title"> Notification</h5>
+                        <div class="notification-list">
+                            <h6 class="month_cat">This month</h6>
+                            <div class="list-group">
+                                <div class="list-group-item unread">
+                                    <p class="notification-name">Duis aute irure dolor in reprehende esse cillu dolore</p>
+                                    <div class="d-flex justify-content-between notification-timer">
+                                        <span class="notification-date">1 h ago</span>
+                                        <a href="#">View more</a>
+                                    </div>
+                                </div>
+        
+                                <div class="list-group-item unread">
+                                    <p class="notification-name">Duis aute irure dolor in reprehende esse cillu dolore</p>
+                                    <div class="d-flex justify-content-between notification-timer">
+                                        <span class="notification-date">1 h ago</span>
+                                        <a href="#">View more</a>
+                                    </div>
+                                </div>
+        
+                                <div class="list-group-item unread">
+                                    <p class="notification-name">Duis aute irure dolor in reprehende esse cillu dolore</p>
+                                    <div class="d-flex justify-content-between notification-timer">
+                                        <span class="notification-date">1 h ago</span>
+                                        <a href="#">View more</a>
+                                    </div>
+                                </div>
+        
+                                <div class="list-group-item">
+                                    <p class="notification-name">Duis aute irure dolor in reprehende esse cillu dolore</p>
+                                    <div class="d-flex justify-content-between notification-timer">
+                                        <span class="notification-date">1 h ago</span>
+                                        <a href="#">View more</a>
+                                    </div>
+                                </div>
+        
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </li> -->
+
+            <li class="nav-item dropdown nav-user">
+                <div class="d-flex align-items-center nav-link nav-user-img">
+                    <div class="nav-user-info">
+                        <h5 class="mb-0 nav-user-name">{{userDetails?.firstName | titlecase}} {{userDetails?.lastName |
+                            titlecase}}</h5>
+                        <span class="d-block text-right">{{ this.userDetails?.userrole?.title | titlecase}}</span>
+                    </div>
+                    <a class="rounded-circle hd_pic" id="navbarDropdownMenuLink2" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        <img *ngIf="!userDetails?.profilePicture" src="../../../../assets/img/placeholder_pic.svg"
+                            alt="" class="img-fluid" />
+                        <img *ngIf="userDetails?.profilePicture" [src]="userDetails?.profilePicture" alt=""
+                            class="img-fluid imageSize" />
+
+                        <i class="drop_icon ml-2" aria-hidden="true">
+                            <img src="../assets/img/icons/arrow_down_blue.svg" width="16" alt="" /></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right nav-user-dropdown"
+                        aria-labelledby="navbarDropdownMenuLink2">
+                        <a class="dropdown-item" (click)="openMyAccount()">Account Settings</a>
+                        <a class="dropdown-item" (click)="logout()">Logout</a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>

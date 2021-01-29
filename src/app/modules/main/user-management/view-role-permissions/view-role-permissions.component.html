@@ -1,0 +1,31 @@
+<!-- Start Create Role Modal -->
+
+<div class="modal-content">
+  <div class="modal_div">
+    <div class="card-body">
+      <div class="header-title text-center text-capitalize">
+        <h5>Permissions</h5>
+      </div>
+      <div class="role_listing">
+        <ul class="list-unstyled chk_lists">
+          <li *ngFor="let item of accessPermissions">
+            <div class="d-flex align-items-lg-center chk_items">
+              <b><label>{{item.key | titlecase}}</label></b>
+              <div class="d-flex justify-content-start flex-wrap">
+                <div class="check-box" *ngFor="let item1 of item.value">
+                  <input type="checkbox" checked disabled>
+                  <span class=" check-mark"><span>{{item1 | titlecase}}</span></span>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div class="btn_group text-center">
+        <button class="btn btn-md btn-outline-primary" (click)="close()"> Close </button>
+      </div>
+    </div>
+  </div>
+</div>

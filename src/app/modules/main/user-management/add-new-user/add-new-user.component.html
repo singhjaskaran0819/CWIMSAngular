@@ -1,0 +1,230 @@
+<div class="container-fluid">
+  <form class="form-box" [formGroup]="signUpForm">
+    <div class="box_title text-center">
+      <h4>Add New User</h4>
+
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <label>Select Role</label>
+        <div class="form-group">
+          <select class="form-control" aria-expanded="true" formControlName="role" #role (change)="selectRole($event)"
+            required>
+            <option disabled selected> </option>
+            <option *ngFor="let role of roles" value={{role.id}}>{{role.title | titlecase }}</option>
+          </select>
+          <div class="input-errors" *ngIf="(submitted || controls.role?.touched )&& controls.role?.errors?.required">
+            Role is required
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <label>First Name</label>
+        <div class="form-group">
+          <input type="text" formControlName="firstName" name="firstName" id="firstName" class="form-control" />
+          <div class="input-errors"
+            *ngIf="(submitted || controls.firstName?.touched) && controls.firstName?.errors?.required">
+            First Name is required
+          </div>
+          <div class=" input-errors"
+            *ngIf="(submitted || controls.firstName?.touched) && controls.firstName?.errors?.pattern">
+            First Name can contain only alphabets
+          </div>
+          <div class="input-errors"
+            *ngIf="(submitted || controls.firstName?.touched) && !controls.firstName?.errors?.pattern && controls.firstName?.errors?.maxlength">
+            First name can contain only 15 characters
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <label>Last Name</label>
+        <div class="form-group">
+          <input type="text" formControlName="lastName" name="lastName" id="lastName" class="form-control" />
+          <div class=" input-errors"
+            *ngIf="(submitted || controls.lastName?.touched) && controls.lastName?.errors?.required">
+            Last Name is required
+          </div>
+          <div class="input-errors"
+            *ngIf="(submitted || controls.lastName?.touched) && controls.lastName?.errors?.pattern">
+            Last Name can contain only alphabets
+          </div>
+          <div class="input-errors"
+            *ngIf="(submitted || controls.lastName?.touched) && !controls.lastName?.errors?.pattern && controls.lastName?.errors?.maxlength">
+            Last name can contain only 15 characters
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <label>Email</label>
+        <div class="form-group">
+          <input type="email" formControlName="email" name="email" id="email" class="form-control" />
+          <div class="input-errors" *ngIf="(submitted || controls.email?.touched) && controls.email?.errors?.required">
+            Email is required
+          </div>
+          <div class="input-errors" *ngIf="(submitted || controls.email?.touched) && controls.email?.errors?.pattern">
+            Enter a valid email
+          </div>
+          <div class="input-errors"
+            *ngIf="(submitted || controls.email?.touched) && !controls.email?.errors?.pattern && controls.email?.errors?.maxlength">
+            Email can contain only 70 characters
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <label>Phone Number</label>
+        <!-- <div class="form-row"> -->
+        <div class="form-group">
+          <!--     [cssClass]="'custom'"-->
+          <ngx-intl-tel-input [preferredCountries]="preferredCountries" [enableAutoCountrySelect]="false"
+            [enablePlaceholder]="true" [searchCountryFlag]="true"
+            [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]" [selectFirstCountry]="false"
+            [selectedCountryISO]="CountryISO.Barbados" [maxLength]="15" [tooltipField]="TooltipLabel.Name"
+            [phoneValidation]="true" [separateDialCode]="separateDialCode" [numberFormat]="PhoneNumberFormat.National"
+            name="phone" formControlName="phone" (change)="phoneNumberChange($event)"
+            (countryChange)="countryChange($event)">
+          </ngx-intl-tel-input>
+          <div class="input-errors" *ngIf="(submitted || controls.phone?.touched) && controls.phone?.errors?.required">
+            Phone number is required
+          </div>
+          <div class="input-errors"
+            *ngIf="(submitted || controls.phone?.touched) && controls.phone?.status=='INVALID' && !controls.phone?.errors?.validatePhoneNumber?.valid && !controls.phone?.errors?.required">
+            Enter a valid phone number
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <!-- <div class="col-12"> -->
+      <div class="col-6">
+        <label>Street</label>
+        <div class="form-group">
+          <input type="text" formControlName="street" name="street" id="street" class="form-control" />
+          <div class="input-errors"
+            *ngIf="(submitted || controls.street?.touched) && controls.street?.errors?.required">
+            Street is required
+          </div>
+          <div class="input-errors"
+            *ngIf="(submitted || controls.street?.touched) && !controls.street?.errors?.pattern && controls.street?.errors?.maxlength">
+            Street can contain only 25 characters
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <label>City</label>
+        <div class="form-group">
+          <input type="text" formControlName="city" name="city" id="city" class="form-control" />
+          <div class="input-errors" *ngIf="(submitted || controls.city?.touched) && controls.city?.errors?.required">
+            City is required
+          </div>
+          <div class="input-errors"
+            *ngIf="(submitted || controls.city?.touched) && !controls.city?.errors?.pattern && controls.city?.errors?.maxlength">
+            City can contain only 70 characters
+          </div>
+        </div>
+        <!-- </div> -->
+
+      </div>
+    </div>
+    <div class="row">
+      <!-- <div class="col-12"> -->
+      <div class="col-6">
+        <label>Zip Code</label>
+        <div class="form-group">
+          <input type="text" formControlName="zipCode" name="zipCode" id="zipCode" class="form-control" />
+          <div class="input-errors"
+            *ngIf="(submitted || controls.zipCode?.touched) && controls.zipCode?.errors?.required">
+            Zip code is required
+          </div>
+          <div class="input-errors"
+            *ngIf="(submitted || controls.zipCode?.touched) && !controls.zipCode?.errors?.pattern && controls.zipCode?.errors?.maxlength">
+            Zip code can contain only 6 characters
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <label>Country</label>
+        <div class="form-group">
+          <!-- <input type="text" formControlName="country" name="country" id="country"
+                              class="form-control" /> -->
+          <select class="form-control" aria-expanded="true" formControlName="country" (change)="selectCountry($event)"
+            required>
+            <option disabled selected> </option>
+            <option *ngFor="let country of countries" value={{country.name}}>{{country.name |
+              titlecase }}</option>
+          </select>
+          <div class="input-errors"
+            *ngIf="(submitted || controls.country?.touched) && controls.country?.errors?.required">
+            Country is required
+          </div>
+          <div class="input-errors"
+            *ngIf="(submitted || controls.country?.touched) && !controls.country?.errors?.pattern && controls.country?.errors?.maxlength">
+            Country can contain only 25 characters
+          </div>
+        </div>
+        <!-- </div> -->
+
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <label>Warehouse Code</label>
+        <div class="form-group">
+
+          <select class="form-control" aria-expanded="true" formControlName="warehouseCode">
+            <option disabled selected> </option>
+            <option *ngFor="let list of warehouseList" [value]="list.code">{{list.name }}</option>
+          </select>
+          <!-- <div class="input-errors"
+            *ngIf="(submitted || controls.warehouseCode?.touched) && controls.warehouseCode?.errors?.required">
+            Warehouse code is required
+          </div> -->
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <label>Password</label>
+        <div class="form-group">
+          <input [type]="passwordType" formControlName="password" name="password" id="password" placeholder=""
+            class="form-control" />
+          <span (click)="togglePassword()" class="pwd_icon"
+            style="position: absolute;top: 12px;right: 10px; cursor: pointer;">
+            <img *ngIf="passwordType == 'text'" src="assets/img/icons/hide_pwd_icon.svg">
+            <img *ngIf="passwordType == 'password'" src="assets/img/icons/show_pwd_icon.svg">
+          </span>
+          <div class="input-errors"
+            *ngIf="(submitted || controls.password?.touched) && controls.password?.errors?.required">
+            Password is required
+          </div>
+          <div class="input-errors"
+            *ngIf="(submitted || controls.password?.touched) && controls.password?.errors?.pattern">
+            Password should contain 1 number, 1 alphabet, 1 special character.
+          </div>
+          <div class="input-errors"
+            *ngIf="(submitted || controls.password?.touched) && !controls.password?.errors?.pattern && controls.password?.errors?.maxlength">
+            Password can contain only 15 characters
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <div class="btn_group text-center">
+          <button class="btn btn-md btn-outline-primary" (click)="cancel()">Cancel</button>
+          <button typ="button" (click)="submit()" class="btn btn-md btn-primary">Submit</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,375 @@
+<div class="modal-content" *ngIf="roleId == undefined">
+  <div class="modal_div">
+    <div class="card-body">
+      <div class="header-title text-center text-capitalize">
+        <h5>Create Role</h5>
+      </div>
+      <div class="role_listing">
+        <div class="row">
+          <div class="col-12">
+            <label>Role</label>
+            <div class="form-group">
+              <input type="text" class="form-control" [(ngModel)]="roleName" />
+              <div class="input-errors" *ngIf="submitted && roleName=='' ">Enter a role name</div>
+            </div>
+          </div>
+        </div>
+        <ul class="list-unstyled chk_lists">
+          <li>
+            <div class="d-flex align-items-lg-center chk_items">
+              <label>Declaration</label>
+              <div class="d-flex justify-content-start flex-wrap">
+                <div class="check-box">
+                  <input type="checkbox" (change)="accessPermission('declaration','rack', $event)">
+                  <span class="check-mark"><span>Racking</span></span>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="d-flex align-items-lg-center chk_items">
+              <label>Inventory</label>
+              <div class="d-flex justify-content-start flex-wrap">
+                <div class="check-box">
+                  <input type="checkbox" (change)="accessPermission('inventory','group-items', $event, 'list')">
+                  <span class="check-mark"><span>Group Items</span></span>
+                </div>
+                <div class="check-box">
+                  <input type="checkbox" (change)="accessPermission('inventory','edit', $event, 'grouped-items')">
+                  <span class="check-mark"><span>Edit</span></span>
+                </div>
+                <div class="check-box">
+                  <input type="checkbox" (change)="accessPermission('inventory','delete', $event, 'list')">
+                  <span class="check-mark"><span>Delete</span></span>
+                </div>
+                <div class="check-box">
+                  <input type="checkbox"
+                    (change)="accessPermission('inventory','stock-take', $event, 'variance-report')">
+                  <span class="check-mark"><span>Stoke Take</span></span>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="d-flex align-items-lg-center chk_items">
+              <label>Sales</label>
+              <div class="d-flex justify-content-start flex-wrap">
+                <div class="check-box">
+                  <input type="checkbox" (change)="accessPermission('sales','create', $event)">
+                  <span class="check-mark"><span>Create Sale</span></span>
+                </div>
+                <div class="check-box">
+                  <input type="checkbox" (change)="accessPermission('sales','add-item', $event)">
+                  <span class="check-mark"><span>Add Item</span></span>
+                </div>
+                <div class="check-box">
+                  <input type="checkbox" (change)="accessPermission('sales','initiate-declaration', $event)">
+                  <span class="check-mark"><span>Initiate Declaration</span></span>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="d-flex align-items-lg-center chk_items">
+              <label>Scheduling</label>
+              <div class="d-flex justify-content-start flex-wrap">
+                <div class="check-box">
+                  <input type="checkbox" (change)="accessPermission('appointment','add-appointment', $event)">
+                  <span class="check-mark"><span>Add Appointment</span></span>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="d-flex align-items-lg-center chk_items">
+              <label>Standard Report</label>
+              <div class="d-flex justify-content-start flex-wrap">
+                <div class="check-box">
+                  <input type="checkbox" (change)="accessPermission('standard-report','request-report', $event)">
+                  <span class="check-mark"><span>Request Report</span></span>
+                </div>
+                <div class="check-box">
+                  <input type="checkbox" (change)="accessPermission('standard-report','edit', $event)">
+                  <span class="check-mark"><span>Edit</span></span>
+                </div>
+                <div class="check-box">
+                  <input type="checkbox" (change)="accessPermission('standard-report','delete', $event)">
+                  <span class="check-mark"><span>Delete</span></span>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="d-flex align-items-lg-center chk_items">
+              <label>Reports</label>
+              <div class="d-flex justify-content-start flex-wrap">
+                <div class="check-box">
+                  <input type="checkbox" (change)="accessPermission('reports','approve', $event)">
+                  <span class="check-mark"><span>Approve</span></span>
+                </div>
+                <div class="check-box">
+                  <input type="checkbox" (change)="accessPermission('reports','reject', $event)">
+                  <span class="check-mark"><span>Reject</span></span>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="d-flex align-items-lg-center chk_items">
+              <label>User Management</label>
+              <div class="d-flex justify-content-start flex-wrap">
+                <div class="check-box">
+                  <input type="checkbox"
+                    (change)="accessPermission('user-management','approve-reject-user', $event,'list-of-user')">
+                  <span class="check-mark"><span>Approve/ Reject User</span></span>
+                </div>
+                <div class="check-box">
+                  <input type="checkbox"
+                    (change)="accessPermission('user-management','delete-user', $event,'list-of-user')">
+                  <span class="check-mark"><span>Delete User</span></span>
+                </div>
+                <div class="check-box">
+                  <input type="checkbox"
+                    (change)="accessPermission('user-management','suspend-user', $event,'list-of-user')">
+                  <span class="check-mark"><span>Suspend User</span></span>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="d-flex align-items-lg-center chk_items">
+              <label>Risk Management</label>
+              <div class="d-flex justify-content-start flex-wrap">
+                <div class="check-box">
+                  <input type="checkbox" (change)="accessPermission('risk-management','new-criteria', $event)">
+                  <span class="check-mark"><span>New Criteria</span></span>
+                </div>
+                <div class="check-box">
+                  <input type="checkbox" (change)="accessPermission('risk-management','feedback', $event)">
+                  <span class="check-mark"><span>Feedback</span></span>
+                </div>
+                <div class="check-box">
+                  <input type="checkbox" (change)="accessPermission('risk-management','view-advisory', $event)">
+                  <span class="check-mark"><span>View Advisory</span></span>
+                </div>
+                <div class="check-box">
+                  <input type="checkbox" (change)="accessPermission('risk-management','target-list', $event)">
+                  <span class="check-mark"><span>Target List</span></span>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+        <div class="input-errors" *ngIf="submitted && noAccessPermissionSelected"> Please select access permission(s).
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div class="btn_group text-center">
+        <button class="btn btn-md btn-outline-primary" (click)="cancel()">Cancel</button>
+        <button class="btn btn-md btn-primary" (click)="createRole()">Create</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- End Create Role Modal -->
+<!-- Edit role -->
+<div class="modal-content" *ngIf="roleId">
+  <div class="modal_div">
+    <div class="card-body">
+      <div class="header-title text-center text-capitalize">
+        <h5>Update Role Permissions</h5>
+      </div>
+      <div class="role_listing">
+        <div class="row">
+          <div class="col-12">
+            <label>Role</label>
+            <div class="form-group">
+              <input type="text" class="form-control" [(ngModel)]="roleName" disabled />
+              <div class="input-errors" *ngIf="submitted && roleName=='' ">Role name</div>
+            </div>
+          </div>
+        </div>
+        <ul class="list-unstyled chk_lists">
+          <li>
+            <div class="d-flex align-items-lg-center chk_items">
+              <label>Declaration</label>
+              <div class="d-flex justify-content-start flex-wrap">
+                <div class="check-box">
+                  <input type="checkbox" [(ngModel)]="racking" [checked]="checkIfExits('declaration','rack')"
+                    (change)="accessPermission('declaration','rack', $event)">
+                  <span class="check-mark"><span>Racking</span></span>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="d-flex align-items-lg-center chk_items">
+              <label>Inventory</label>
+              <div class="d-flex justify-content-start flex-wrap">
+                <div class="check-box">
+                  <input type="checkbox" [(ngModel)]="groupItems"
+                    [checked]="checkIfExits('inventory','group-items','list')"
+                    (change)="accessPermission('inventory','group-items', $event, 'list')">
+                  <span class="check-mark"><span>Group Items</span></span>
+                </div>
+                <div class="check-box">
+                  <input type="checkbox" [(ngModel)]="editGroupItems"
+                    [checked]="checkIfExits('inventory','edit','grouped-items')"
+                    (change)="accessPermission('inventory','edit', $event, 'grouped-items')">
+                  <span class="check-mark"><span>Edit</span></span>
+                </div>
+                <div class="check-box">
+                  <input type="checkbox" [(ngModel)]="deleteInventory"
+                    [checked]="checkIfExits('inventory','delete','list')"
+                    (change)="accessPermission('inventory','delete', $event, 'list')">
+                  <span class="check-mark"><span>Delete</span></span>
+                </div>
+                <div class="check-box">
+                  <input type="checkbox" [checked]="checkIfExits('inventory','stock-take','variance-report')"
+                    [(ngModel)]="stockTake"
+                    (change)="accessPermission('inventory','stock-take', $event, 'variance-report')">
+                  <span class="check-mark"><span>Stoke Take</span></span>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="d-flex align-items-lg-center chk_items">
+              <label>Sales</label>
+              <div class="d-flex justify-content-start flex-wrap">
+                <div class="check-box">
+                  <input type="checkbox" [checked]="checkIfExits('sales','create')"
+                    (change)="accessPermission('sales','create', $event)">
+                  <span class="check-mark"><span>Create Sale</span></span>
+                </div>
+                <div class="check-box">
+                  <input type="checkbox" [checked]="checkIfExits('sales','add-item')"
+                    (change)="accessPermission('sales','add-item', $event)">
+                  <span class="check-mark"><span>Add Item</span></span>
+                </div>
+                <div class="check-box">
+                  <input type="checkbox" [checked]="checkIfExits('sales','initiate-declaration')"
+                    (change)="accessPermission('sales','initiate-declaration', $event)">
+                  <span class="check-mark"><span>Initiate Declaration</span></span>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="d-flex align-items-lg-center chk_items">
+              <label>Scheduling</label>
+              <div class="d-flex justify-content-start flex-wrap">
+                <div class="check-box">
+                  <input type="checkbox" [checked]="checkIfExits('appointment','add-appointment')"
+                    (change)="accessPermission('appointment','add-appointment', $event)">
+                  <span class="check-mark"><span>Add Appointment</span></span>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="d-flex align-items-lg-center chk_items">
+              <label>Standard Report</label>
+              <div class="d-flex justify-content-start flex-wrap">
+                <div class="check-box">
+                  <input type="checkbox" [checked]="checkIfExits('standard-report','request-report')"
+                    (change)="accessPermission('standard-report','request-report', $event)">
+                  <span class="check-mark"><span>Request Report</span></span>
+                </div>
+                <div class="check-box">
+                  <input type="checkbox" [checked]="checkIfExits('standard-report','edit')"
+                    (change)="accessPermission('standard-report','edit', $event)">
+                  <span class="check-mark"><span>Edit</span></span>
+                </div>
+
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="d-flex align-items-lg-center chk_items">
+              <label>Reports</label>
+              <div class="d-flex justify-content-start flex-wrap">
+                <div class="check-box">
+                  <input type="checkbox" [checked]="checkIfExits('reports','approve')"
+                    (change)="accessPermission('reports','approve', $event)">
+                  <span class="check-mark"><span>Approve</span></span>
+                </div>
+                <div class="check-box">
+                  <input type="checkbox" [checked]="checkIfExits('reports','reject')"
+                    (change)="accessPermission('reports','reject', $event)">
+                  <span class="check-mark"><span>Reject</span></span>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="d-flex align-items-lg-center chk_items">
+              <label>User Management</label>
+              <div class="d-flex justify-content-start flex-wrap">
+                <div class="check-box">
+                  <input type="checkbox"
+                    [checked]="checkIfExits('user-management','approve-reject-user','list-of-user')"
+                    (change)="accessPermission('user-management','approve-reject-user', $event,'list-of-user')">
+                  <span class="check-mark"><span>Approve/ Reject User</span></span>
+                </div>
+                <div class="check-box">
+                  <input type="checkbox" [checked]="checkIfExits('user-management','delete-user','list-of-user')"
+                    (change)="accessPermission('user-management','delete-user', $event,'list-of-user')">
+                  <span class="check-mark"><span>Delete User</span></span>
+                </div>
+                <div class="check-box">
+                  <input type="checkbox" [checked]="checkIfExits('user-management','suspend-user','list-of-user')"
+                    (change)="accessPermission('user-management','suspend-user', $event,'list-of-user')">
+                  <span class="check-mark"><span>Suspend User</span></span>
+                </div>
+                <div class="check-box">
+                  <input type="checkbox" [checked]="checkIfExits('user-management','reassign-role','list-of-user')"
+                    (change)="accessPermission('user-management','reassign-role', $event,'list-of-user')">
+                  <span class="check-mark"><span>Reassign Role</span></span>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="d-flex align-items-lg-center chk_items">
+              <label>Risk Management</label>
+              <div class="d-flex justify-content-start flex-wrap">
+                <div class="check-box">
+                  <input type="checkbox" [checked]="checkIfExits('risk-management','new-criteria')"
+                    (change)="accessPermission('risk-management','new-criteria', $event)">
+                  <span class="check-mark"><span>New Criteria</span></span>
+                </div>
+                <div class="check-box">
+                  <input type="checkbox" [checked]="checkIfExits('risk-management','feedback')"
+                    (change)="accessPermission('risk-management','feedback', $event)">
+                  <span class="check-mark"><span>Feedback</span></span>
+                </div>
+                <div class="check-box">
+                  <input type="checkbox" [checked]="checkIfExits('risk-management','view-advisory')"
+                    (change)="accessPermission('risk-management','view-advisory', $event)">
+                  <span class="check-mark"><span>View Advisory</span></span>
+                </div>
+                <div class="check-box">
+                  <input type="checkbox" [checked]="checkIfExits('risk-management','target-list')"
+                    (change)="accessPermission('risk-management','target-list', $event)">
+                  <span class="check-mark"><span>Target List</span></span>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+        <div class="input-errors" *ngIf="submitted && noAccessPermissionSelected"> Please select access permission(s).
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div class="btn_group text-center">
+        <button class="btn btn-md btn-outline-primary" (click)="cancel()">Cancel</button>
+        <button class="btn btn-md btn-primary" (click)="updateRole()">Update</button>
+
+      </div>
+    </div>
+  </div>
+</div>

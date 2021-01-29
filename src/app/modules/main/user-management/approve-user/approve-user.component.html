@@ -1,0 +1,47 @@
+<div class="modal-content">
+  <div class="modal_div">
+    <button type="button" class="close" (click)="close()"><img src="../assets/img/icons/close_icon.svg"
+        alt="close" /></button>
+
+    <div class="card-body">
+      <div class="header-title text-center">
+        <h5>Detail</h5>
+      </div>
+      <div class="data_list_view">
+        <div class="d_items d-flex justify-content-between">
+          <span class="l_title">Full Name</span>
+          <strong>{{ userDetails?.firstName | titlecase }} {{ userDetails?.lastName | titlecase}}</strong>
+        </div>
+        <div class="d_items d-flex justify-content-between">
+          <span class="l_title">Role</span>
+          <strong>{{ userDetails?.role | userRole | titlecase }}</strong>
+        </div>
+        <div class="d_items d-flex justify-content-between">
+          <span class="l_title">Phone Number</span>
+          <strong> {{ userDetails?.phoneNumber}}</strong>
+        </div>
+        <div class="d_items d-flex justify-content-between">
+          <span class="l_title">Warehouse Code</span>
+          <strong>{{ userDetails?.warehouseCode}}</strong>
+        </div>
+        <div class="d_items d-flex justify-content-between">
+          <span class="l_title">Position</span>
+          <strong>{{userDetails?.position | userPosition:userDetails?.role | titlecase }}</strong>
+        </div>
+        <div class="d_items d-flex justify-content-between">
+          <span class="l_title">Address</span>
+          <strong> {{ userDetails?.addressLine1 | titlecase }} {{ userDetails?.city | titlecase }} {{
+            userDetails?.country | titlecase }} </strong>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div class="btn_group text-center">
+        <button class="btn btn-md btn-danger" (click)="cancelApproval()">Cancel</button>
+        <button type="submit" class="btn btn-md btn-success" data-dismiss="modal"
+          (click)="acceptUser()">Approve</button>
+      </div>
+    </div>
+
+  </div>
+</div>

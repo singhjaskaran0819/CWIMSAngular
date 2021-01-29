@@ -1,0 +1,353 @@
+<!--  ************ OFFICER/ ADMIN START ********* -->
+<div class="page-wrapper" *ngIf="(role!='4' && role!= '3')">
+    <div class="page-breadcrumb">
+        <div class="d-flex justify-content-between align-items-center flex-md-row flex-column-reverse">
+            <h3 class="page-title">Warehouse Locations</h3>
+
+            <div class="d-flex justify-content-end flex-md-row top_btns">
+                <div class="search_filter_btn">
+                    <button class="btn btn-sm btn-primary" (click)="OnFiterClick();">
+                        <i><img src="../../../../assets/img/icons/filter_icon.svg" alt="" /></i>
+                    </button>
+                    <div class="search_filter" id="search_filter" style="display:none;">
+                        <h6 class="f_title">Filters</h6>
+                        <div class="warecode_filter">
+                            <div class="d-flex align-items-center filter_items">
+                                <ng-multiselect-dropdown [placeholder]="'Select Warehouse'"
+                                    [settings]="dropdownSettings" [data]="dropdownList" [(ngModel)]="selectedItems"
+                                    (onSelect)="onItemSelect($event)" (onDeSelect)="onDeSelect($event)"
+                                    style="width: 100%;">
+                                </ng-multiselect-dropdown>
+                            </div>
+                        </div>
+
+                        <div class="filter_block">
+                            <div class="filter_list">
+                                <div *ngIf="filterQuery?.warehouseCode" class="d-flex align-items-center filter_items">
+                                    <label>Warehouse location</label>
+                                    <div class="in_group">
+                                        <select class="form-control" name="location_Code"
+                                            (change)="selectFilter('locationCode', $event)" [(ngModel)]="locationCode">
+                                            <option value="" selected>Choose warehouse location</option>
+                                            <option *ngFor="let item of filters?.warehouseLocationData"
+                                                [value]="item.code"> {{ item.name }} </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Warehouse filters -->
+                                <ng-container *ngIf="!filterQuery?.warehouseCode">
+                                    <div class="d-flex align-items-center filter_items">
+                                        <label>City</label>
+                                        <div class="in_group">
+                                            <select class="form-control" name="city"
+                                                (change)="selectFilter('city', $event)" [(ngModel)]="city">
+                                                <option value="" selected>Choose city</option>
+                                                <option *ngFor="let item of filters?.cityData" [value]="item.city"> {{
+                                                    item.city }} </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex align-items-center filter_items">
+                                        <label>Country</label>
+                                        <div class="in_group">
+                                            <select class="form-control" name="country"
+                                                (change)="selectFilter('country', $event)" [(ngModel)]="country">
+                                                <option value="" selected>Choose country</option>
+                                                <option *ngFor="let item of filters?.countryData"
+                                                    [value]="item.country"> {{
+                                                    item.country }} </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex align-items-center filter_items">
+                                        <label>Postal Code</label>
+                                        <div class="in_group">
+                                            <select class="form-control" name="postal_Code"
+                                                (change)="selectFilter('postalCode', $event)" [(ngModel)]="postalCode">
+                                                <option value="" selected>Choose postalCode</option>
+                                                <option *ngFor="let item of filters?.postalCodeData"
+                                                    [value]="item.postalCode">
+                                                    {{item.postalCode}} </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                                <!-- end -->
+
+                                <!-- Warehouse-location filters -->
+                                <ng-container *ngIf="filterQuery?.warehouseCode">
+                                    <div
+                                        [class]="locationCode ? 'select_disabled d-flex align-items-center filter_items' : 'd-flex align-items-center filter_items'">
+                                        <label>City</label>
+                                        <div class="in_group">
+                                            <select class="form-control" name="city"
+                                                (change)="selectWarehouseLocationFilter('location_city', $event)"
+                                                [(ngModel)]="location_city">
+                                                <option value="" selected>Choose city</option>
+                                                <option *ngFor="let item of filters?.cityData" [value]="item.city"> {{
+                                                    item.city }} </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div
+                                        [class]="locationCode ? 'select_disabled d-flex align-items-center filter_items' : 'd-flex align-items-center filter_items'">
+                                        <label>Country</label>
+                                        <div class="in_group">
+                                            <select class="form-control" name="country"
+                                                (change)="selectWarehouseLocationFilter('location_country', $event)"
+                                                [(ngModel)]="location_country">
+                                                <option value="" selected>Choose country</option>
+                                                <option *ngFor="let item of filters?.countryData"
+                                                    [value]="item.country"> {{
+                                                    item.country }} </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div
+                                        [class]="locationCode ? 'select_disabled d-flex align-items-center filter_items' : 'd-flex align-items-center filter_items'">
+                                        <label>Postal Code</label>
+                                        <div class="in_group">
+                                            <select class="form-control" name="postal_Code"
+                                                (change)="selectWarehouseLocationFilter('location_postalCode', $event)"
+                                                [(ngModel)]="location_postalCode">
+                                                <option value="" selected>Choose postalCode</option>
+                                                <option *ngFor="let item of filters?.postalCodeData"
+                                                    [value]="item.postalCode">
+                                                    {{item.postalCode}} </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                                <!-- end -->
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center btn-control">
+                            <button class="btn btn-md btn-outline-primary" (click)="OnFiterClick();">Cancel</button>
+                            <button class="btn btn-md btn-primary" (click)="searchWarehouse()">Apply Search</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table custom_table">
+            <thead>
+                <tr>
+                    <th><span class="c_name">Warehouse No.</span></th>
+                    <th>Warehouse Code</th>
+                    <th>Telephone</th>
+                    <th>Address</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngIf="warehouseList?.length > 0; else no_data">
+                    <ng-container *ngFor="let warehouse of warehouseList">
+                        <tr (click)="showDetail(warehouse.code)" class="cursorPointer">
+                            <td>{{warehouse.name}}</td>
+                            <td>{{warehouse.code}}</td>
+                            <td>{{warehouse.telephone}}</td>
+                            <td>{{warehouse.street}} {{warehouse.city}} {{warehouse.country}}</td>
+                        </tr>
+                        <tr class="accordion-toggle cursorEventsNone" id="accordion1"
+                            *ngIf="warehouse?.code == selectedWarehouseId">
+                            <td colspan="4" style="padding-top:0; padding-bottom: 0;">
+                                <div class="accordin_table">
+                                    <div class="table_header">
+                                        <div class="row">
+                                            <div class="col col-3"><span class="c_name">Location</span>
+                                            </div>
+                                            <div class="col col-2">Location Code</div>
+                                            <div class="col col-3">Telephone</div>
+                                            <div class="col col-4">Address</div>
+                                        </div>
+                                    </div>
+
+                                    <div *ngIf="warehouseLocations"
+                                        class="table_scroll infinte-scroll-div cursorEventsNone " infiniteScroll
+                                        [infiniteScrollDistance]="6" [infiniteScrollThrottle]="100"
+                                        (scrolled)="onScroll()" [scrollWindow]="false">
+                                        <ng-container *ngIf="warehouseLocations?.length > 0; else noWarehouseLocations">
+                                            <div class="row" *ngFor="let location of warehouseLocations">
+                                                <div class="col col-3">{{location.name}}</div>
+                                                <div class="col col-2">{{location.code}}</div>
+                                                <div class="col col-3">{{location.telephone}}</div>
+                                                <div class="col col-4">{{location.street}} {{location.city}}
+                                                    {{location.country}}</div>
+                                            </div>
+                                        </ng-container>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-container>
+                </ng-container>
+            </tbody>
+        </table>
+    </div>
+    <ng-template #no_data>
+        <tr>
+            <td colspan="4">
+                <div class="no-record">
+                    No record found
+                </div>
+            </td>
+        </tr>
+    </ng-template>
+
+    <div
+        class="d-flex align-items-center flex-md-row flex-column justify-content-md-between justify-content-center flex-wrap pagination_block">
+        <div class="d-flex align-items-center row_count">
+            <span class="mb-0 ">No. of Rows</span>
+            <select (change)="onLimitChange($event)" [(ngModel)]="selected_limit" name="selectRows">
+                <option value="10" selected>10</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+            </select>
+        </div>
+
+        <app-pagination [page]="page" (pageChangeEvent)="pageChanged($event)" [collectionSize]="totalRecords"
+            [pageSize]="selected_limit" #appPagination>
+        </app-pagination>
+    </div>
+</div>
+
+<ng-template #noWarehouseLocations>
+    <div class="row">
+        <div class="col col-12" style="text-align: center;">No record found</div>
+    </div>
+</ng-template>
+
+<!--  ************ OFFICER/ ADMIN END ********* -->
+
+
+<!--  ************ OPERATOR START ******** * -->
+<div class="page-wrapper" *ngIf="(role=='4' || role=='3') && roleNature =='0'">
+    <div class="page-breadcrumb">
+        <div class="d-flex justify-content-between align-items-center flex-md-row flex-column-reverse">
+            <h3 class="page-title">Warehouse Locations</h3>
+
+            <div class="d-flex justify-content-end flex-md-row top_btns">
+                <div class="search_filter_btn">
+                    <button class="btn btn-sm btn-primary" (click)="OnFiterClick();">
+                        <i><img src="../../../../assets/img/icons/filter_icon.svg" alt="" /></i>
+                    </button>
+                    <div class="search_filter" id="search_filter" style="display:none;">
+                        <h6 class="f_title">Filters</h6>
+
+                        <div class="filter_block">
+                            <div class="filter_list">
+
+                                <!-- Warehouse-location filters -->
+                                <ng-container *ngIf="filterQuery?.warehouseCode">
+                                    <div
+                                        [class]="locationCode ? 'select_disabled d-flex align-items-center filter_items' : 'd-flex align-items-center filter_items'">
+                                        <label>City</label>
+                                        <div class="in_group">
+                                            <select class="form-control" name="city"
+                                                (change)="selectWarehouseLocationFilter('location_city', $event)"
+                                                [(ngModel)]="location_city">
+                                                <option value="" selected>Choose city</option>
+                                                <option *ngFor="let item of filters?.cityData" [value]="item.city"> {{
+                                                    item.city }} </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div
+                                        [class]="locationCode ? 'select_disabled d-flex align-items-center filter_items' : 'd-flex align-items-center filter_items'">
+                                        <label>Country</label>
+                                        <div class="in_group">
+                                            <select class="form-control" name="country"
+                                                (change)="selectWarehouseLocationFilter('location_country', $event)"
+                                                [(ngModel)]="location_country">
+                                                <option value="" selected>Choose country</option>
+                                                <option *ngFor="let item of filters?.countryData"
+                                                    [value]="item.country"> {{
+                                                    item.country }} </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div
+                                        [class]="locationCode ? 'select_disabled d-flex align-items-center filter_items' : 'd-flex align-items-center filter_items'">
+                                        <label>Postal Code</label>
+                                        <div class="in_group">
+                                            <select class="form-control" name="postal_Code"
+                                                (change)="selectWarehouseLocationFilter('location_postalCode', $event)"
+                                                [(ngModel)]="location_postalCode">
+                                                <option value="" selected>Choose postalCode</option>
+                                                <option *ngFor="let item of filters?.postalCodeData"
+                                                    [value]="item.postalCode">
+                                                    {{item.postalCode}} </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                                <!-- end -->
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center btn-control">
+                            <button class="btn btn-md btn-outline-primary" (click)="OnFiterClick();">Cancel</button>
+                            <button class="btn btn-md btn-primary" (click)="searchWarehouse()">Apply Search</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table custom_table">
+            <thead>
+                <tr>
+                    <th><span class="c_name">Location</span></th>
+                    <th>Location Code</th>
+                    <th>Telephone</th>
+                    <th>Address</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngIf="warehouseLocations?.length > 0; else no_data">
+                    <ng-container *ngFor="let location of warehouseLocations">
+                        <tr>
+                            <td>{{location.name}}</td>
+                            <td>{{location.code}}</td>
+                            <td>{{location.telephone}}</td>
+                            <td>{{location.street}} {{location.city}} {{location.country}}</td>
+                        </tr>
+
+                    </ng-container>
+                </ng-container>
+            </tbody>
+        </table>
+    </div>
+    <ng-template #no_data>
+        <tr>
+            <td colspan="4">
+                <div class="no-record">
+                    No record found
+                </div>
+            </td>
+        </tr>
+    </ng-template>
+
+    <div
+        class="d-flex align-items-center flex-md-row flex-column justify-content-md-between justify-content-center flex-wrap pagination_block">
+        <div class="d-flex align-items-center row_count">
+            <span class="mb-0 ">No. of Rows</span>
+            <select (change)="onLimitChange($event)" [(ngModel)]="selected_limit" name="selectRows">
+                <option value="10" selected>10</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+            </select>
+        </div>
+
+        <app-pagination [page]="page" (pageChangeEvent)="pageChanged($event)" [collectionSize]="totalRecords"
+            [pageSize]="selected_limit" #appPagination>
+        </app-pagination>
+    </div>
+</div>
+
+<!--  ************ OPERATOR END ********* -->

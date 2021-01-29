@@ -1,0 +1,32 @@
+<div class="modal_div">
+  <form class="form-box" [formGroup]="reassignRoleForm">
+    <div class="card-body">
+      <div class="box_title text-center">
+        <h5>Reassign Role</h5>
+      </div>
+      <div class="row">
+        <div class="col-12 text-left">
+          <label>Select Role</label>
+          <div class="form-group">
+            <select class="form-control" aria-expanded="true" formControlName="role" #role (change)="selectRole($event)"
+              required>
+              <option disabled selected> </option>
+              <!-- <option> 1</option> -->
+              <option *ngFor="let role of roles" value={{role.id}}>{{role.title | titlecase }}</option>
+            </select>
+            <div class="input-errors" *ngIf="submitted && controls.role?.errors?.required">
+              Role is required
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <div class="btn_group text-center">
+        <button class="btn btn-md btn-outline-primary" (click)="cancel()">Cancel</button>
+        <button typ="button" (click)="submit()" class="btn btn-md btn-primary">Submit</button>
+      </div>
+    </div>
+  </form>
+</div>

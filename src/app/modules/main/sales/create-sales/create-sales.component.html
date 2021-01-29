@@ -1,0 +1,321 @@
+<div class="page-wrapper">
+
+  <div class="page-breadcrumb">
+    <div class="d-flex justify-content-between align-items-center flex-md-row flex-column-reverse">
+
+      <h3 class="page-title">Create New Sale</h3>
+
+      <div class="d-flex justify-content-end top_btns">
+        <button class="btn btn-md btn-primary" data-toggle="modal" data-target="#UploadSale">Upload Sales</button>
+      </div>
+    </div>
+  </div>
+  <!-- Breadcrumb -->
+
+  <div class="create_sale">
+
+    <nav>
+      <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
+          aria-controls="nav-home" aria-selected="true">General Segment</a>
+        <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
+          aria-controls="nav-profile" aria-selected="false">Product(s) Sold</a>
+      </div>
+    </nav>
+
+    <div class="tab-content" id="nav-tabContent">
+      <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+        <div class="card card_box">
+          <h6>Recepit</h6>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6">
+                <label>Receipt Number <sup class="text-danger">*</sup></label>
+                <div class="form-group">
+                  <input type="text" class="form-control" placeholder="Identification No. of receipt" />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label>Receipt Date <sup class="text-danger">*</sup></label>
+                <div class="form-group">
+                  <input type="date" class="form-control" placeholder="Date the receipt was generated" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card card_box">
+          <h6>Sale Info</h6>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-4 col-sm-6">
+                <label>Sale Type <sup class="text-danger">*</sup></label>
+                <div class="form-group">
+                  <select class="form-control">
+                    <option>Types of sale conducted</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-6">
+                <label>Currency</label>
+                <div class="form-group">
+                  <select class="form-control">
+                    <option>Types of sale conducted</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-6">
+                <label>Total Sale Value</label>
+                <div class="form-group">
+                  <select class="form-control">
+                    <option>Total dollar amount of sale</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card card_box">
+          <h6>Sales Detail</h6>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6">
+                <label>Customer Name</label>
+                <div class="form-group">
+                  <input type="text" class="form-control" placeholder="Customer making the purchase" />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label>Customer Address</label>
+                <div class="form-group">
+                  <input type="text" class="form-control" placeholder="Address of sale customer" />
+                </div>
+              </div>
+
+              <div class="col-md-4 col-sm-6">
+                <label>Document Type</label>
+                <div class="form-group">
+                  <select class="form-control">
+                    <option>Customer Identification type</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-6">
+                <label>Document Number</label>
+                <div class="form-group">
+                  <select class="form-control">
+                    <option>Customer ID number</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-6">
+                <label>Document Country Issue</label>
+                <div class="form-group">
+                  <select class="form-control">
+                    <option>Country ID was issued</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <label>Customer Nationality</label>
+                <div class="form-group">
+                  <select class="form-control">
+                    <option>Nationality of customer</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label>Country of Residency</label>
+                <div class="form-group">
+                  <select class="form-control">
+                    <option>Country Customer resides</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card card_box">
+          <h6>Transport</h6>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6">
+                <label>Transport ID </label>
+                <div class="form-group">
+                  <input type="text" class="form-control" placeholder="ID of transport vessel" />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label>Vessel Name</label>
+                <div class="form-group">
+                  <input type="text" class="form-control" placeholder="Name of transport vessel" />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label>Departure Date</label>
+                <div class="form-group">
+                  <input type="date" class="form-control" placeholder="Customer departure date" />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label>Departure Port</label>
+                <div class="form-group">
+                  <select class="form-control">
+                    <option>Port of customer departure</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="btn_group">
+              <button class="btn btn-md btn-primary">Next</button>
+              <button class="btn btn-md btn-primary">Submit</button>
+              <button class="btn btn-md btn-primary" data-toggle="modal" data-target="#saleSaved">Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End tab 1 -->
+
+      <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+        <div class="card card_box">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-3">
+                <label>Product ID </label>
+                <div class="form-group">
+                  <input type="text" class="form-control" placeholder="46465HHKJ" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <label>Commercial Description</label>
+                <div class="form-group">
+                  <input type="text" class="form-control" placeholder="It’s good product" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <label>Quantity</label>
+                <div class="form-group">
+                  <input type="number" class="form-control" placeholder="12" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <label>Sale Value</label>
+                <div class="form-group">
+                  <input type="number" class="form-control" placeholder="25" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card card_box">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-3">
+                <label>Product ID </label>
+                <div class="form-group">
+                  <input type="text" class="form-control" placeholder="46465HHKJ" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <label>Commercial Description</label>
+                <div class="form-group">
+                  <input type="text" class="form-control" placeholder="It’s good product" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <label>Quantity</label>
+                <div class="form-group">
+                  <input type="number" class="form-control" placeholder="12" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <label>Sale Value</label>
+                <div class="form-group">
+                  <input type="number" class="form-control" placeholder="25" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="btn_group">
+              <button class="btn btn-md btn-outline-primary">Previous</button>
+              <button class="btn btn-md btn-primary">Submit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End tab 2 -->
+    </div>
+  </div>
+  <!-- End Create Sales -->
+</div>
+
+<!-- Upload Sale Modal -->
+<div class="modal fade" id="UploadSale" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-md modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal_div">
+        <form action="">
+          <div class="card-body" id="tableToModify">
+            <div class="header-title text-center">
+              <h5>Upload Sale</h5>
+            </div>
+            <div id="drop_file_zone" ondrop="upload_file(event)" ondragover="return false">
+              <div id="drag_upload_file">
+                <i><img src="../assets/img/icons/upload_icon.svg" alt="" /></i>
+                <p>
+                  Drag and Drop here
+                  <br />
+                  or
+                </p>
+                <div class="input_file">
+                  <input type="file" id="selectfile" />
+                  <label>Browse file</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <div class="btn_group text-center">
+              <button class="btn btn-md btn-outline-primary" data-dismiss="modal">Cancel</button>
+              <button class="btn btn-md btn-primary" data-dismiss="modal">Upload</button>
+
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End -->
+
+<!-- Upload Sale Modal -->
+<div class="modal fade" id="saleSaved" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal_div text-center">
+        <div class="card-body" id="tableToModify">
+          <i class="my-3 d-block"><img src="../assets/img/icons/success_check_icon.svg" alt="Check icon"
+              width="70" /></i>
+          <p>Sale submitted successfully</p>
+        </div>
+        <div class="modal-footer">
+          <div class="btn_group text-center">
+            <a href="sales-lists.html" class="btn btn-md btn-primary">Okay</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End -->

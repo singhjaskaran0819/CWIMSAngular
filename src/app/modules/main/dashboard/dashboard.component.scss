@@ -1,0 +1,48 @@
+@import '../../../../assets/css/base.scss';
+
+.wear_btn {
+    width:46px; height:46px;
+    img {width:100%;}
+}
+#wearhouse_filter {
+    label {font-size:$f12+2;}
+}
+.sales_chart, .line_chart {border:1px solid $primary-color; padding:20px; background:$white-color; @include border-radius (10px); margin:0 0 30px; height:calc(100% - 30px);}
+.sales_chart {
+    h5 {width:100%; margin:0;}
+}
+.sales_chart select, .line_chart select{
+    background-color:$blue-light-color; min-height:26px; 
+    background-size:11px; font-size:$f12+2; max-width:120px;
+}
+
+#chartdiv {width: 100%; height: 95%; @include flexbox; @include align-items (center);}
+
+.status_box { 
+    background:$white-color; border-bottom:8px solid $primary-color; padding:30px; 
+    @include box-shadow(0, 0px, 10px, rgba(0, 0, 0, 0.1));
+    //box-shadow:0 0 10px rgba(0,0,0,.1); 
+    @include border-radius (10px); 
+    margin-bottom:30px; height:calc(100% - 30px);
+    h6 {
+        color:$black-light-color1; font-size:$f20; 
+        font-weight:$f-medium; min-height: 48px; margin:0;
+        @media (max-width:991px){
+            font-size:$f16+2;
+            min-height: 44px;
+        }
+        @media (max-width:575px){
+            min-height: initial;
+        }
+    }
+    h2 {
+        color:$black-light-color1; font-size:$f40; 
+        font-weight:$f-bold; margin:15px 0 10px;
+        @media (max-width:991px){
+            font-size:$f30+4;
+        }
+    }
+    span {color:#939393; font-size:$f16+2;}
+}
+
+#piechart {width:100%; height: 100%; padding: 10px; padding-bottom: 120px;}

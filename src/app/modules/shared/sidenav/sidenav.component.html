@@ -1,0 +1,72 @@
+<aside class="side-navbar" id="sidebar_menu">
+        <div class="close_menu" (click)="hide_menu()">
+                <img src="../../../assets/img/icons/close_icon.svg" alt="" />
+        </div>
+        <a class="logo_main text-center cursorPointer" (click)="cwimsLogoClick()">
+                <img src="../../../assets/img/cwims_logo.svg" width="" alt="" class="img-fluid" />
+        </a>
+        <div class="main-menu">
+                <ul class="side-menu list-unstyled">
+                        <!-- Main Menu -->
+                        <li [ngClass]="{'active': item.link ? isActive(item.link): false}"
+                                *ngFor="let item of sidebarItems" class="cursorPointer"
+                                [routerLinkActiveOptions]="{exact: false}">
+                                <ng-container *ngIf="item.accessAllowed">
+                                        <a [routerLink]="item.link" *ngIf="!item?.children">
+                                                <i> <img src="{{item.icon}}" alt="" /> </i>
+                                                {{item.name}}
+                                        </a>
+
+                                        <a *ngIf="item.children?.length>0" aria-expanded="false" data-toggle="collapse"
+                                                attr.data-target="#{{item.id}}">
+                                                <i> <img src="{{item.icon}}" alt="" /> </i>
+                                                {{item.name}}
+                                        </a>
+                                        <!-- Sub menu -->
+                                        <ul attr.id="{{item.id}}" class="collapse side-menu list-unstyled">
+
+                                                <li [ngClass]="{'active': childItem.link ? isActive(childItem.link): false}"
+                                                        [routerLinkActiveOptions]="{exact: false}" class="sidebar-item"
+                                                        *ngFor="let childItem of item.children" class="cursorPointer">
+                                                        <ng-container *ngIf="childItem.accessAllowed">
+
+                                                                <a [routerLink]="childItem.link"
+                                                                        *ngIf="!childItem?.subchildren">
+                                                                        <i><img src="{{childItem.icon}}" alt="" /> </i>
+                                                                        <span class="hide_menu"> {{childItem.name}}
+                                                                        </span>
+                                                                </a>
+
+                                                                <a *ngIf="childItem.subchildren?.length>0"
+                                                                        aria-expanded="false" data-toggle="collapse"
+                                                                        attr.data-target="#{{childItem.id}}">
+                                                                        <i> <img src="{{childItem.icon}}" alt="" /> </i>
+                                                                        {{childItem.name}}
+                                                                </a>
+                                                                <!-- Sub sub menu -->
+                                                                <ul attr.id="{{childItem.id}}"
+                                                                        class="collapse side-menu list-unstyled">
+                                                                        <li [ngClass]="{'active': childItem1.link ? isActive(childItem1.link): false}"
+                                                                                class="sidebar-item"
+                                                                                *ngFor="let childItem1 of childItem.subchildren"
+                                                                                class="cursorPointer">
+                                                                                <a [routerLink]="childItem1.link">
+                                                                                        <i><img src="{{childItem1.icon}}"
+                                                                                                        alt="" /> </i>
+                                                                                        <span class="hide_menu">
+                                                                                                {{childItem1.name}}
+                                                                                        </span>
+                                                                                </a>
+                                                                        </li>
+                                                                </ul>
+                                                        </ng-container>
+                                                </li>
+                                        </ul>
+                                </ng-container>
+                </ul>
+                <div class="logout">
+                        <a (click)="logout()"><i><img src="../../../assets/img/icons/logout_icon.svg" alt="" /></i>
+                                Logout</a>
+                </div>
+        </div>
+</aside>

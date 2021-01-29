@@ -1,0 +1,177 @@
+<div class="modal-content">
+  <div class="modal_div">
+    <form action="">
+      <div class="card-body">
+        <div class="header-title text-center text-capitalize">
+          <h5>Access Permission</h5>
+        </div>
+        <div class="role_listing">
+          <div class="row">
+            <div class="col-12">
+              <label>Select Role</label>
+              <div class="form-group">
+                <select class="form-control">
+                  <option>Operator</option>
+                  <option>Officer</option>
+                  <option>Admin</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <ul class="list-unstyled chk_lists">
+            <li>
+              <div class="d-flex align-items-lg-center chk_items">
+                <label>Declaration</label>
+                <div class="d-flex justify-content-start flex-wrap">
+                  <div class="check-box">
+                    <input type="checkbox">
+                    <span class="check-mark"><span>Racking</span></span>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="d-flex align-items-lg-center chk_items">
+                <label>Inventory</label>
+                <div class="d-flex justify-content-start flex-wrap">
+                  <div class="check-box">
+                    <input type="checkbox">
+                    <span class="check-mark"><span>Group Items</span></span>
+                  </div>
+                  <div class="check-box">
+                    <input type="checkbox">
+                    <span class="check-mark"><span>Edit</span></span>
+                  </div>
+                  <div class="check-box">
+                    <input type="checkbox">
+                    <span class="check-mark"><span>Delete</span></span>
+                  </div>
+                  <div class="check-box">
+                    <input type="checkbox">
+                    <span class="check-mark"><span>Stoke Take</span></span>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="d-flex align-items-lg-center chk_items">
+                <label>Sales</label>
+                <div class="d-flex justify-content-start flex-wrap">
+                  <div class="check-box">
+                    <input type="checkbox">
+                    <span class="check-mark"><span>Create Sale</span></span>
+                  </div>
+                  <div class="check-box">
+                    <input type="checkbox">
+                    <span class="check-mark"><span>Add Item</span></span>
+                  </div>
+                  <div class="check-box">
+                    <input type="checkbox">
+                    <span class="check-mark"><span>Initiate Declaration</span></span>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="d-flex align-items-lg-center chk_items">
+                <label>Scheduling</label>
+                <div class="d-flex justify-content-start flex-wrap">
+                  <div class="check-box">
+                    <input type="checkbox">
+                    <span class="check-mark"><span>Add Appointment</span></span>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="d-flex align-items-lg-center chk_items">
+                <label>Standard Report</label>
+                <div class="d-flex justify-content-start flex-wrap">
+                  <div class="check-box">
+                    <input type="checkbox">
+                    <span class="check-mark"><span>Request Report</span></span>
+                  </div>
+                  <div class="check-box">
+                    <input type="checkbox">
+                    <span class="check-mark"><span>Edit</span></span>
+                  </div>
+                  <div class="check-box">
+                    <input type="checkbox">
+                    <span class="check-mark"><span>Delete</span></span>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="d-flex align-items-lg-center chk_items">
+                <label>Reports</label>
+                <div class="d-flex justify-content-start flex-wrap">
+                  <div class="check-box">
+                    <input type="checkbox">
+                    <span class="check-mark"><span>Approve</span></span>
+                  </div>
+                  <div class="check-box">
+                    <input type="checkbox">
+                    <span class="check-mark"><span>Reject</span></span>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="d-flex align-items-lg-center chk_items">
+                <label>User Management</label>
+                <div class="d-flex justify-content-start flex-wrap">
+                  <div class="check-box">
+                    <input type="checkbox">
+                    <span class="check-mark"><span>Approve</span></span>
+                  </div>
+                  <div class="check-box">
+                    <input type="checkbox">
+                    <span class="check-mark"><span>Reject Item</span></span>
+                  </div>
+                  <div class="check-box">
+                    <input type="checkbox">
+                    <span class="check-mark"><span>Approve Profile</span></span>
+                  </div>
+                  <div class="check-box">
+                    <input type="checkbox">
+                    <span class="check-mark"><span>Reject Profile</span></span>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="d-flex align-items-lg-center chk_items">
+                <label>Risk Management</label>
+                <div class="d-flex justify-content-start flex-wrap">
+                  <div class="check-box">
+                    <input type="checkbox">
+                    <span class="check-mark"><span>New Criteria</span></span>
+                  </div>
+                  <div class="check-box">
+                    <input type="checkbox">
+                    <span class="check-mark"><span>Feedback</span></span>
+                  </div>
+                  <div class="check-box">
+                    <input type="checkbox">
+                    <span class="check-mark"><span>View Advisory</span></span>
+                  </div>
+                  <div class="check-box">
+                    <input type="checkbox">
+                    <span class="check-mark"><span>Target List</span></span>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="btn_group text-center">
+          <button class="btn btn-md btn-outline-primary" (click)="cancelAccess()">Cancel</button>
+          <button class="btn btn-md btn-primary" (click)="allowAccess()">Allow</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

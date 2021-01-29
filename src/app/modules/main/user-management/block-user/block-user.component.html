@@ -1,0 +1,20 @@
+<div class="modal-content">
+  <div class="modal_div text-center">
+    <div class="card-body" id="tableToModify">
+      <i class="my-3 d-block"><img src="../assets/img/icons/blocked_icon.svg" alt="Check icon" width="80" /></i>
+      <h6 *ngIf="!data?.isSuspended">Do you want to suspend user?</h6>
+      <p *ngIf="!data?.isSuspended">If you want to suspend user then click<br /> on suspend button.</p>
+      <h6 *ngIf="data?.isSuspended">Do you want to unsuspend user?</h6>
+      <p *ngIf="data?.isSuspended">If you want to unsuspend user then click<br /> on unsuspend button.</p>
+    </div>
+    <div class="modal-footer">
+      <div class="btn_group text-center">
+        <button class="btn btn-md btn-outline-primary" (click)="cancel()"> Cancel </button>
+        <button *ngIf="!data?.isSuspended" class="btn btn-md btn-danger" (click)="suspendUnsuspendUser(true)"> Suspend
+        </button>
+        <button *ngIf="data?.isSuspended" class="btn btn-md btn-danger" (click)="suspendUnsuspendUser(false)"> Unsuspend
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

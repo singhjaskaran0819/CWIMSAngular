@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="13.141" height="26.373" viewBox="0 0 13.141 26.373">
+  <g id="Group_9942" data-name="Group 9942" transform="translate(-91.5 -434.5)">
+    <g id="radio-button" transform="translate(-41.5 435)">
+      <g id="Group_9937" data-name="Group 9937" transform="translate(133.56 0)">
+        <g id="Group_9936" data-name="Group 9936">
+          <path id="Path_14526" data-name="Path 14526" d="M140.718,12.052a6.1,6.1,0,0,1-3.952-1.452,6.018,6.018,0,0,1-2.04-3.6.372.372,0,0,1,.734-.12A5.324,5.324,0,1,0,140.718.743a5.339,5.339,0,0,0-5.271,4.514.372.372,0,1,1-.735-.108,6.012,6.012,0,0,1,2.02-3.668,6.08,6.08,0,0,1,10.058,4.545A6.055,6.055,0,0,1,140.718,12.052Z" transform="translate(-134.707 0)" fill="#fff" stroke="#fff" stroke-width="1"/>
+        </g>
+      </g>
+      <g id="Group_9939" data-name="Group 9939" transform="translate(133.5 13.321)">
+        <g id="Group_9938" data-name="Group 9938">
+          <path id="Path_14527" data-name="Path 14527" d="M139.571,280.852a6.055,6.055,0,0,1-6.071-6.026,5.98,5.98,0,0,1,2.312-4.732.372.372,0,1,1,.459.585,5.241,5.241,0,0,0-2.027,4.147,5.313,5.313,0,1,0,3.508-4.967.372.372,0,0,1-.252-.7,6.036,6.036,0,1,1,2.071,11.692Z" transform="translate(-133.5 -268.8)" fill="#fff" stroke="#fff" stroke-width="1"/>
+        </g>
+      </g>
+      <g id="Group_9941" data-name="Group 9941" transform="translate(135.572 2.056)">
+        <g id="Group_9940" data-name="Group 9940">
+          <path id="Path_14528" data-name="Path 14528" d="M179.316,49.431a3.97,3.97,0,1,1,2.016-7.4.372.372,0,0,1-.373.643,3.222,3.222,0,1,0,1.612,2.786,3.2,3.2,0,0,0-.454-1.645.372.372,0,0,1,.638-.382,3.944,3.944,0,0,1,.56,2.028,3.989,3.989,0,0,1-4,3.97Z" transform="translate(-175.318 -41.491)" fill="#fff" stroke="#fff" stroke-width="1"/>
+        </g>
+      </g>
+    </g>
+    <g id="Ellipse_664" data-name="Ellipse 664" transform="translate(96 452)" fill="#fff" stroke="#fff" stroke-width="1">
+      <circle cx="2" cy="2" r="2" stroke="none"/>
+      <circle cx="2" cy="2" r="1.5" fill="none"/>
+    </g>
+  </g>
+</svg>

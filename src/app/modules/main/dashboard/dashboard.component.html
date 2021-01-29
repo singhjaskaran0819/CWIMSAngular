@@ -1,0 +1,112 @@
+<div class="page-breadcrumb">
+    <div class="row align-items-center">
+        <div class="col-5 align-self-center">
+            <h3 class="page-title">Dashboard</h3>
+        </div>
+        <div class="col-7 text-right">
+            <button class="btn btn-primary wear_btn" (click)="filter()"><img src="../assets/img/icons/filter-icon.svg"
+                    alt="" /></button>
+        </div>
+    </div>
+</div>
+<!-- Bread crumb -->
+<div class="row" id="wearhouse_filter" *ngIf="isfilter">
+    <div class="col-md-3 col-6">
+        <label>Select Warehouse </label>
+        <div class="form-group">
+            <select class="form-control">
+                <option>WHSTEST1</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-md-3 col-6">
+        <label>Select Company Code</label>
+        <div class="form-group">
+            <select class="form-control">
+                <option>32444454</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-md-3 col-6">
+        <label>Sale Type</label>
+        <div class="form-group">
+            <select class="form-control">
+                <option>Duty Free</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-md-3 col-6">
+        <label>Currency</label>
+        <div class="form-group">
+            <select class="form-control">
+                <option>$</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-9">
+        <div class="line_chart">
+            <div class="flex">
+                <div class="flex-item">
+                    <div style="display: block;">
+                        <canvas baseChart width="400" height="180" [datasets]="lineChartData" [labels]="lineChartLabels"
+                            [options]="lineChartOptions" [colors]="lineChartColors" [legend]="lineChartLegend"
+                            [chartType]="lineChartType"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="sales_chart">
+            <div class="d-flex align-items-center justify-content-between">
+                <h5>Sales</h5>
+                <select class="form-control">
+                    <option>Year</option>
+                    <option>Month</option>
+                </select>
+            </div>
+            <div id="chartdiv">
+                <canvas baseChart width="200" height="220" [options]="doughnutChartOptions" [colors]="chartColors"
+                    [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="doughnutChartType" #pieChart>
+                </canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card_block">
+    <div class="row">
+        <div class="col-xl-3 col-sm-6">
+            <div class="status_box">
+                <h6 class="text-capitalize mt-0">Pending Release Order</h6>
+                <h2>11</h2>
+                <span>SADS Pending Release</span>
+            </div>
+        </div>
+        <div class="col-xl-3 col-sm-6">
+            <div class="status_box">
+                <h6 class="text-capitalize mt-0">Total Duty Liability</h6>
+                <h2>1360,423</h2>
+                <span>Duty Liability Of Current Stock</span>
+            </div>
+        </div>
+        <div class="col-xl-3 col-sm-6">
+            <div class="status_box">
+                <h6 class="text-capitalize mt-0">Sales Pending SAD</h6>
+                <h2>6,545</h2>
+                <span>Sales To Be Assesses</span>
+            </div>
+        </div>
+        <div class="col-xl-3 col-sm-6">
+            <div class="status_box">
+                <h6 class="text-capitalize mt-0">Remaining Guarantee</h6>
+                <h2>1,006,140</h2>
+                <span>Warehouse Guarntee Balance</span>
+            </div>
+        </div>
+    </div>
+</div>

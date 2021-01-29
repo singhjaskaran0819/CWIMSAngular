@@ -1,0 +1,93 @@
+@import '../../../../assets/css/base.scss';
+
+.front-forms {
+  height:100%; position:$relative; padding:30px 0; min-height: 100vh;
+  @media (max-height:550px){
+    align-items:self-start!important;
+  }
+  &:before {
+    content:'';
+    background:url(../../../../assets/img/wave_top_left.svg);
+    background-repeat:no-repeat;
+    background-size:100%;
+    position:$fixed;
+    left:-2%;
+    top:-9%;
+    padding:14% 15%;
+    @media (max-width:768px){
+      padding:20%;
+    	top:-7%;
+    }
+  }
+  &:after {
+    content:'';
+    background:url(../../../../assets/img/wave_top_right.svg);
+    background-repeat:no-repeat;
+    background-size:100%;
+    position:$fixed;	
+    right: -8%;
+    top: -13%;
+    padding:14%;
+    @media (max-width:768px){
+      padding:22%;
+      right:-14%;
+      top:-15%;
+    }
+    @media (max-width:575px){     
+      top: -11%;
+    }
+  }
+}
+.pack_lft, .pack_rht {position:$fixed; bottom:2%;  max-width:28%; z-index:-1;}
+.pack_lft {left:2%;}
+.pack_rht {right:2%;}
+.front-title {
+  margin:0 0 35px; color:$white-color; text-align:$center;
+  h2 {margin:0; color:$white-color;
+    @media (max-width:768px){
+      margin:0 0 25px;
+    }
+  }
+}
+.box_title {
+  text-align:$center; margin:0 0 30px;
+  h3 {margin:0 0 10px;}
+  p {font-size:$f16;}
+}
+.form-box {
+  width:100%; 
+  background:$blue-light-color;
+  @include border-radius (10px); 
+  padding:30px 50px; 
+  margin:0 0 15px;
+  @media (max-width:1440px){ 
+    padding:25px 35px;
+  }
+  @media (max-width:575px){
+    padding:25px;
+  } 
+  h2 {margin-bottom:30px;}
+  label {font-size:$f16; text-align:$left; font-weight:$f-regular; color:$base-color; margin:0 0 7px;}
+  a {
+    &:hover{
+      color:$dark-skyblue-color;
+    }
+  }
+}
+.login_box {
+  max-width:550px; margin:30px auto; max-height: calc(100vh - 30px); 
+  @media (max-width:1440px){ 
+    max-width:500px;
+  }
+}
+.sign_btn {font-size:$f16; text-align:$center; font-weight:$f-bold; color:$base-color; display:$block; padding:15px 0 0;}
+
+.pwd_field {
+  width:30px; position:$absolute; top:12px; right:10px;
+  input[type="checkbox"] {position:$absolute; width:100%; height:100%; opacity:0; cursor:$pointer;}
+}
+// .pwd_icon{background:url(../../../../assets/img/icons/show_pwd_icon.svg)no-repeat; background-position:center; display:inline-block; width: 30px; height: 24px;}
+// .pwd_field input[type="checkbox"]:checked + .pwd_icon {
+// 	background:url(../../../../assets/img/icons/hide_pwd_icon.svg)no-repeat;
+// 	background-position:center;
+// } 

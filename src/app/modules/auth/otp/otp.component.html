@@ -1,0 +1,36 @@
+<div class="d-flex align-items-center front-forms">
+    <div class="pack_lft"><img src="../../../../assets/img/pack_lft.svg" alt="" class="img-fluid" /></div>
+    <div class="pack_rht"><img src="../../../../assets/img/pack_rht.svg" alt="" class="img-fluid" /></div>
+    <div class="container-fluid">
+        <div class="login_box">
+            <div class="front-title text-center">
+                <h2>Customs<br />
+                    Warehouse Inventory<br />
+                    Management System</h2>
+            </div>
+            <form class="form-box">
+                <div class="box_title">
+                    <h3 class="text-center">Enter OTP</h3>
+                    <p class="mb-md-5">Please enter code sent to your email</p>
+                </div>
+                <div class="d-flex">
+                    <ng-otp-input #ngOtpInput (onInputChange)="onOtpChange($event)" [config]="config"></ng-otp-input>
+                </div>
+
+                <div class="mt-2 cursorPointer">
+                    <a (click)="resendOtp()" class="font-weight-bold">Resend Code?</a>
+                </div>
+
+                <div class="row">
+                    <div class="col-12 mt-4">
+                        <button type="button" [ngClass]="{'disableButton': otp.length!=6}" (click)="verifyOtp()"
+                            class="w-100 btn btn-lg btn-primary text-capitalize">Submit</button>
+                    </div>
+                    <div class="col-12 cursorPointer">
+                        <a (click)="signIn()" class="sign_btn">Sign In</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

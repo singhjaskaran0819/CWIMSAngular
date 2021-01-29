@@ -1,0 +1,32 @@
+@import '../../../../../assets/css/base.scss';
+
+.wd_block {
+	.card {
+		@include box-shadow(0, 0px, 10px, rgba(0, 0, 0, 0.1));
+		@include border-radius (12px); margin:0 0 30px; border:0;
+	}
+	.card-header {
+		position:$relative; cursor:$pointer; border:0; background:$white-color; @include border-radius (12px); padding:20px;
+		&:after {
+			content:'';
+			background-image:url(../../../../../assets/img/icons/bread_arrow.svg);
+			background-repeat: no-repeat;
+			background-size:100%;
+			position:$absolute;
+			right:20px;
+			top: 24px;
+			width:8px;
+			height:18px;
+		}
+		h6 {margin:0;text-transform:$capitalize;}
+	}
+	.card-body {padding:0 20px;}
+	.form-control { background:$blue-light-color;}
+	label {font-size:$f12+2;}
+}
+.wd_block .card-header[aria-expanded="true"]::after {		
+	@include transform(rotate(-90deg));
+}
+.wd_block .card-header[aria-expanded="false"]::after {	
+	@include transform(rotate(90deg));	
+}

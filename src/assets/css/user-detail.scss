@@ -1,0 +1,70 @@
+@import '../../assets/css/base.scss';
+
+.pd_div {
+    background:$white-color; border-bottom:4px solid $primary-color; display:$block;
+    @include box-shadow(0, 0px, 10px, rgba(0, 0, 0, 0.1));    
+    @include border-radius (10px);
+}
+.profile_block {padding:25px; height:calc(100% - 30px); margin-bottom:30px;}
+.personal_detail {
+    height:calc(100% - 30px); margin-bottom:30px;
+    h6 {padding:15px 30px; border-bottom:1px solid $primary-color; margin:0; text-transform:$capitalize;}
+    label{font-size:$f12+2; display:$block; text-transform:$capitalize;}
+    span {font-weight:$f-bold;}
+    .form-group {
+        @media (min-width:1200px){
+            margin-bottom:10px;
+        }
+        span {padding:7px 0; display:$block;}
+    }
+    .row {
+        padding:25px;
+        @media (min-width:1200px){
+            padding-bottom: 15px;
+        }
+        @media (max-width:820px){
+            padding:15px;
+        }
+    }
+}
+ 
+.pic_outer {position:$relative; border:1px solid $primary-color; @include border-radius (50%); display: $inline-block; padding:5px; width:180px; height:180px;}
+.profile_pic {
+    display:$inline-block; position:$relative; width:100%; height:100%; overflow:$hidden; @include border-radius (50%);
+    >img {/*width:100%;*/ height:110%; position:$absolute; left:50%; transform:translate(-50%); -webkit-transform:translate(-50%);}
+}
+.short_info {
+    margin:10px 0;
+    h6 {font-size:$f16+2;}
+    span {font-size:$f12+2; display:$block; margin:0 0 5px;}
+}
+.other_details {
+    padding:20px; color:$grey-dark-color4; font-size:$f12+2; overflow-x:auto;
+    label {font-weight:$f-semibold; font-size:$f16+2; margin:0 0 10px; color:$black-color3;}
+}
+
+/** Change Password **/
+.sub_title {
+    h6 span {
+        font-size:$f12+2; font-weight:$f-regular; position:$relative;
+        @media (max-width:767px){
+            display:$block;
+        }
+        &:before {
+            content:'';
+            @include border-radius (4px);
+            background:$black-color;
+            display:$inline-block;
+            margin:1px 6px;
+            height:8px;
+            width:8px;
+        }
+    }
+}
+.pwd_block {
+    @include box-shadow(0, 0px, 10px, rgba(0, 0, 0, 0.1));
+    background:$white-color; padding:20px 20px 0;
+    border-bottom:4px solid $primary-color;
+    @include border-radius (10px);
+    label{font-size:$f12+2;}
+}
