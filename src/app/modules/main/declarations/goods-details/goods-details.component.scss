@@ -1,5 +1,5 @@
 @import '../../../../../assets/css/base.scss';
-
+@import '../../../main/sales/sales/sales.component.scss';
 .wd_block {
 	.card {
 		@include box-shadow(0, 0px, 10px, rgba(0, 0, 0, 0.1));
@@ -30,3 +30,4 @@
 .wd_block .card-header[aria-expanded="false"]::after {	
 	@include transform(rotate(90deg));	
 }
+

@@ -1,0 +1,8 @@
+@import '../../../../../assets/css/base.scss';
+.gd_title { 
+    color:$black-color;
+    margin-bottom: 0;
+    + .custom_table {
+        tr th { @include border-radius (0);}
+    }
+}

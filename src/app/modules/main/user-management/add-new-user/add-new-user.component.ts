@@ -10,6 +10,7 @@ import { AccessPermissionComponent } from '../access-permission/access-permissio
 import { ModalService } from 'src/app/core/services/modal.service';
 import { UserService } from 'src/app/core/services/user.service';
 
+// const countriesNames = require('countries-names');
 @Component({
   selector: 'app-add-new-user',
   templateUrl: './add-new-user.component.html',
@@ -22,9 +23,11 @@ export class AddNewUserComponent implements OnInit {
   signUpForm;
   submitted = false;
   roles;
-
+  // operatorPositions;
+  // officerPositions;
   roleCode;
-
+  // userPositions = [];
+  // positionCode;
   file;
   imageUrl;
   url;
@@ -40,6 +43,8 @@ export class AddNewUserComponent implements OnInit {
   countries;
   isLoggedIn;
   role;
+  hideWarehouse = true;
+  countryIso = CountryISO.Barbados;
   constructor(private router: Router, private formBuilder: FormBuilder, private authService: AuthService, private modalService: ModalService, private userService: UserService) { }
 
   ngOnInit(): void {
@@ -64,8 +69,8 @@ export class AddNewUserComponent implements OnInit {
       country: ['', [Validators.required, Validators.maxLength(25)]],
       // address: ['', [Validators.required, , Validators.maxLength(30)]],
       warehouseCode: [''],
-      email: ['', [Validators.required, Validators.pattern(REGEX.EMAIL), Validators.maxLength(70)]],
-      password: ['', [Validators.required, Validators.pattern(REGEX.PASSWORD), Validators.maxLength(15)]]
+      email: ['', [Validators.required, Validators.pattern(REGEX.EMAIL), Validators.maxLength(70)]]
+      // password: ['', [Validators.required, Validators.pattern(REGEX.PASSWORD), Validators.maxLength(15)]]
     });
   }
 
@@ -77,7 +82,7 @@ export class AddNewUserComponent implements OnInit {
 
   getUserDefinedRole() {
     this.userService.getOrCreateRole().subscribe((res) => {
-      this.roles = res.data;
+      this.roles = res.data.rows;
     })
   }
 
@@ -90,7 +95,24 @@ export class AddNewUserComponent implements OnInit {
   }
 
   selectRole(event) {
+    console.log(event.target.value)
+    // this.roleId = event.tartget.value;
     this.signUpForm.patchValue({ warehouseCode: '' })
+
+    this.hideWarehouse = true;
+    this.signUpForm.patchValue({ warehouseCode: '' })
+    if (this.signUpForm.value.role.toUpperCase() == "3" || this.signUpForm.value.role.toUpperCase() == "4") {
+      this.signUpForm.get('warehouseCode').setValidators([Validators.required]);
+      this.signUpForm.get('warehouseCode').updateValueAndValidity();
+      this.hideWarehouse = false;
+    }
+    if (this.signUpForm.value.role.toUpperCase() == "5" || this.signUpForm.value.role.toUpperCase() == "6") {
+      this.signUpForm.get('warehouseCode').clearValidators();
+      this.signUpForm.get('warehouseCode').updateValueAndValidity();
+      this.hideWarehouse = true;
+    }
+
+    this.roleCode = event.target.value;
 
   }
 
@@ -98,6 +120,7 @@ export class AddNewUserComponent implements OnInit {
   }
 
   countryChange(event) {
+    this.countryIso = event.iso2;
   }
 
   selectedCountry;
@@ -117,6 +140,7 @@ export class AddNewUserComponent implements OnInit {
   }
 
   async submit() {
+
     this.submitted = true;
     if (this.signUpForm.invalid) {
       return;
@@ -132,6 +156,7 @@ export class AddNewUserComponent implements OnInit {
       "lastName": this.signUpForm.value.lastName,
       "email": this.signUpForm.value.email,
       "phoneNumber": this.signUpForm.value.phone.internationalNumber,
+      "countryIso": this.countryIso,
       // "address": this.signUpForm.value.address,
       "street": this.signUpForm.value.street,
       "city": this.signUpForm.value.city,
@@ -139,7 +164,7 @@ export class AddNewUserComponent implements OnInit {
       "postalCode": this.signUpForm.value.zipCode,
       "warehouseCode": this.signUpForm.value.warehouseCode,
       // "profilePicture": this.url,
-      "password": this.signUpForm.value.password
+      // "password": this.signUpForm.value.password
     }
     if (data.warehouseCode == "") {
       delete data.warehouseCode;
@@ -150,12 +175,12 @@ export class AddNewUserComponent implements OnInit {
     })
   }
 
-  togglePassword() {
-    if (this.passwordType == 'text') {
-      this.passwordType = 'password';
-    } else if (this.passwordType == 'password') {
-      this.passwordType = 'text';
-    }
-  }
+  // togglePassword() {
+  //   if (this.passwordType == 'text') {
+  //     this.passwordType = 'password';
+  //   } else if (this.passwordType == 'password') {
+  //     this.passwordType = 'text';
+  //   }
+  // }
 
 }

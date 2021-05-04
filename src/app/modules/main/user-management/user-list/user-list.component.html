@@ -3,12 +3,11 @@
         <div class="d-flex justify-content-between align-items-center flex-md-row flex-column-reverse">
             <ol class="list-unstyled d-flex align-items-center breadcrumb">
                 <li class="breadcrumb-item">
-                    <h3 class="page-title text-capitalize">List of User</h3>
+                    <h3 class="page-title text-capitalize">List of Users</h3>
                 </li>
             </ol>
 
             <div class="d-flex justify-content-end top_btns">
-
                 <button class="btn btn-md btn-primary" *ngIf="checkPermission('create-new-user')"
                     (click)="addUser()">New User</button>
 
@@ -25,7 +24,8 @@
                                     <div class="in_group">
                                         <select class="form-control" (change)="selectFilterValues('city', $event)">
                                             <option value=""></option>
-                                            <option *ngFor="let city of filters?.cityData"> {{city | titlecase}}
+                                            <option *ngFor="let city of filters?.cityData" value={{city}}> {{city |
+                                                titlecase}}
                                             </option>
                                         </select>
                                     </div>
@@ -35,7 +35,8 @@
                                     <div class="in_group">
                                         <select class="form-control" (change)="selectFilterValues('country', $event)">
                                             <option value=""></option>
-                                            <option *ngFor="let country of filters?.countryData"> {{country |
+                                            <option *ngFor="let country of filters?.countryData" value={{country}}>
+                                                {{country |
                                                 titlecase}} </option>
                                         </select>
                                     </div>
@@ -47,6 +48,20 @@
                                             <option value=""></option>
                                             <option *ngFor="let role of filters?.roleData" value={{role.role}}>
                                                 {{role.roleName | titlecase}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center filter_items">
+                                    <label> Status </label>
+                                    <div class="in_group">
+                                        <!-- [(ngModel)]="searchFilter?.status" [ngModelOptions]="{standalone: true}" -->
+                                        <select class="form-control" name="select-filters"
+                                            (change)="selectFilterValues('status', $event)">
+                                            <option value=""></option>
+                                            <option *ngFor="let status of filters?.statusData"
+                                                value={{status.statusCode}}>
+                                                {{status.status | titlecase}}
                                             </option>
                                         </select>
                                     </div>
@@ -71,9 +86,23 @@
             <table class="table custom_table">
                 <thead>
                     <tr>
-                        <th>Full Name</th>
-                        <th>Phone Number</th>
-                        <th>Role</th>
+                        <th>Full Name <div class="sorting"><i (click)="sorting('firstName', 1)"
+                                    [class]="active_class === 'firstName1' ? 'active' : ''"><img
+                                        src="/assets/img/icons/arw_up.png" alt="sort" /></i>
+                                <i (click)="sorting('firstName', -1)"
+                                    [class]="active_class === 'firstName-1' ? 'active' : ''"><img
+                                        src="/assets/img/icons/arw_down.png" alt="sort" /></i>
+                            </div>
+                        </th>
+                        <th>Phone Number <div class="sorting"><i (click)="sorting('phoneNumber', 1)"
+                                    [class]="active_class === 'phoneNumber1' ? 'active' : ''"><img
+                                        src="/assets/img/icons/arw_up.png" alt="sort" /></i>
+                                <i (click)="sorting('phoneNumber', -1)"
+                                    [class]="active_class === 'phoneNumber-1' ? 'active' : ''"><img
+                                        src="/assets/img/icons/arw_down.png" alt="sort" /></i>
+                            </div>
+                        </th>
+                        <th>Role </th>
                         <th>Status</th>
                         <th>Action</th>
                     </tr>
@@ -81,48 +110,93 @@
                 <tbody>
                     <ng-container *ngIf="userList?.length> 0; else no_data">
                         <tr *ngFor="let user of userList; let i = index;">
-                            <td><a> {{ user?.firstName | titlecase }} {{ user?.lastName | titlecase }}</a></td>
+                            <td (click)="openDetail(user?.id)"><a> {{ user?.firstName | titlecase }} {{ user?.lastName |
+                                    titlecase }}</a></td>
                             <td>{{ user?.phoneNumber }}</td>
                             <td>{{ user?.userrole?.title | titlecase }}</td>
                             <td>
-                                <div class="action_btn" id="Div1"
-                                    *ngIf="user?.status =='0'  && checkPermission('approve-reject-user') ">
-                                    <a class="mr-2" (click)="approveUser(user)"><i><img
-                                                src="../assets/img/icons/accept_icon.svg" alt="" /></i></a>
-                                    <a (click)="rejectUser(user)"><i><img src="../assets/img/icons/reject_icon.svg"
-                                                alt="" /></i></a>
-                                </div>
-                                <button id="reject" class="badge badge-danger status_badge pointerEventsNone"
-                                    *ngIf="user?.isSuspended"> Suspended </button>
-                                <button id="accept" class="badge badge-success status_badge pointerEventsNone"
-                                    *ngIf="user?.status =='1' && user?.isSuspended== false"> Approved </button>
-                                <button id="reject" class="badge badge-danger status_badge pointerEventsNone"
-                                    *ngIf="user?.status =='2 '&& user?.isSuspended== false"> Rejected </button>
+                                <button *ngIf="!user?.isSuspended && !user?.isDeleted"
+                                    class="badge status_badge pointerEventsNone"
+                                    [ngClass]="(user?.status =='1'?'badge-success':(user?.status =='2'? 'badge-danger':(user?.status =='0'?'badge-warning': '')))">
+                                    {{user?.status
+                                    | approvalStatus | titlecase}} </button>
+                                <button *ngIf="user?.isSuspended && !user?.isDeleted"
+                                    class="badge badge-warning status_badge pointerEventsNone"> Suspended </button>
+                                <button *ngIf="user?.isDeleted && !user?.isSuspended"
+                                    class="badge badge-dark status_badge pointerEventsNone">
+                                    Deleted </button>
                             </td>
                             <td>
                                 <div class="dropdown dots_btn" id="Div1">
                                     <button class="btn-transparent p-0 dropdown-toggle" type="button"
                                         id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                                        aria-expanded="false">
+                                        aria-expanded="false" (click)="openMenu(i)">
                                         <img src="../assets/img/icons/dots_icons.svg" alt="" />
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" href="javascript:void(0)"
-                                            (click)="openDetail(user?.id)"><i class="mr-1"><img
+                                        <a class="dropdown-item" (click)="openDetail(user?.id)"><i class="mr-1"><img
                                                     src="../assets/img/icons/view_icon.svg" alt="" /></i>
                                             View</a>
-                                        <a class="dropdown-item" href="javascript:void(0)"
-                                            (click)="deleteUser(user?.id)" *ngIf="checkPermission('delete-user')"><i
+                                        <a class="dropdown-item" (click)="deleteUser(user?.id)"
+                                            *ngIf="!user.isDeleted && (user?.status =='2' || user?.status =='0') && checkPermission('delete-user') && !user.isSuspended  && !user.isAccountVerified "><i
                                                 class="mr-1"><img src="../assets/img/icons/delete_icon.svg"
                                                     alt="" /></i>
                                             Delete</a>
-                                        <a class="dropdown-item" href="javascript:void(0)"
+
+                                        <div class="multi-dropdown position-relative" id="multiDrop"
+                                            *ngIf="!user.isDeleted && user.isAccountVerified">
+                                            <a (click)="openUpdateMenu(i)" class="dropdown-item "
+                                                id="dropdownMenuButton1">
+                                                <i class="mr-1"><img src="../assets/img/icons/update_icon1.svg"
+                                                        alt="" /></i>
+                                                Update
+                                            </a>
+                                            <ul class="submenu dropdown-menu" id="drop{{i}}" style="display:none;">
+
+                                                <li
+                                                    *ngIf="!user?.isSuspended && checkPermission('approve-reject-user') && user.status !='1' && user.status =='0' ">
+                                                    <a class="dropdown-item" (click)="approveUser(user)"><i
+                                                            class="mr-1"><img src="../assets/img/icons/accept_icon.svg"
+                                                                alt="" /></i> Approve</a>
+                                                </li>
+                                                <li
+                                                    *ngIf=" checkPermission('approve-reject-user') && user.status !='2' && user?.status =='0'">
+                                                    <a class="dropdown-item" (click)="rejectUser(user)">
+                                                        <i class="mr-1"><img src="../assets/img/icons/reject_icon.svg"
+                                                                alt="" /></i>
+                                                        Reject</a>
+                                                </li>
+                                                <li *ngIf="!user?.isSuspended && user.status !='2'"><a
+                                                        class="dropdown-item"
+                                                        (click)="reassignPermissions(user?.id, user?.userrole?.title, user?.userrole?.id, user?.userrole?.type)">
+                                                        <i class="mr-1"><img src="../assets/img/icons/edit_icon.svg"
+                                                                alt="" /></i> Re-assign Role</a>
+                                                </li>
+                                                <li>
+                                                    <!-- && checkPermission('suspend-user')" -->
+                                                    <a *ngIf="!user?.isSuspended && user?.status !='2' "
+                                                        class=" dropdown-item"
+                                                        (click)="suspendUser(user?.id , user?.isSuspended )">
+                                                        <i class="mr-1"><img src="../assets/img/icons/blocked_icon.svg"
+                                                                alt="" /></i>
+                                                        Suspend</a>
+
+                                                    <!-- && checkPermission('suspend-user') -->
+                                                    <a *ngIf="user?.isSuspended && user?.status !='2'"
+                                                        class="dropdown-item"
+                                                        (click)="suspendUser(user?.id, user?.isSuspended  )">
+                                                        <i class="mr-1"><img src="../assets/img/icons/blocked_icon.svg"
+                                                                alt="" /></i>
+                                                        Unsuspend</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                        <!-- <a class="dropdown-item" href="javascript:void(0)"
                                             (click)="reassignPermissions(user?.id, user?.userrole?.title, user?.userrole?.id )"
-                                            *ngIf="user?.userrole?.nature ==1 && checkPermission('reassign-role')"><i
-                                                class="mr-1"><img src="../assets/img/icons/edit_icon.svg" alt="" /></i>
+                                            *ngIf="checkPermission('reassign-role')"><i class="mr-1"><img
+                                                    src="../assets/img/icons/edit_icon.svg" alt="" /></i>
                                             Reassign role</a>
-                                        <!-- <a class="dropdown-item" (click)="editPermissions()"><i class="mr-1"><img
-                                                    src="../assets/img/icons/edit_icon.svg" alt="" /></i> Edit</a> -->
                                         <a *ngIf="!user?.isSuspended && checkPermission('suspend-user')"
                                             class="dropdown-item"
                                             (click)="suspendUser(user?.id , user?.isSuspended )"><i class="mr-1"><img
@@ -132,7 +206,7 @@
                                             class="dropdown-item"
                                             (click)="suspendUser(user?.id, user?.isSuspended  )"><i class="mr-1"><img
                                                     src="../assets/img/icons/blocked_icon.svg" alt="" /></i>
-                                            Unsuspend</a>
+                                            Unsuspend</a> -->
                                     </div>
                                 </div>
                             </td>

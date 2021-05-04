@@ -18,26 +18,21 @@ export class loggedInGuard implements CanActivate {
     }
 }
 
-// @Injectable()
-// export class verifySessionGuard implements CanActivate {
+@Injectable()
+export class otpGuard implements CanActivate {
 
-//     constructor(private mainService: MainServiceService, private router: Router) { }
-//     canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
+    constructor(private router: Router) { }
+    canActivate() {
+        console.log(sessionStorage.getItem("email"))
+        if (sessionStorage.getItem("email")) {
+            return true;
+        } else {
+            sessionStorage.clear();
+            this.router.navigateByUrl('/auth')
+        }
+    }
+}
 
-//         return this.mainService.verifySession(state.root.queryParams.token).pipe(map((response: any) => {
-//             if (response.statusCode == 200) {
-//                 return true;
-//             }
-//             window.location.href = "https://sandbox.dev.clover.com"
-//             return false;
-
-//         }), catchError(err => {
-//             window.location.href = "https://sandbox.dev.clover.com"
-//             return ObservableOf(false);
-//         })
-//         );
-//     }
-// }
 
 
 

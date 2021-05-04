@@ -54,6 +54,13 @@ export class WarehouseLocationsComponent implements OnInit {
     skip: 0
   }
 
+  default_sorting = {
+    sortKey: 'createdAt',
+    sortDirection: 1
+  }
+  active_class = "createdAt1";
+  showWarehouseLocations = false;
+
   constructor(
     private mainService: MainService
   ) { }
@@ -76,6 +83,24 @@ export class WarehouseLocationsComponent implements OnInit {
       this.getWarehouseList(this.default_pagination);
       this.getFilters({});
     }
+
+    /**ToggleClass */
+
+    // $(".accordin_row").click(function () {
+    //   $(this).toggleClass('nnn');
+    // });
+  }
+
+  sorting(sortKey, sortDirection) {
+    this.active_class = `${sortKey}${sortDirection}`;
+    this.default_sorting = {
+      sortKey,
+      sortDirection
+    }
+
+    var query;
+    query = { ...this.default_pagination, ...this.default_sorting }
+    this.getWarehouseList(query)
   }
 
   // Get warehouse list 
@@ -174,8 +199,11 @@ export class WarehouseLocationsComponent implements OnInit {
     this.getWarehouseList(this.default_pagination);
   }
 
+  selectedIndex;
   // Show detail
-  showDetail(code) {
+  showDetail(code, index) {
+    this.selectedIndex = index;
+    this.showWarehouseLocations = false;
     if (this.location_city !== "" || this.location_country !== "" || this.location_postalCode !== "") {
       this.selectedWarehouseId = this.filterQuery.warehouseCode;
       return true;
@@ -188,8 +216,10 @@ export class WarehouseLocationsComponent implements OnInit {
     this.warehouseLocationCount = 0;
     this.warehouseLocations = [];
     if (this.searchFilterQuery.locationCode) {
+
       this.getWarehouseLocation(null, this.searchFilterQuery.locationCode, null);
     } else {
+
       this.getWarehouseLocation(this.selectedWarehouseId, null, this.inf_scroll_pagination);
     }
   }
@@ -208,6 +238,7 @@ export class WarehouseLocationsComponent implements OnInit {
       }
       this.mainService.getWarehouseLocations(obj).subscribe(res => {
         this.warehouseLocationCount = this.warehouseLocations.length;
+        this.showWarehouseLocations = true;
         if (this.warehouseLocationCount < res.data.count) {
           this.warehouseLocations = [...this.warehouseLocations, ...res.data.rows];
           this.warehouseLocationCount = this.warehouseLocationCount + res.data.rows.length;

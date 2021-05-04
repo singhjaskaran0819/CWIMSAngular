@@ -32,12 +32,42 @@ export class SwalService {
     })
   }
 
+  async approveRackedItemsSwal(text, title) {
+    return await Swal.fire({
+      icon: 'warning',
+      title,
+      text,
+      showCancelButton: true,
+      reverseButtons: true,
+      confirmButtonColor: '#2aa6f0',
+      cancelButtonColor: '#fff',
+      confirmButtonText: 'Confirm',
+      cancelButtonText: 'Cancel',
+      // timer: 3000
+    })
+  }
+
+  async approveRejectVarianceReportSwal(text, title) {
+    return await Swal.fire({
+      icon: 'warning',
+      title,
+      text,
+      showCancelButton: true,
+      reverseButtons: true,
+      confirmButtonColor: '#2aa6f0',
+      cancelButtonColor: '#fff',
+      confirmButtonText: 'Approve',
+      cancelButtonText: 'Cancel',
+      // timer: 3000
+    })
+  }
+
   async warningSwal(title, text) {
     return await Swal.fire({
       title,
       text,
       icon: 'warning',
-      timer: 3000,
+      // timer: 3000,
       showCancelButton: true,
       reverseButtons: true,
       confirmButtonColor: '#2aa6f0',

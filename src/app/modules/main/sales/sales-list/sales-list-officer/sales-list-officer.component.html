@@ -1,2 +1,183 @@
-<br>
-<h2>Coming Soon</h2>
+<!-- ######################   officer   ##################### -->
+
+<div class="page-wrapper">
+
+  <div class="page-breadcrumb">
+    <div class="d-flex justify-content-between align-items-center flex-md-row flex-column-reverse">
+
+      <h3 class="page-title">List Of Sale</h3>
+
+      <div class="d-flex justify-content-end top_btns">
+        <!-- data-toggle="modal" data-target="#CreateDeclaration" -->
+        <button class="btn btn-md btn-primary" (click)="openInitiateDeclaration()">Initiate
+          Declaration</button>
+
+        <!-- Start Search Filter -->
+        <div class="search_filter_btn">
+          <button class="btn btn-sm btn-primary" (click)="filterSales()"><i><img
+                src="../assets/img/icons/filter_icon.svg" alt="" /></i></button>
+          <div class="search_filter" id="search_filter" style="display:none;">
+            <h6 class="f_title">Filters</h6>
+            <!-- Warecode Filter -->
+            <div class="warecode_filter">
+              <div class="d-flex align-items-center filter_items">
+                <label>Warehouse Code</label>
+                <div class="in_group">
+                  <select class="form-control">
+                    <option></option>
+                  </select>
+                </div>
+              </div>
+              <div class="filter_search">
+                <input type="search" placeholder="Search" class="form-control" />
+              </div>
+              <div class="wear_list">
+                <div class="wearlist_items check-box">
+                  <input type="checkbox" />
+                  <span class="check-mark"><span>Equals</span></span>
+                </div>
+                <!-- <div class="wearlist_items check-box">
+                  <input type="checkbox" />
+                  <span class="check-mark"><span>Not Equal</span></span>
+                </div>
+                <div class="wearlist_items check-box">
+                  <input type="checkbox" />
+                  <span class="check-mark"><span>Contains Substring</span></span>
+                </div>
+                <div class="wearlist_items check-box">
+                  <input type="checkbox" />
+                  <span class="check-mark"><span>Start With</span></span>
+                </div>
+                <div class="wearlist_items check-box">
+                  <input type="checkbox" />
+                  <span class="check-mark"><span>Ends With</span></span>
+                </div>
+                <div class="wearlist_items check-box">
+                  <input type="checkbox" />
+                  <span class="check-mark"><span>Empty</span></span>
+                </div>
+                <div class="wearlist_items check-box">
+                  <input type="checkbox" />
+                  <span class="check-mark"><span>Non Empty</span></span>
+                </div> -->
+              </div>
+            </div>
+
+            <div class="filter_block">
+              <div class="filter_list">
+                <div class="d-flex align-items-center filter_items">
+                  <label>Company</label>
+                  <div class="in_group">
+                    <select class="form-control">
+                      <option>Company</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center filter_items">
+                  <label>Company Name</label>
+                  <div class="in_group">
+                    <select class="form-control">
+                      <option></option>
+                    </select>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center filter_items">
+                  <label>Telephone</label>
+                  <div class="in_group">
+                    <select class="form-control">
+                      <option></option>
+                    </select>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center filter_items">
+                  <label>Address</label>
+                  <div class="in_group">
+                    <select class="form-control">
+                      <option></option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="d-flex justify-content-center btn-control">
+              <button class="btn btn-md btn-outline-primary" (click)="filterClose()">Cancel</button>
+              <button class="btn btn-md btn-primary" (click)="ApplySearch()">Apply Search</button>
+            </div>
+          </div>
+          <!-- End Search Filter -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Breadcrumb -->
+
+  <div class="table-responsive">
+    <table class="table custom_table">
+      <thead>
+        <tr>
+          <th>Receipt Number</th>
+          <th>Company Name</th>
+          <th>Sale Type</th>
+          <th>Sale Currency</th>
+          <th class="text-right">Departure Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr (click)="goToDetails()" class="cursorPointer">
+          <td>4511515DD</td>
+          <td>Company1</td>
+          <td>Duty Free</td>
+          <td>USD</td>
+          <td class="text-right">12-Aug-2020</td>
+        </tr>
+        <!-- <tr>
+          <td>3511515DD</td>
+          <td>Company2</td>
+          <td>Warehouse Transfer</td>
+          <td>EUR</td>
+          <td class="text-right">12-Aug-2020</td>
+        </tr>
+        <tr>
+          <td>1511514DD</td>
+          <td>Company3</td>
+          <td>Duty Free</td>
+          <td>GBD</td>
+          <td class="text-right">12-Aug-2020</td>
+        </tr>
+        <tr>
+          <td>5411515DD</td>
+          <td>Company4</td>
+          <td>Diplomat</td>
+          <td>USD</td>
+          <td class="text-right">12-Aug-2020</td>
+        </tr>
+        <tr>
+          <td>9511114DD</td>
+          <td>Company5</td>
+          <td>Duty Free</td>
+          <td>GBD</td>
+          <td class="text-right">12-Aug-2020</td>
+        </tr> -->
+      </tbody>
+    </table>
+  </div>
+  <!-- End Table Listing -->
+</div>
+
+
+<!--Pagination start-->
+<div
+  class="d-flex align-items-center flex-md-row flex-column justify-content-md-between justify-content-center flex-wrap pagination_block">
+  <div class="d-flex align-items-center row_count">
+    <span class="mb-0 ">No. of Rows</span>
+    <select (change)="onLimitChange($event)" [(ngModel)]="selected_limit" name="selectRows">
+      <option value="10" selected>10</option>
+      <option value="20">20</option>
+      <option value="30">30</option>
+    </select>
+  </div>
+  <app-pagination [page]="page" (pageChangeEvent)="pageChanged($event)" [collectionSize]="totalRecords"
+    [pageSize]="selected_limit" #appPagination>
+  </app-pagination>
+</div>
+<!--End-->

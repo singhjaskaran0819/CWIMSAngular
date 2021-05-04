@@ -1,0 +1,88 @@
+<!-- Rack Modal -->
+<!-- <div class="modal fade" id="rack" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document"> -->
+<div class="modal-content">
+  <!-- <form rel="" action=""> -->
+  <div class="modal_div">
+    <form [formGroup]="form">
+      <div class="card-body" id="tableToModify">
+        <div class="header-title text-center">
+          <h5>Edit Stock Take</h5>
+        </div>
+        <div class="form-row">
+          <div class="col-12">
+            <label> Warehouse </label>
+            <div class="form-group">
+              <input type="text" class="form-control" formControlName="warehouseCode" disabled />
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col-12">
+            <label> Location </label>
+            <div class="form-group">
+              <input type="text" class="form-control" formControlName="locationCode" disabled />
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col-12">
+            <label> Product Id </label>
+            <div class="form-group">
+              <input type="text" class="form-control" formControlName="productCode" disabled />
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col-12">
+            <label>Sub Location</label>
+            <div class="form-group">
+              <input type="text" class="form-control" formControlName="subLocation" />
+              <!-- <div class="input-errors"
+                  *ngIf="(submitted || controls.quantity?.touched) && controls.quantity?.errors?.required && !quantityGreater">
+                  Please enter quantity.</div> -->
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col-12">
+            <label> Description </label>
+            <div class="form-group">
+              <input type="text" class="form-control" formControlName="description" />
+              <div class="input-errors"
+                *ngIf="(submitted || controls.description?.touched) && controls.description?.errors?.required">
+                Please enter custom value.</div>
+            </div>
+          </div>
+        </div>
+        <div class="form-row disabled">
+          <div class="col-12">
+            <label> Stock Take Quantity </label>
+            <div class="form-group">
+              <input type="number" class="form-control" formControlName="stockTakeQuantity" />
+              <div class="input-errors"
+                *ngIf="(submitted || controls.stockTakeQuantity?.touched) && controls.stockTakeQuantity?.errors?.required">
+                Please enter stock take quantity.</div>
+              <div class="input-errors"
+                *ngIf="(submitted && !controls.stockTakeQuantity.errors?.required) && form.controls.stockTakeQuantity.errors?.pattern">
+                Stock Take Quantity must be greater than zero.
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- </div> -->
+        <div class="modal-footer">
+          <div class="btn_group text-center">
+            <button class="btn btn-md btn-outline-primary" (click)="cancel()">Cancel</button>
+            <button class="btn btn-md btn-primary" (click)="editStockTake()">Edit</button>
+            <!-- [ngClass]="enableApply? 'disableButton' : ''" -->
+
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<!-- </div>
+    </div> -->
+<!-- End Modal -->

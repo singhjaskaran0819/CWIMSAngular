@@ -11,11 +11,19 @@ import { RejectUserComponent } from '../reject-user/reject-user.component';
 export class ApproveUserComponent implements OnInit {
 
   userDetails;
+  role;
+  roles
   constructor(private modalService: ModalService,
     private userService: UserService) { }
 
   ngOnInit(): void {
 
+  }
+
+  getUserDefinedRole() {
+    this.userService.getOrCreateRole().subscribe((res) => {
+      this.roles = res.data.rows;
+    })
   }
 
   approveRejectUser(status) {

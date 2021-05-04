@@ -53,8 +53,8 @@ export class HttpRequestInterceptor implements HttpInterceptor {
                 // LoaderService.hideLoader();
                 this.spinner.HideSpinner();
                 if (err) {
-                    const status = err.error.statusCode;
-                    const message = err.error.msg;
+                    const status = err?.error?.statusCode;
+                    const message = err?.error?.msg;
                     if (status === 401) {
                         this.toastrService.showError(message);
                         sessionStorage.clear();

@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpService } from './http.service';
 import { APIS } from '../../common/constants';
 import { BehaviorSubject } from 'rxjs';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -32,6 +31,11 @@ export class UserService {
     }
   }
 
+  fetchUserDetail(userId?) {
+    if (userId) {
+      return this.http.getData(`${APIS.USER.FETCH_USER_DETAILS}?userId=${userId}`)
+    }
+  }
 
   //update user profile
   updateUser(data) {
@@ -41,7 +45,6 @@ export class UserService {
   //delete user
   deleteUser(data) {
     return this.http.deleteData(APIS.USER.UPDATE_USER, data);
-
   }
 
   // update password
@@ -87,6 +90,10 @@ export class UserService {
     }
   }
 
+  getRolesBasedOnType(roleType) {
+    return this.http.getData(`${APIS.ROLE.ROLE}`, roleType)
+  }
+
   updateRole(data?) {
     return this.http.putData(`${APIS.ROLE.ROLE}`, data)
 
@@ -99,4 +106,16 @@ export class UserService {
   getPermissionsByRole(data) {
     return this.http.getData(APIS.USER.GET_PERMISSIONS_BY_ROLE, data);
   }
+
+  getLogs(data?) {
+    return this.http.getData(APIS.LOGS.GET_LOGS, data);
+  }
+
+  getErrorLogs(data?) {
+    return this.http.getData(APIS.LOGS.FETCH_ERROR_LOGS, data);
+  }
+
+  getLogsFilter(data?){
+    return this.http.getData(APIS.LOGS.FILTERS, data);
+ }
 }

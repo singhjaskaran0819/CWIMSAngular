@@ -1,2 +1,37 @@
-<br>
-<h2>Coming Soon</h2>
+<!-- Reply Modal -->
+<!-- <div class="modal fade" id="ReplyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document"> -->
+<div class="modal-content">
+  <div class="modal_div">
+    <form [formGroup]="replyForm">
+      <div class="card-body">
+        <div class="header-title text-center">
+          <h5>Reply</h5>
+          <p class="text-left">{{messageData?.reason}}</p>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <label class="mb-3 font-weight-bold"><i class="mr-1"><img src="../assets/img/icons/reply_icon.svg"
+                  alt="" /></i> {{messageData?.createdAt | date}}</label>
+            <div class="form-group">
+              <textarea class="form-control" placeholder="Write reason here ….." rows="3"
+                formControlName="reply"></textarea>
+              <div class="input-errors" *ngIf="submitted && controls?.reply?.errors?.required"> Please enter
+                the reply. </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="btn_group text-center">
+          <button class="btn btn-md btn-outline-primary" (click)="cancelReply()">Cancel</button>
+          <button class="btn btn-md btn-primary" (click)="sendReply()">Send</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<!-- </div>
+</div> -->
+<!-- End Reply Modal -->

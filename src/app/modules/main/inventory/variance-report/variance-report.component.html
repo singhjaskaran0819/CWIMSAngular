@@ -1,2 +1,270 @@
-<br>
-<h2>Coming Soon</h2>
+<div class="page-wrapper">
+
+  <div class="page-breadcrumb">
+    <div class="d-flex justify-content-between align-items-center flex-md-row flex-column-reverse">
+
+      <h3 class="page-title">Variance Report</h3>
+
+      <!-- <div class="page-breadcrumb">
+    <div class="d-flex justify-content-between align-items-center flex-md-row flex-column-reverse">
+      <div class="row align-items-center">
+        <div class="col-md-12 align-self-center">
+          <ol class="list-unstyled d-flex align-items-center breadcrumb">
+            <li class="breadcrumb-item">
+              <h3 class="page-title cursorPointer"><a (click)="goToInventory()">Inventory</a></h3>
+            </li>
+            <li class="breadcrumb-item active">Variance Report</li>
+          </ol>
+        </div>
+      </div> -->
+
+      <!-- [ngClass]="reports.length>0? '': 'disableButton'" (click)="export()" -->
+
+      <div class="d-flex justify-content-end top_btns">
+        <!-- *ngIf="checkPermission('download')" -->
+        <a class="btn btn-md btn-primary" *ngIf="checkPermission('download')"
+          [ngClass]="reports.length>0? '': 'disableButton'" (click)="export()" target="_self" [attr.href]="csvLink"
+          [attr.download]="csvLink"> Download Report </a>
+
+        <div class="dropdown dots_btn mr-3">
+
+          <button [ngClass]="checkedList.length>0? '': 'disableButton'" *ngIf="checkPermission('approve-reject')"
+            class="btn btn-md btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Actions
+          </button>
+          <!-- *ngIf="checkPermission('update')" [ngClass]="checkedList.length>0? '': 'disableButton'"  *ngIf="roleCode== '4'" -->
+          <!--   (click)="approveRejectReport()"-->
+          <div class="dropdown-menu custome_drop" aria-labelledby="dropdownMenuButton">
+            <button class="btn btn-md btn-primary" (click)="approveReport()">
+              Approve </button>
+            <button class="btn btn-md btn-secondary" (click)="rejectReport()">
+              Reject </button>
+          </div>
+          <!-- <button *ngIf="checkPermission('update')" class="btn btn-md btn-primary"
+            [ngClass]="reports.length>0? '': 'disableButton'" (click)="export()"> Download Report </button> -->
+
+          <!-- <button *ngIf="checkPermission('update')" class="btn btn-md btn-primary"
+            [ngClass]="checkedList.length>0? '': 'disableButton'" (click)="updateSubmit()"> Update
+            Selected</button> -->
+        </div>
+
+        <div class="dropdown dots_btn" id="Div1">
+
+          <button *ngIf="checkPermission('update')"
+            [ngClass]="checkedList.length>0 && isSameStocktakeSerial ? '': 'disableButton'"
+            class="btn btn-md btn-primary" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false"> Update Selected</button>
+
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <a class="dropdown-item" (click)="updateSubmit('2')"><i class="mr-1"><img
+                  src="../assets/img/icons/add_icon.svg" alt="" /></i> Add
+              to existing
+            </a>
+            <a class="dropdown-item" (click)="updateSubmit('3')"><i class="mr-1"><img
+                  src="../assets/img/icons/update_icon1.svg" alt="" /></i>
+              Update previous value </a>
+            <a class="dropdown-item" (click)="updateSubmit('4')"><i class="mr-1"><img
+                  src="../assets/img/icons/cancel.svg" alt="" /></i>
+              Cancel </a>
+          </div>
+        </div>
+        <!-- </div> -->
+
+
+        <div class="search_filter_btn">
+          <button class="btn btn-sm btn-primary" (click)="filter()"><i><img src="../assets/img/icons/filter_icon.svg"
+                alt="" /></i></button>
+          <div class="search_filter" id="search_filter" style="display:none;">
+            <h6 class="f_title">Filters</h6>
+            <button class="btn btn-md btn-outline-primary float-right" style="right: 10px;position: absolute;height: 40px;top: 10px;padding-top: 8px;" (click)="clearFilters()">Clear</button>
+            <!-- Warecode Filter -->
+            <!-- <div class="warecode_filter">
+                <div class="filter_search">
+                    <input type="search" placeholder="Search" class="form-control" />
+                </div>
+            </div> -->
+            <div class="filter_block">
+              <div class="filter_list">
+                <div class="d-flex align-items-center filter_items">
+                  <label>Location</label>
+                  <div class="in_group">
+                    <select class="form-control" [(ngModel)]="searchFilter.locationCode" (change)="addSearchFilterKey('locationCode',$event)">
+                      <option value="">Select Location</option>
+                      <option *ngFor="let location of filterData?.locationData" [value]="location">{{location}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center filter_items">
+                  <label>Status</label>
+                  <div class="in_group">
+                    <select class="form-control" [(ngModel)]="searchFilter.status" (change)="addSearchFilterKey('status',$event)">
+                      <option value="">Select Status</option>
+                      <option *ngFor="let item of filterData?.statusData" [value]="item?.statusCode">{{ item?.status }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center filter_items">
+                  <label>Difference </label>
+                  <div class="in_group">
+                    <select class="form-control" [(ngModel)]="searchFilter.difference" (change)="addSearchFilterKey('difference',$event)">
+                      <option value="">Select Difference</option>
+                      <option [value]="1"> Greater than 0 </option>
+                      <option [value]="0"> Equals to 0 </option>
+                    </select>
+                  </div>
+                </div>
+                <!--    <div class="d-flex align-items-center filter_items">
+                <label>Serial</label>
+                <div class="in_group">
+                  <select class="form-control" (change)="addSearchFilterKey('serial',$event)">
+                    <option value="">Select Serial</option>
+                    <option *ngFor="let item of dataForFilter?.serialData" [value]="item">
+                      {{item}}
+                    </option>
+                  </select>
+                </div>
+              </div> -->
+              </div>
+            </div>
+            <div class="d-flex justify-content-center btn-control">
+              <button class="btn btn-md btn-outline-primary" (click)="filter()">Cancel</button>
+              <button class="btn btn-md btn-primary" (click)="applySearch()">Apply Search</button>
+            </div>
+          </div>
+        </div>
+        <!-- End Search Filter -->
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Breadcrumb -->
+
+<div class="table-responsive">
+  <table class="table custom_table">
+    <thead>
+      <tr>
+        <th colspan="0" *ngIf="checkPermission('update') || checkPermission('approve-reject')">
+          <!-- <div class="check-box"> -->
+          <!-- (change)="allSelected($event)"  -->
+          <!-- <input type="checkbox" [(ngModel)]="masterSelected" (change)="checkUncheckAll()" />
+            <span class="check-mark"></span>
+          </div> -->
+        </th>
+        <th>Product ID <div class="sorting"><i (click)="sorting('productID', 1)"
+              [class]="active_class === 'productID1' ? 'active' : ''"><img src="/assets/img/icons/arw_up.png"
+                alt="sort" /></i>
+            <i (click)="sorting('productID', -1)" [class]="active_class === 'productID-1' ? 'active' : ''"><img
+                src="/assets/img/icons/arw_down.png" alt="sort" /></i>
+          </div>
+        </th>
+        <th>Stocktake Serial <div class="sorting"><i (click)="sorting('stocktakeSerial', 1)"
+              [class]="active_class === 'stocktakeSerial1' ? 'active' : ''"><img src="/assets/img/icons/arw_up.png"
+                alt="sort" /></i>
+            <i (click)="sorting('stocktakeSerial', -1)"
+              [class]="active_class === 'stocktakeSerial-1' ? 'active' : ''"><img src="/assets/img/icons/arw_down.png"
+                alt="sort" /></i>
+          </div>
+        </th>
+        <th>Locations <div class="sorting"> <i (click)="sorting('locationCode', 1)"
+              [class]="active_class === 'locationCode1' ? 'active' : ''"><img src="/assets/img/icons/arw_up.png"
+                alt="sort" /></i>
+            <i (click)="sorting('locationCode', -1)" [class]="active_class === 'locationCode-1' ? 'active' : ''"><img
+                src="/assets/img/icons/arw_down.png" alt="sort" /></i>
+          </div>
+        </th>
+        <!-- <th>Sub Location</th> -->
+        <th>Description</th>
+        <th>Quantity</th>
+        <th>Stocktake Qty</th>
+        <th>Difference</th>
+        <th>Rejection Reason</th>
+        <th>Inventory status</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngIf="reports?.length>0; else no_data">
+        <tr *ngFor="let report of reports; let i=index" [ngClass]="report?.isUpdated? 'row_background ' : ''">
+          <td *ngIf="(checkPermission('update') || checkPermission('approve-reject'))">
+            <!-- *ngIf="(!report?.isUpdated && report?.status == '0' &&  roleCode== '4' ) || (!report?.isUpdated && report?.status == '1' &&  roleType== '1')  " -->
+            <div class="check-box"
+              [ngClass]=" (((!report?.isUpdated && report?.status == '0' && roleCode== '4' && report.inventoryItemStatus=='1') ) || ((!report?.isUpdated && report?.status == '1' && roleType== '1') && report.inventoryItemStatus=='1')) ? '': 'disableCheckbox'">
+              <!-- (change)="onSelected(i,report)" [checked]="allSelect?true:false" -->
+              <input type="checkbox" [(ngModel)]="report.isSelected" (change)="isAllSelected(i, report)" />
+              <span class="check-mark">
+                <!-- <span>{{report?.id}}</span> -->
+              </span>
+            </div>
+          </td>
+          <td>{{report?.productID? report?.productID: '-'}}</td>
+          <td>{{report?.stocktakeSerial? report?.stocktakeSerial: '-'}}</td>
+          <!-- <td>{{report?.inventory?.warehouselocation?.name ? report?.inventory?.warehouselocation?.name :'-'}}</td> -->
+          <td>{{report?.locationCode ? report?.locationCode :'-'}}</td>
+          <!-- <td>{{report?.subLocation? report?.subLocation: '-'}}</td> -->
+          <!-- <td>{{report?.inventory?.description}}</td> -->
+          <td>{{report?.description? report?.description: '-'}}</td>
+          <td>{{report?.actualQuantity? report?.actualQuantity: '-'}}</td>
+          <td>{{report?.stockTakeQuantity? report?.stockTakeQuantity: '-'}}</td>
+          <td>{{report?.difference? report?.difference: '-'}}</td>
+          <td>{{report?.rejectionReason || '-'}}</td>
+          <td>{{report?.inventoryItemStatus == 0 ? 'NOT_FOUND' : 'EXISTS' }}</td>
+          <td> {{report?.statusValue? report?.statusValue: '-'}} </td>
+          <!-- <td *ngIf="report.isUpdated"> Updated </td> -->
+          <!-- <td *ngIf="!report.isUpdated"> Pending </td> -->
+          <td>
+            <a (click)="fullDetails(report?.productID)"><img src="../assets/img/icons/view_icon.svg" alt="" /></a>
+            <!-- <div class="dropdown dots_btn" id="Div1">
+              <button class="btn-transparent p-0 dropdown-toggle" type="button" id="dropdownMenuButton"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" (click)="openMenu(i)">
+                <img src="../assets/img/icons/dots_icons.svg" alt="" />
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" (click)="updateNotFoundItem()"><i class="mr-1"><img
+                      src="../assets/img/icons/view_icon.svg" alt="" /></i> Add
+                  to existing
+                </a>
+                <a class="dropdown-item" (click)="updateNotFoundItem()"><i class="mr-1"><img
+                      src="../assets/img/icons/delete_icon.svg" alt="" /></i>
+                  Update previous value </a>
+                <a class="dropdown-item" (click)=" updateNotFoundItem()"><i class="mr-1"><img
+                      src="../assets/img/icons/delete_icon.svg" alt="" /></i>
+                  Cancel </a>
+              </div>
+            </div> -->
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</div>
+<!-- End Table Listing -->
+<div *ngIf="reports?.length>0 "
+  class="d-flex align-items-center flex-md-row flex-column justify-content-md-between justify-content-center flex-wrap pagination_block">
+  <div class="d-flex align-items-center row_count">
+    <span class="mb-0 ">No. of Rows</span>
+    <select (change)="onLimitChange($event)" [(ngModel)]="selected_limit" name="selectRows">
+      <option value="10" selected>10</option>
+      <option value="20">20</option>
+      <option value="30">30</option>
+    </select>
+  </div>
+
+  <app-pagination [page]="page" (pageChangeEvent)="pageChanged($event)" [collectionSize]="totalRecords"
+    [pageSize]="selected_limit" #appPagination>
+  </app-pagination>
+</div>
+<!-- </div> -->
+
+<ng-template #no_data>
+  <tr>
+    <td colspan="12">
+      <div class="no-record">
+        No record found
+      </div>
+    </td>
+  </tr>
+</ng-template>

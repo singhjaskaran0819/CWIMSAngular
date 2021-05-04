@@ -11,6 +11,11 @@ export class DeclarationsComponent implements OnInit {
   goodsDetails = false;
 
   ngOnInit(): void {
+    this.declarationsService.changeGoodsDetailsValue(false);
+    this.declarationsService.goodsDetails.subscribe((value) => {
+      this.goodsDetails = value;
+    });
+
   }
 
 }

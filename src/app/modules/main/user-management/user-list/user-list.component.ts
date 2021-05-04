@@ -35,7 +35,7 @@ export class UserListComponent implements OnInit {
   searchFilter: any = {};
   filters;
   // userRole;
-  accessPermissions: any = {};
+  accessPermissions = {};
   searchQuery = {};
   constructor(
     private router: Router,
@@ -45,12 +45,18 @@ export class UserListComponent implements OnInit {
     private mainService: MainService
   ) { }
 
+  default_sorting = {
+    sortKey: 'createdAt',
+    sortDirection: 1
+  }
+
+  active_class = "createdAt1"
+
   ngOnInit(): void {
     this.role = sessionStorage.getItem('roleCode');
     this.mainService.accessPermissions.subscribe((res) => {
       this.accessPermissions = res['user-management'];
     })
-
     this.userService.updateListFlag.subscribe((res) => {
       if (res) {
         this.getUserList(this.default_pagination);
@@ -59,18 +65,46 @@ export class UserListComponent implements OnInit {
 
     this.getUserList(this.default_pagination);
     this.getFilters();
-
   }
 
   checkPermission(permission) {
-    if (Object.keys(this.accessPermissions).length > 0) {
-      for (var i = 0; i < this.accessPermissions['list-of-user']?.length; i++) {
-        if (this.accessPermissions['list-of-user'].includes(permission)) {
-          return true;
+    if (this.accessPermissions) {
+      if (Object.keys(this.accessPermissions).length > 0) {
+        for (var i = 0; i < this.accessPermissions['list-of-user']?.length; i++) {
+          if (this.accessPermissions['list-of-user'].includes(permission)) {
+            return true;
+          }
         }
       }
     }
     return false;
+  }
+
+  sorting(sortKey, sortDirection) {
+    this.active_class = `${sortKey}${sortDirection}`;
+    this.default_sorting = {
+      sortKey,
+      sortDirection
+    }
+
+    var query;  
+      query = { ...this.default_pagination, ...this.default_sorting }
+    this.getUserList(query)
+  }
+
+  openMenu(value) {
+    let x = document.getElementById("drop" + value);
+    x.style.display = "none";
+  }
+
+  openUpdateMenu(value) {
+    event.stopPropagation();
+    let x = document.getElementById("drop" + value);
+    if (x.style.display === "none") {
+      x.style.display = "block";
+    } else {
+      x.style.display = "none";
+    }
   }
 
   getFilters() {
@@ -106,12 +140,9 @@ export class UserListComponent implements OnInit {
   addUser() {
     this.modalService.openModal(AddNewUserComponent, {}, MODAL_SIZE.MEDIUM)
   }
-  // editPermissions() {
-  //   this.modalService.openModal(AccessPermissionComponent, {}, MODAL_SIZE.EXTRA_LARGE)
-  // }
 
-  reassignPermissions(id?, role?, roleId?) {
-    this.modalService.openModal(ReassignPermissionsComponent, { "userid": id, "role": role, "roleId": roleId }, MODAL_SIZE.MEDIUM)
+  reassignPermissions(id?, role?, roleId?, roleType?) {
+    this.modalService.openModal(ReassignPermissionsComponent, { "userid": id, "role": role, "roleId": roleId, "roleType": roleType }, MODAL_SIZE.MEDIUM)
   }
 
   suspendUser(id, isSuspended) {
@@ -141,9 +172,6 @@ export class UserListComponent implements OnInit {
     this.modalService.openModal(RejectUserComponent, { 'userDetails': userData }, MODAL_SIZE.MEDIUM)
   }
 
-  // createRole() {
-  //   this.modalService.openModal(CreateNewRoleComponent, {}, MODAL_SIZE.EXTRA_LARGE)
-  // }
   // on page change
   pageChanged(event) {
     this.page = event
@@ -174,6 +202,7 @@ export class UserListComponent implements OnInit {
       x.style.display = "none";
     }
   }
+
   selectFilterValues(key, event) {
     if (event.target.value !== '') {
       this.searchQuery[key] = event.target.value;
@@ -194,5 +223,4 @@ export class UserListComponent implements OnInit {
     let x = document.getElementById("search_filter");
     x.style.display = "none";
   }
-
 }

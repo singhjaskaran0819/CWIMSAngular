@@ -10,6 +10,60 @@
       <div class="d-flex justify-content-end top_btns">
         <button class="btn btn-md btn-primary" (click)="createRole()" *ngIf="checkPermission('create-role')">New
           Role</button>
+        <!-- <button class="btn btn-md btn-primary" *ngIf="checkPermission('create-new-user')"
+                  (click)="addUser()">New User</button> -->
+
+        <!-- Start Search Filter -->
+        <!--  <div class="search_filter_btn">
+          <button class="btn btn-sm btn-primary" (click)="filter()"><i><img src="../assets/img/icons/filter_icon.svg"
+                alt="" /></i></button>
+          <div class="search_filter" id="search_filter" style="display:none;">
+            <h6 class="f_title">Filters</h6>
+            <div class="filter_block">
+              <div class="filter_list">
+                <div class="d-flex align-items-center filter_items">
+                  <label>City</label>
+                  <div class="in_group">
+                    <select class="form-control" (change)="selectFilterValues('city', $event)">
+                      <option value=""></option>
+                      <option *ngFor="let city of filters?.cityData"> {{city | titlecase}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center filter_items">
+                  <label> Country </label>
+                  <div class="in_group">
+                    <select class="form-control" (change)="selectFilterValues('country', $event)">
+                      <option value=""></option>
+                      <option *ngFor="let country of filters?.countryData"> {{country |
+                        titlecase}} </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center filter_items">
+                  <label> Role </label>
+                  <div class="in_group">
+                    <select class="form-control" (change)="selectFilterValues('role', $event)">
+                      <option value=""></option>
+                      <option *ngFor="let role of filters?.roleData" value={{role.role}}>
+                        {{role.roleName |
+                        titlecase}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="d-flex justify-content-center btn-control">
+              <button class="btn btn-md btn-outline-primary" (click)="cancelSearch()">Cancel</button>
+              <button class="btn btn-md btn-primary" (click)="applySearch()">Apply Search</button>
+            </div>
+          </div> -->
+        <!-- End Search Filter -->
+        <!-- </div>
+      </div> -->
+        <!-- End Filter -->
       </div>
     </div>
   </div>
@@ -20,7 +74,13 @@
       <table class="table custom_table">
         <thead>
           <tr>
-            <th>Role </th>
+            <th>Role <div class="sorting"><i (click)="sorting('title', 1)"
+              [class]="active_class === 'title1' ? 'active' : ''"><img
+                  src="/assets/img/icons/arw_up.png" alt="sort" /></i>
+          <i (click)="sorting('title', -1)"
+              [class]="active_class === 'title-1' ? 'active' : ''"><img
+                  src="/assets/img/icons/arw_down.png" alt="sort" /></i>
+      </div></th>
             <th>Role Id</th>
             <th>Action</th>
           </tr>
@@ -28,9 +88,22 @@
         <tbody>
           <ng-container *ngIf="roleList?.length> 0; else no_data">
             <tr *ngFor="let role of roleList; let i = index;">
-              <td>{{ role?.title }}</td>
+              <td (click)="viewPermissions(role?.id)">{{ role?.title }}</td>
               <td><a> {{ role?.id }} </a></td>
 
+              <!-- <td>
+                <div class="action_btn" id="Div1" *ngIf="user?.status =='0' && user?.isBlocked== false">
+                  <a class="mr-2" (click)="approveUser(user)"><i><img src="../assets/img/icons/accept_icon.svg"
+                        alt="" /></i></a>
+                  <a (click)="rejectUser(user)"><i><img src="../assets/img/icons/reject_icon.svg" alt="" /></i></a>
+                </div>
+                <button id="reject" class="badge badge-danger status_badge pointerEventsNone"
+                  *ngIf="user?.isBlocked== true"> Suspended </button>
+                <button id="accept" class="badge badge-success status_badge pointerEventsNone"
+                  *ngIf="user?.status =='1' && user?.isBlocked== false"> Approved </button>
+                <button id="reject" class="badge badge-danger status_badge pointerEventsNone"
+                  *ngIf="user?.status =='2 '&& user?.isBlocked== false"> Rejected </button>
+              </td> -->
               <td>
                 <div class="dropdown dots_btn" id="Div1">
                   <button class="btn-transparent p-0 dropdown-toggle" type="button" id="dropdownMenuButton"
@@ -41,12 +114,14 @@
                     <a class="dropdown-item" href="javascript:void(0)" (click)="viewPermissions(role?.id)"><i
                         class="mr-1"><img src="../assets/img/icons/view_icon.svg" alt="" /></i>
                       View</a>
-                    <a class="dropdown-item" href="javascript:void(0)" *ngIf="checkPermission('update-role')"
-                      (click)="updatePermissions(role?.id, role?.title) "><i class="mr-1"><img
+                    <a class="dropdown-item" href="javascript:void(0)"
+                      *ngIf="checkPermission('update-role') && role.nature!='0'"
+                      (click)="updatePermissions(role?.id, role?.title, role?.type) "><i class="mr-1"><img
                           src="../assets/img/icons/edit_icon.svg" alt="" /></i>
                       Update </a>
-                    <a class="dropdown-item" href="javascript:void(0)" (click)="deleteRole(role?.id, role?.title)"
-                      *ngIf="checkPermission('delete-role')"><i class="mr-1"><img
+                    <a class="dropdown-item" href="javascript:void(0)"
+                      (click)="deleteRole(role?.id, role?.title, role?.type)"
+                      *ngIf="checkPermission('delete-role') && role.nature!='0'"><i class="mr-1"><img
                           src="../assets/img/icons/delete_icon.svg" alt="" /></i>
                       Delete</a>
                   </div>
@@ -55,10 +130,74 @@
             </tr>
           </ng-container>
 
+          <!-- <tr class="even">
+            <td>Mickey Tyler</td>
+            <td>+191 1234567890</td>
+            <td>Officer</td>
+            <td><button id="reject" class="badge badge-danger status_badge">Rejected</button></td>
+            <td>
+              <div class="dropdown dots_btn" id="Div1">
+                <button class="btn-transparent p-0 dropdown-toggle" type="button" id="dropdownMenuButton"
+                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <img src="../assets/img/icons/dots_icons.svg" alt="" />
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item" href="user-detail.html"><i class="mr-1"><img
+                        src="../assets/img/icons/view_icon.svg" alt="" /></i> View</a>
+                  <a class="dropdown-item" href="#" data-toggle="modal" data-target="#accessPermission"><i
+                      class="mr-1"><img src="../assets/img/icons/edit_icon.svg" alt="" /></i> Edit</a>
+                  <a class="dropdown-item" href="#" data-toggle="modal" data-target="#blockUser"><i class="mr-1"><img
+                        src="../assets/img/icons/blocked_icon.svg" alt="" /></i>
+                    Block</a>
+                </div>
+              </div>
+            </td>
+          </tr> -->
+          <!--   <tr>
+                      <td><a href="user-detail.html">John</a></td>
+                      <td>+191 1234567890</td>
+                      <td>Operator</td>
+                      <td><button id="accept" class="badge badge-success status_badge">Approved</button></td>
+                      <td>
+                          <div class="dropdown dots_btn" id="Div1">
+                              <button class="btn-transparent p-0 dropdown-toggle" type="button"
+                                  id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                  aria-expanded="false">
+                                  <img src="../assets/img/icons/dots_icons.svg" alt="" />
+                              </button>
+                              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                  <a class="dropdown-item" href="user-detail.html"><i class="mr-1"><img
+                                              src="../assets/img/icons/view_icon.svg" alt="" /></i> View</a>
+                                  <a class="dropdown-item" href="#" data-toggle="modal"
+                                      data-target="#accessPermission"><i class="mr-1"><img
+                                              src="../assets/img/icons/edit_icon.svg" alt="" /></i> Edit</a>
+                                  <a class="dropdown-item" href="#" data-toggle="modal" data-target="#blockUser"><i
+                                          class="mr-1"><img src="../assets/img/icons/blocked_icon.svg" alt="" /></i>
+                                      Block</a>
+                              </div>
+                          </div>
+                      </td>
+                  </tr> -->
         </tbody>
       </table>
     </div>
     <!-- End Table Listing -->
+
+    <div
+      class="d-flex align-items-center flex-md-row flex-column justify-content-md-between justify-content-center flex-wrap pagination_block">
+      <div class="d-flex align-items-center row_count">
+        <span class="mb-0 ">No. of Rows</span>
+        <select (change)="onLimitChange($event)" [(ngModel)]="selected_limit" name="selectRows">
+          <option value="10" selected>10</option>
+          <option value="20">20</option>
+          <option value="30">30</option>
+        </select>
+      </div>
+
+      <app-pagination [page]="page" (pageChangeEvent)="pageChanged($event)" [collectionSize]="totalRecords"
+        [pageSize]="selected_limit" #appPagination>
+      </app-pagination>
+    </div>
   </div>
 </div>
 

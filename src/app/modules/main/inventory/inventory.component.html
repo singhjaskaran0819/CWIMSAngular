@@ -1,2 +1,262 @@
-<br>
-<h2>Coming Soon</h2>
+<!-- <app-inventory-list-officer *ngIf="roleCode== '2'"></app-inventory-list-officer> -->
+<!-- <app-inventory-list-officer *ngIf="roleCode== '6' || roleCode== '5'"></app-inventory-list-officer>
+<app-inventory-list-operator *ngIf="roleCode== '4' || roleCode== '3'"> </app-inventory-list-operator>
+<app-inventory-list-admin *ngIf="roleCode== '2' || roleCode== '1'"></app-inventory-list-admin> -->
+
+
+<div>
+    <div class="page-breadcrumb">
+        <div class="d-flex justify-content-between align-items-center flex-md-row flex-column-reverse">
+
+            <h3 class="page-title">Inventory</h3>
+
+            <div class="d-flex justify-content-end top_btns">
+                <button *ngIf="roleCode== '3' || roleCode== '4' || checkPermission('group-items')"
+                    class="btn btn-md btn-primary"
+                    [ngClass]="(checkedList.length==0 || checkedList.length==1 || groupItemsDisable)?'disableButton':''"
+                    (click)="groupItems()">Group Items</button>
+
+                <!-- || checkPermission('group-items') -->
+                <!-- <button *ngIf="roleCode== '4' " class="btn btn-md btn-primary" (click)="checkVarianceReport()">Variance
+                    Report</button> -->
+
+                <button *ngIf="roleCode== '5' || roleCode== '6' || checkPermission('stock-take')"
+                    [ngClass]="inventoryList.length==0? 'disableButton': ''" class="btn btn-md btn-primary"
+                    (click)="openStockTakeModal()">Stock Take</button>
+
+                <div class="search_filter_btn">
+                    <button class="btn btn-sm btn-primary" (click)="filter()"><i><img
+                                src="../assets/img/icons/filter_icon.svg" alt="" /></i></button>
+                    <!-- Start Search Filter -->
+                    <div class="search_filter" id="search_filter" style="display:none;">
+                        <h6 class="f_title">Filters</h6>
+                        <button class="btn btn-md btn-outline-primary float-right" style="right: 10px;position: absolute;height: 40px;top: 10px;padding-top: 8px;" (click)="clearFilters()">Clear</button>
+                        <!-- Warecode Filter -->
+                        <div class="warecode_filter">
+                            <div class="filter_search">
+                                <input type="search" [(ngModel)]="search" placeholder="Search" class="form-control" />
+                            </div>
+                        </div>
+
+
+                        <div class="filter_block">
+                            <div class="filter_list">
+                                <div class="d-flex align-items-center filter_items">
+                                    <label>Location</label>
+                                    <div class="in_group">
+                                        <select class="form-control" [(ngModel)]="searchFilter.locationCode">
+                                            <option value="">Select Location</option>
+                                            <option *ngFor="let item of dataForFilter?.locationCodeData"
+                                                [value]="item?.code">{{item?.name}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center filter_items">
+                                    <label>Year</label>
+                                    <div class="in_group">
+                                        <select class="form-control" [(ngModel)]="searchFilter.year">
+                                            <option value="">Select Year</option>
+                                            <option *ngFor="let item of dataForFilter?.yearData" [value]="item">{{item}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex align-items-center filter_items">
+                                    <label>Serial</label>
+                                    <div class="in_group">
+                                        <select class="form-control" [(ngModel)]="searchFilter.serial">
+                                            <option value="">Select Serial</option>
+                                            <option *ngFor="let item of dataForFilter?.serialData" [value]="item">
+                                                {{item}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center filter_items">
+                                    <label>Number</label>
+                                    <div class="in_group">
+                                        <select class="form-control" [(ngModel)]="searchFilter.number">
+                                            <option value=""> Select Number </option>
+                                            <option *ngFor="let item of dataForFilter?.numberData" [value]="item">
+                                                {{item}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center filter_items">
+                                    <label>Tariff Code</label>
+                                    <div class="in_group">
+                                        <select class="form-control" [(ngModel)]="searchFilter.tariffCode">
+                                            <option value=""> Select Tariff Code </option>
+                                            <option *ngFor="let item of dataForFilter?.tariffCodeData" [value]="item">
+                                                {{item}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center btn-control">
+                            <button class="btn btn-md btn-outline-primary" (click)="filter()">Cancel</button>
+                            <button class="btn btn-md btn-primary" (click)="applySearch()">Apply Search</button>
+                        </div>
+                    </div>
+                    <!-- End Search Filter -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb -->
+
+    <div class="table-responsive" *ngIf="roleCode!= '2' && roleCode!= '1'">
+        <table class="table custom_table">
+            <thead>
+                <tr>
+                    <th *ngIf="roleCode== '3' || roleCode== '4' || checkPermission('group-items')">
+                    </th>
+                    <th>Location <div class="sorting">
+                            <i (click)="sorting('location', 1)"
+                                [class]="active_class === 'location1' ? 'active' : ''"><img
+                                    src="/assets/img/icons/arw_up.png" alt="sort" /></i>
+                            <i (click)="sorting('location', -1)"
+                                [class]="active_class === 'location-1' ? 'active' : ''"><img
+                                    src="/assets/img/icons/arw_down.png" alt="sort" /></i>
+                        </div>
+                    </th>
+                    <th>Product ID <div class="sorting"><i (click)="sorting('productID', 1)"
+                                [class]="active_class === 'productID1' ? 'active' : ''"><img
+                                    src="/assets/img/icons/arw_up.png" alt="sort" /></i>
+                            <i (click)="sorting('productID', -1)"
+                                [class]="active_class === 'productID-1' ? 'active' : ''"><img
+                                    src="/assets/img/icons/arw_down.png" alt="sort" /></i>
+                        </div>
+                    </th>
+                    <th>Description</th>
+                    <th>Initial Qty</th>
+                    <th>Remaining Qty</th>
+                    <th> Unit Value </th>
+                    <th> Customs Value </th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngIf="inventoryList.length>0; else no_data">
+                    <tr *ngFor="let inventory of inventoryList">
+                        <td *ngIf="roleCode== '3' || roleCode== '4' || checkPermission('group-items')">
+                            <div class="check-box">
+                                <input type="checkbox" [(ngModel)]="inventory.isSelected" (change)="isAllSelected()" />
+                                <span class="check-mark"></span>
+                            </div>
+                        </td>
+                        <td>{{ inventory?.warehouselocation?.name }}</td>
+                        <td>{{ inventory?.productID }}</td>
+                        <td>{{ inventory?.description }}</td>
+                        <td>{{ inventory?.initialQuantity }}</td>
+                        <td>{{ inventory?.remainingQuantity }}</td>
+                        <td>{{ inventory?.unitValue }}</td>
+                        <td>{{ inventory?.customsValue }}</td>
+                        <td><a (click)="openFullDetailsModal(inventory.productID)"><img
+                                    src="../assets/img/icons/view_icon.svg" alt="" /></a>
+                        </td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="table-responsive" *ngIf="roleCode== '2' || roleCode== '1'">
+        <table class="table custom_table">
+            <thead>
+                <tr>
+                    <th>Product ID <div class="sorting">
+                            <i (click)="sorting('productID', 1)"
+                                [class]="active_class === 'productID1' ? 'active' : ''"><img
+                                    src="/assets/img/icons/arw_up.png" alt="sort" /></i>
+                            <i (click)="sorting('productID', -1)"
+                                [class]="active_class === 'productID-1' ? 'active' : ''"><img
+                                    src="/assets/img/icons/arw_down.png" alt="sort" /></i>
+                        </div>
+                    </th>
+                    <th>Warehouse<div class="sorting">
+                            <i (click)="sorting('warehouse', 1)"
+                                [class]="active_class === 'warehouse1' ? 'active' : ''"><img
+                                    src="/assets/img/icons/arw_up.png" alt="sort" /></i>
+                            <i (click)="sorting('warehouse', -1)"
+                                [class]="active_class === 'warehouse-1' ? 'active' : ''"><img
+                                    src="/assets/img/icons/arw_down.png" alt="sort" /></i>
+                        </div>
+                    </th>
+                    <th>Location <div class="sorting">
+                            <i (click)="sorting('location', 1)"
+                                [class]="active_class === 'location1' ? 'active' : ''"><img
+                                    src="/assets/img/icons/arw_up.png" alt="sort" /></i>
+                            <i (click)="sorting('location', -1)"
+                                [class]="active_class === 'location-1' ? 'active' : ''"><img
+                                    src="/assets/img/icons/arw_down.png" alt="sort" /></i>
+                        </div>
+                    </th>
+                    <th>Description </th>
+                    <th>Quantity <div class="sorting">
+                            <i (click)="sorting('initialQuantity', 1)"
+                                [class]="active_class === 'initialQuantity1' ? 'active' : ''"><img
+                                    src="/assets/img/icons/arw_up.png" alt="sort" /></i>
+                            <i (click)="sorting('initialQuantity', -1)"
+                                [class]="active_class === 'initialQuantity-1' ? 'active' : ''"><img
+                                    src="/assets/img/icons/arw_down.png" alt="sort" /></i>
+                        </div>
+                    </th>
+                    <th> Remaining Quantity </th>
+                    <th> Unit Value </th>
+                    <th> Customs Value </th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngIf="inventoryList?.length>0; else no_data">
+                    <tr *ngFor="let inventory of inventoryList">
+                        <td>{{ inventory?.productID ?inventory?.productID: '-' }}</td>
+                        <td>{{ inventory?.warehouselocation?.warehouse?.name ?
+                            inventory?.warehouselocation?.warehouse?.name: '-'}}</td>
+                        <td>{{ inventory?.warehouselocation?.name ? inventory?.warehouselocation?.name : '-'}}</td>
+                        <td>{{ inventory?.description ? inventory?.description: "-" }}</td>
+                        <td>{{ inventory?.initialQuantity ? inventory?.initialQuantity : '-'}}</td>
+                        <td>{{ inventory?.remainingQuantity ? inventory?.remainingQuantity: '-' }}</td>
+                        <td>{{ inventory?.unitValue }}</td>
+                        <td>{{ inventory?.customsValue }}</td>
+                        <td><a (click)="openFullDetailsModal(inventory.productID)"> <img
+                                    src="../assets/img/icons/view_icon.svg" alt="" />
+                            </a> </td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </div>
+    <!-- End Table Listing -->
+    <div *ngIf="inventoryList.length>0"
+        class="d-flex align-items-center flex-md-row flex-column justify-content-md-between justify-content-center flex-wrap pagination_block">
+        <div class="d-flex align-items-center row_count">
+            <span class="mb-0 ">No. of Rows</span>
+            <select (change)="onLimitChange($event)" [(ngModel)]="selected_limit" name="selectRows">
+                <option value="10" selected>10</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+            </select>
+        </div>
+
+        <app-pagination [page]="page" (pageChangeEvent)="pageChanged($event)" [collectionSize]="totalRecords"
+            [pageSize]="selected_limit" #appPagination>
+        </app-pagination>
+    </div>
+</div>
+
+<ng-template #no_data>
+    <tr>
+        <td colspan="7">
+            <div class="no-record">
+                No record found
+            </div>
+        </td>
+    </tr>
+</ng-template>

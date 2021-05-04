@@ -4,8 +4,9 @@
 
 export const environment = {
   production: false,
-  apiUrl: "http://3.23.11.41:3001",
-  // apiUrl: "http://54a86bbcb74a.ngrok.io",
+  apiUrl: "http://localhost:3000",
+  // apiUrl: "http://3.23.11.41:3000",
+  // apiUrl: "https://42879d7fc33d.ngrok.io",
   siteKey: '6LepEc8ZAAAAAE7GIgABeAyYv86n2z7aToi8VwQQ'
   // secret key 6LepEc8ZAAAAABlOu0wdFLkEn025HYuHATFCpiMd
 }

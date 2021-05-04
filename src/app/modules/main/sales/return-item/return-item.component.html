@@ -1,2 +1,106 @@
-<br>
-<h2>Coming Soon</h2>
+<div class="page-wrapper">
+
+  <div class="page-breadcrumb">
+    <div class="d-flex justify-content-between align-items-center flex-md-row flex-column-reverse">
+
+      <ol class="list-unstyled d-flex align-items-center breadcrumb">
+        <li class="breadcrumb-item">
+          <h3 class="page-title"><a class="cursorPointer" (click)="goToList()">List of Sale</a></h3>
+        </li>
+        <li class="breadcrumb-item active">Return</li>
+      </ol>
+
+    </div>
+  </div>
+  <!-- Breadcrumb -->
+
+  <div class="card card_box">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-4 col-sm-6">
+          <label>Receipt Number</label>
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="" />
+            <span class="bg-success badge-status d-none">Verified</span>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-6">
+          <label>Date of Sale</label>
+          <div class="form-group">
+            <input type="date" class="form-control" placeholder="" />
+            <span class="bg-danger badge-status">Not Verified</span>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-6">
+          <label>Sale Type</label>
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="" />
+            <span class="bg-success badge-status">Verified</span>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <label>Sale Type</label>
+          <div class="form-group">
+            <select class="form-control">
+              <option>121555</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label>Sale Type</label>
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="" />
+            <span class="bg-danger badge-status">Not Verified</span>
+          </div>
+        </div>
+
+        <div class="col-md-12 text-center mt-3">
+          <button class="btn btn-md btn-primary" (click)="confirmReturn()">Confirm</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="table_block">
+    <h5 class="page-title my-3">Product Description</h5>
+    <div class="table-responsive">
+      <table class="table custom_table">
+        <thead>
+          <tr>
+            <th>Product ID</th>
+            <th>Description</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>12565</td>
+            <td>LCD</td>
+            <td>20</td>
+            <td>20USD</td>
+            <td>
+              <div class="action_btn">
+                <i><img src="../assets/img/icons/edit_icon.svg" alt="" width="20" /></i>
+              </div>
+            </td>
+          </tr>
+          <tr class="even">
+            <td>12566</td>
+            <td>LCD</td>
+            <td>20</td>
+            <td>20USD</td>
+            <td>
+              <div class="action_btn">
+                <i><img src="../assets/img/icons/edit_icon.svg" alt="" width="20" /></i>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- End Table Listing -->
+  </div>
+</div>

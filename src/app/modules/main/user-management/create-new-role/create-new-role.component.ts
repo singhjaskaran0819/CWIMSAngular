@@ -24,6 +24,9 @@ export class CreateNewRoleComponent implements OnInit {
   approveRejectUser = false;
   deleteUser = false;
   suspendUser = false;
+  disableCheckbox = false;
+  roleTypeFlag = false;
+  roleCode;
   // permissions = {
   //   'dashboard': [],
   //   'declaration': [],
@@ -86,6 +89,7 @@ export class CreateNewRoleComponent implements OnInit {
       var data = {
         "id": this.roleId
       }
+
       this.userService.getPermissionsByRole(data).subscribe((res) => {
         this.accessPermissions = res.data.permissions;
         this.permissions = this.accessPermissions;
@@ -129,10 +133,19 @@ export class CreateNewRoleComponent implements OnInit {
     this.modalService.closeModal();
   }
 
+  roleTypeSelected(event) {
+
+    this.roleTypeFlag = event.target.checked;
+    this.roleCode = event.target.value;
+  }
+
   accessPermission(module, permission, event, sub_module?) {
     var flag = 0;
     var update = false;
     if (event.target.checked) {
+      if (permission == 'group-items' || permission == 'create' || permission == 'add-item') {
+        this.disableCheckbox = true;
+      }
       if (Object.keys(this.permissions).length > 0) {
         for (let key in this.permissions) {
           flag++;
@@ -254,7 +267,8 @@ export class CreateNewRoleComponent implements OnInit {
 
     var data = {
       "title": this.roleName,
-      "permissions": this.permissions
+      "permissions": this.permissions,
+      "type": this.roleCode
     }
 
     this.userService.getOrCreateRole(data).subscribe((res) => {
@@ -279,6 +293,7 @@ export class CreateNewRoleComponent implements OnInit {
     var data = {
       "id": this.roleId,
       "title": this.roleName,
+      "type": this.roleCode,
       "permissions": this.permissions
     }
 

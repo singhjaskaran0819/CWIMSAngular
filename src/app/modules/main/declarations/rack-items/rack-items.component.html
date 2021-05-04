@@ -1,0 +1,122 @@
+<!-- Rack Modal -->
+<!-- <div class="modal fade" id="rack" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document"> -->
+<div class="modal-content">
+  <!-- <form rel="" action=""> -->
+  <div class="modal_div">
+    <form [formGroup]="rackItemsForm">
+      <div class="card-body" id="tableToModify">
+        <div class="header-title text-center">
+          <h5>Rack</h5>
+        </div>
+        <div class="form-row">
+          <div class="col-12">
+            <label>Product Id</label>
+            <div class="form-group">
+              <input type="text" class="form-control" formControlName="productCode" />
+              <div class="input-errors"
+                *ngIf="(submitted || controls.productCode?.touched) && controls.productCode?.errors?.required">
+                Please enter product code.</div>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="form-row">
+          <div class="col-12">
+            <label>Sub Location</label>
+            <div class="form-group">
+              <input type="text" class="form-control" formControlName="subLocation" />
+            </div>
+          </div>
+        </div> -->
+        <div class="form-row">
+          <div class="col-12">
+            <label>Description</label>
+            <div class="form-group">
+              <input type="text" class="form-control" formControlName="description" />
+              <div class="input-errors"
+                *ngIf="(submitted || controls.description?.touched) && controls.description?.errors?.required">
+                Please enter description.</div>
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col-12">
+            <label>Quantity</label>
+            <div class="form-group">
+              <input type="number" (keypress)="($event.charCode >= 48 && $event.charCode < 58)" class="form-control"
+                formControlName="quantity" #quantity (keyup)="quantityChange($event)" />
+              <div class="input-errors"
+                *ngIf="(submitted || controls.quantity?.touched) && controls.quantity?.errors?.required && !quantityGreater">
+                Please enter quantity.</div>
+              <div class="input-errors"
+                *ngIf="(submitted || controls.quantity?.touched) && controls.quantity?.errors?.pattern && !quantityGreater">
+                Quantity can't be 0 or less than 0.</div>
+              <div class="input-errors" *ngIf="(submitted || controls.quantity?.touched) && quantityGreater">
+                Quantity can't be greater than total quantity.</div>
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col-12">
+            <label>Weight</label>
+            <div class="form-group">
+              <input type="text" class="form-control" formControlName="weight" #weight />
+              <div class="input-errors"
+                *ngIf="(submitted || controls.weight?.touched) && controls.weight?.errors?.required">
+                Please enter weight.</div>
+            </div>
+          </div>
+        </div>
+        <!-- </div> -->
+        <div class="form-row">
+          <div class="col-12">
+            <label>Customs Value</label>
+            <div class="form-group">
+              <input type="text" class="form-control" formControlName="customsValue"
+                (keyup)="customValueChanged($event)" />
+              <div class="input-errors"
+                *ngIf="(submitted || controls.customsValue?.touched) && controls.customsValue?.errors?.required">
+                Please enter custom value.</div>
+              <div class="input-errors"
+                *ngIf="(submitted || controls.customsValue?.touched) && controls.customsValue?.errors?.pattern ">
+                Custom value can't be 0 or less than 0.</div>
+              <div class="input-errors"
+                *ngIf="(submitted || controls.customsValue?.touched) && customValueFlag && !controls.customsValue?.errors?.required && !controls.customsValue?.errors?.pattern">
+                Value can't be greater than total custom value.
+              </div>
+              <div class="input-errors"
+                *ngIf="(submitted || controls.customsValue?.touched) && customValueFlag1 && !controls.customsValue?.errors?.required && !controls.customsValue?.errors?.pattern ">
+                All items are not yet racked. Kindly enter appropriate custom value.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-row disabled" *ngIf="sadItem?.isLiquor">
+          <div class="col-12">
+            <label>Supplementary Value</label>
+            <div class="form-group">
+              <input type="text" class="form-control" formControlName="supplementaryValue" />
+              <div class="input-errors"
+                *ngIf="(submitted || controls.supplementaryValue?.touched) && controls.supplementaryValue?.errors?.required">
+                Please enter supplementary value.</div>
+            </div>
+          </div>
+        </div>
+        <!-- </div> -->
+        <div class="modal-footer">
+          <div class="btn_group text-center">
+            <button class="btn btn-md btn-outline-primary" (click)="cancel()">Cancel</button>
+            <button class="btn btn-md btn-primary" *ngIf="!isRacked" [ngClass]="enableApply? 'disableButton' : ''"
+              (click)="nextOrApply()">Next</button>
+            <!-- [ngClass]="enableApply? 'disableButton' : ''" -->
+            <button class="btn btn-md btn-primary" [ngClass]="!enableApply? 'disableButton' : ''"
+              (click)="nextOrApply()">Apply</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<!-- </div>
+</div> -->
+<!-- End Modal -->

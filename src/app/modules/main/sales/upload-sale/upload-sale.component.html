@@ -1,0 +1,57 @@
+<!-- <div class="modal fade" id="UploadSale" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-md modal-dialog-centered" role="document"> -->
+<div class="modal-content">
+  <div class="modal_div">
+    <form [formGroup]="fileUploadForm">
+      <div class="card-body" id="tableToModify">
+        <div class="header-title text-center">
+          <h5>Upload Sale</h5>
+        </div>
+        <!-- <div id="drop_file_zone" ondrop="uploadFile(event)" ondragover="return false">
+          
+            <i><img src="../assets/img/icons/upload_icon.svg" alt="" /></i>
+            <p>
+              Drag and Drop here
+              <br />
+              or
+            </p>
+            <div class="input_file">
+              <input type="file" id="selectfile" [multiple]="false" (change)="uploadFile($event)" formControlName="file"
+                encType="multipart/form-data" accept=".csv" />
+              <label>Browse file</label>
+            </div>
+          </div>
+        </div> -->
+
+        <!-- <div id="drop_file_zone"> -->
+        <!-- <div id="drag_upload_file"> -->
+        <!-- <i><img src="../assets/img/icons/upload_icon.svg" alt="" /></i> -->
+        <!-- dropZoneClassName="drop_file_zone drag_upload_file" -->
+        <ngx-file-drop accept=".csv" dropZoneLabel="Drag and Drop here" (onFileDrop)="dropped($event)"
+          (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)" multiple="false">
+          <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+            <!-- <input type="file" id="selectfile" [multiple]="false" (click)="openFileSelector()" formControlName="file"
+              encType="multipart/form-data" accept=".csv" />
+            <label>Browse file</label> -->
+
+            <button type="button" (click)="openFileSelector()">Browse Files</button>
+          </ng-template>
+        </ngx-file-drop>
+        <!-- </div> -->
+        <!-- </div> -->
+
+        <div> {{fileName}} </div>
+        <div *ngIf="docTypeWrong" class="input-errors"> Only csv documents can be uploaded.</div>
+      </div>
+      <div class="modal-footer">
+        <div class="btn_group text-center">
+          <button class="btn btn-md btn-outline-primary" (click)="cancel()">Cancel</button>
+          <!-- <button class="btn btn-md btn-primary" (click)="uploadFile()">Upload</button> -->
+
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<!-- </div>
+</div> -->

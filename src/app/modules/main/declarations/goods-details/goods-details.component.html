@@ -1,2 +1,346 @@
-<br>
-<h2>Coming Soon</h2>
+<div class="page-wrapper">
+    <div class="page-breadcrumb">
+        <div class="row align-items-center">
+            <div class="col-md-12 align-self-center">
+                <ol class="list-unstyled d-flex align-items-center breadcrumb">
+                    <li class="breadcrumb-item">
+                        <h3 class="page-title cursorPointer"><a (click)="goToGoodsReceived()">Good Received</a></h3>
+                    </li>
+                    <li class="breadcrumb-item active">Add Details</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <div class="wd_block" id="accordion">
+        <div class="card">
+            <div class="card-header" id="headingOne" data-toggle="collapse" data-target="#collapseOne"
+                aria-expanded="true" aria-controls="collapseOne">
+                <div class="mb-0 row">
+                    <h6 class="col-sm-6"> Warehouse Details</h6>
+                    <span class="col-sm-6">Warehouse code: {{details?.warehouselocation?.warehouse?.code}}</span>
+                </div>
+            </div>
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3 col-6">
+                            <label>Warehouse Code</label>
+                            <div class="form-group">
+                                <input type="text" class="form-control" [(ngModel)]="warehouseCode" readonly />
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <label>Warehouse Name</label>
+                            <div class="form-group">
+                                <input type="text" [(ngModel)]="warehouseName" class="form-control" readonly />
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <label>Company Code</label>
+                            <div class="form-group">
+                                <input type="text" [(ngModel)]="companyCode" class="form-control" readonly />
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <label>Company Name</label>
+                            <div class="form-group">
+                                <input type="text" [(ngModel)]="companyName" class="form-control" readonly />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header" id="headingTwo" data-toggle="collapse" data-target="#collapseTwo"
+                aria-expanded="false" aria-controls="collapseTwo">
+                <div class="mb-0 row">
+                    <h6 class="col-sm-6">SAD Assessment Details</h6>
+                    <span class="col-sm-6">{{office}} {{year}} {{serial}} {{assessmentNumber}}</span>
+                </div>
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3 col-6">
+                            <label>Office</label>
+                            <div class="form-group">
+                                <input type="text" [(ngModel)]="office" class="form-control" readonly />
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <label>Year</label>
+                            <div class="form-group">
+                                <input type="text" [(ngModel)]="year" class="form-control" readonly />
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <label>Serial</label>
+                            <div class="form-group">
+                                <input type="text" [(ngModel)]="serial" class="form-control" readonly />
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <label>Assessment Number</label>
+                            <div class="form-group">
+                                <input type="text" [(ngModel)]="assessmentNumber" class="form-control" readonly />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="inventory_tab">
+        <div class="btn-action">
+            <button class="btn btn-md btn-primary" (click)="upload()" [ngClass]="itemsRackedFlag? 'disableButton': '-'"
+                *ngIf="!messagesTabSelected && checkPermission('upload') && (statusCode=='3' || statusCode=='2' )">Upload</button>
+
+            <button class="btn btn-md btn-primary" (click)="resetRackedItems('')"
+                [ngClass]="!isAllSadItemsRacked? 'disableButton': '-'"
+                *ngIf="!messagesTabSelected && checkPermission('reset-racked-items') && (statusCode=='2' || statusCode=='3') ">
+                Reset </button>
+
+            <button class="btn btn-md btn-primary" (click)="approveDeclaration()"
+                *ngIf="!messagesTabSelected && checkPermission('approve-reject') && (statusCode=='0' || statusCode=='4' )">Approve</button>
+            <!-- data-toggle="modal" data-target="#RejectModal" -->
+            <button class="btn btn-md btn-outline-primary" (click)="openRejectModal()"
+                *ngIf="!messagesTabSelected && checkPermission('approve-reject') && (statusCode=='0' || statusCode=='4')">Reject</button>
+        </div>
+        <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <a class="active" id="nav-home-tab" data-toggle="tab" href="#nav-home" (click)="tabChanged(false)"
+                    role="tab" aria-controls="nav-home" aria-selected="true">SAD Items</a>
+                <a class="" *ngIf="roleType !='0' && roleType !='3'" id="nav-profile-tab" data-toggle="tab"
+                    href="#nav-profile" (click)="tabChanged(true)" role="tab" aria-controls="nav-profile"
+                    aria-selected="false">Messages</a>
+            </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                <div class="table-responsive">
+                    <table class="table custom_table">
+                        <thead>
+                            <tr>
+                                <!-- <th>
+                                    <div class="check-box">
+                                        <input type="checkbox" (click)="onSelectAll($event)" />
+                                        <span class="check-mark"></span>
+                                    </div>
+                                </th> -->
+                                <th><span class="c_name">Line Number <div class="sorting"><i
+                                                (click)="sorting('lineNumber', 1)"
+                                                [class]="active_class === 'lineNumber1' ? 'active' : ''"><img
+                                                    src="/assets/img/icons/arw_up.png" alt="sort" /></i>
+                                            <i (click)="sorting('lineNumber', -1)"
+                                                [class]="active_class === 'lineNumber-1' ? 'active' : ''"><img
+                                                    src="/assets/img/icons/arw_down.png" alt="sort" /></i>
+                                        </div></span></th>
+                                <th>HS Code <div class="sorting"><i (click)="sorting('hsCode', 1)"
+                                            [class]="active_class === 'hsCode1' ? 'active' : ''"><img
+                                                src="/assets/img/icons/arw_up.png" alt="sort" /></i>
+                                        <i (click)="sorting('hsCode', -1)"
+                                            [class]="active_class === 'hsCode-1' ? 'active' : ''"><img
+                                                src="/assets/img/icons/arw_down.png" alt="sort" /></i>
+                                    </div>
+                                </th>
+                                <th>Commercial Description</th>
+                                <th>Quantity<div class="sorting"><i (click)="sorting('initialQuantity', 1)"
+                                            [class]="active_class === 'initialQuantity1' ? 'active' : ''"><img
+                                                src="/assets/img/icons/arw_up.png" alt="sort" /></i>
+                                        <i (click)="sorting('initialQuantity', -1)"
+                                            [class]="active_class === 'initialQuantity-1' ? 'active' : ''"><img
+                                                src="/assets/img/icons/arw_down.png" alt="sort" /></i>
+                                    </div>
+                                </th>
+                                <th>Weight<div class="sorting"><i (click)="sorting('weight', 1)"
+                                            [class]="active_class === 'weight1' ? 'active' : ''"><img
+                                                src="/assets/img/icons/arw_up.png" alt="sort" /></i>
+                                        <i (click)="sorting('weight', -1)"
+                                            [class]="active_class === 'weight-1' ? 'active' : ''"><img
+                                                src="/assets/img/icons/arw_down.png" alt="sort" /></i>
+                                    </div>
+                                </th>
+                                <th>Supplementary Value</th>
+                                <th>Custom Value</th>
+                                <th>Origin</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngIf="sadItemList?.length > 0; else no_data">
+                                <ng-container *ngFor="let item of sadItemList">
+                                    <tr>
+                                        <!-- <td>
+                                            <div class="check-box">
+                                                <input type="checkbox" [checked]="selectAll" [disabled]="selectAll" />
+                                                <span class="check-mark"></span>
+                                            </div>
+                                        </td> -->
+                                        <td>{{item?.lineNumber}}</td>
+                                        <td>{{item?.hsCode}}</td>
+                                        <td>{{item?.description}}</td>
+                                        <td>{{item?.initialQuantity}}</td>
+                                        <td>{{item?.weight}}</td>
+                                        <td>{{item?.supplementryValue ? item?.supplementryValue : '-'}}</td>
+                                        <td>{{item?.customsValue}}</td>
+                                        <td>{{item?.origin}}</td>
+                                        <td>
+                                            <a title="View" (click)="showDetails(i,item?.id)"><i class="mr-1"><img
+                                                        src="../assets/img/icons/view_icon.svg" alt="" /></i>
+                                            </a>
+                                            <!-- || item?.quantity=='0' -->
+                                            <a *ngIf="!item?.isRacked && checkPermission('rack-items') && item?.qty>0"
+                                                title="Rack" (click)="openRackingPopUp(item, false)"><i
+                                                    class="ml-1 cursorPointer"><img
+                                                        src="../assets/img/icons/edit_icon.svg" width="20" alt="" /></i>
+                                            </a>
+                                            <!-- <a *ngIf="!item?.isRacked && checkPermission('rack-items') && item?.qty>0"
+                                                title="Rack" (click)="openUploadPopupForRackingItems(item)"><i
+                                                    class="ml-1 cursorPointer"><img
+                                                        src="../assets/img/icons/upload_icon.svg" width="20"
+                                                        alt="" /></i>
+                                            </a> -->
+                                            <a *ngIf="item?.isRacked && checkPermission('reset-racked-items') && (statusCode=='2' || statusCode=='3')"
+                                                title="Reset Racked Items" (click)="resetRackedItems(item)"><i
+                                                    class="ml-1 cursorPointer"><img
+                                                        src="../assets/img/icons/update_icon1.svg" width="20"
+                                                        alt="" /></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr class="accordion-toggle cursorEventsNone" id="accordion1"
+                                        *ngIf="item?.id == selectedItemId">
+                                        <td colspan="12" class="p-0">
+                                            <div class="accordin_table">
+                                                <div class="table_header">
+                                                    <div class="row">
+                                                        <!-- <div class="col"><span class="c_name">Item No.</span></div> -->
+                                                        <!-- <div class="col">HS Code</div> -->
+                                                        <!-- <div class="col">Icon</div> -->
+                                                        <div class="col">Product Id</div>
+                                                        <!-- <div class="col">Sub Location</div> -->
+                                                        <div class="col">Product Description</div>
+                                                        <div class="col">Quantity</div>
+                                                        <div class="col">Weight</div>
+                                                        <div class="col">Custom Value</div>
+                                                        <div class="col" *ngIf="statusCode=='2'">Action</div>
+                                                    </div>
+                                                </div>
+                                                <div *ngIf="rackedItems" class="table_scroll infinte-scroll-div"
+                                                    infiniteScroll [infiniteScrollDistance]="6"
+                                                    style="pointer-events: all !important; max-height: 108px !important;"
+                                                    [infiniteScrollThrottle]="100" (scrolled)="onScroll()"
+                                                    [scrollWindow]="false">
+                                                    <ng-container *ngIf="rackedItems?.length > 0; else no_data1">
+                                                        <div class="row" *ngFor="let item1 of rackedItems">
+                                                            <!-- <div class="col ">{{item1?.id}}</div> -->
+                                                            <!-- <div class="col ">{{item1?.hsCode}}</div> -->
+                                                            <div class="col ">{{item1?.productID}}</div>
+                                                            <!-- <div class="col ">{{item1?.subLocation}}</div> -->
+                                                            <div class="col "> {{item1?.description}} </div>
+                                                            <div class="col "> {{item1?.qty}}</div>
+                                                            <div class="col "> {{item1?.weight}}</div>
+                                                            <div class="col ">{{item1?.customsValue}} </div>
+                                                            <div class="col " *ngIf="statusCode=='2'" title="Rack"
+                                                                (click)="openRackingPopUpForModification(item1, true, item)">
+                                                                <i class="ml-1 cursorPointer"><img
+                                                                        src="../assets/img/icons/edit_icon.svg"
+                                                                        width="20" alt="" /></i>
+                                                            </div>
+                                                        </div>
+                                                    </ng-container>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </ng-container>
+                            </ng-container>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="w-100 text-right mt-3"
+                    *ngIf="!messagesTabSelected && (statusCode=='3'|| statusCode=='2') && checkPermission('rack-items') && sadItemList?.length > 0 ">
+                    <button class="btn btn-md btn-primary" (click)="submitRackedItemsForApproval()">Submit</button>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                <div class="table-responsive">
+                    <table class="table custom_table">
+                        <thead>
+                            <tr>
+                                <th>Officer</th>
+                                <th>Operator </th>
+                                <th>Date</th>
+                                <th>Reason</th>
+                                <th>Reply</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngIf="messageList?.length>0; else no_data">
+                                <tr *ngFor="let message of messageList">
+                                    <td>{{message?.officerData?.firstName}} {{message?.officerData?.lastName}}</td>
+                                    <td>{{message?.operatorData?.firstName}} {{message?.operatorData?.lastName}}</td>
+                                    <td>{{parseTimeString(message?.createdAt)}}</td>
+                                    <td>
+                                        <div class="text_scroll">{{message?.reason || '-'}}</div>
+                                    </td>
+                                    <td>
+                                        <div class="text_scroll">{{message?.reply || '-'}}</div>
+                                    </td>
+                                    <td><button
+                                            [disabled]="message?.reason && roleType=='1' || message?.reply && roleType=='2'"
+                                            class="btn btn-transparent p-0" (click)="openReplyModal(message)"><img
+                                                src="../assets/img/icons/msg_icon.svg" alt="" /></button></td>
+                                </tr>
+                            </ng-container>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- End Table Listing -->
+    <div *ngIf="sadItemList?.length > 0"
+        class="w-100 d-flex align-items-center flex-md-row flex-column justify-content-md-between justify-content-center flex-wrap pagination_block">
+        <div class="d-flex align-items-center row_count">
+            <span class="mb-0 ">No. of Rows</span>
+            <select (change)="onLimitChange($event)" [(ngModel)]="selected_limit" name="selectRows">
+                <option value="10" selected>10</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+            </select>
+        </div>
+
+        <app-pagination [page]="page" (pageChangeEvent)="pageChanged($event)" [collectionSize]="totalRecords"
+            [pageSize]="selected_limit" #appPagination>
+        </app-pagination>
+    </div>
+</div>
+
+<ng-template #no_data>
+    <tr>
+        <td colspan="12">
+            <div class="no-record">
+                No record found
+            </div>
+        </td>
+    </tr>
+</ng-template>
+
+<ng-template #no_data1>
+    <!-- <tr>
+        <td> -->
+    <div class="no-record">
+        No record found
+    </div>
+    <!-- </td>
+    </tr> -->
+</ng-template>

@@ -1,2 +1,75 @@
-<br>
-<h2>Coming Soon</h2>
+<!-- full Detail Modal -->
+
+<div class="modal-content">
+  <div class="modal_div">
+    <div class="card-body">
+      <div class="header-title text-center">
+        <h5>Details</h5>
+      </div>
+      <div class="view_detail">
+        <div class="vd_items">
+          <h6>Receipt</h6>
+          <ul class="list-unstyled">
+            <li>Receipt Number: <strong> {{saleData.receiptNumber}} </strong></li>
+            <li>Receipt Date: <strong> {{getDate(saleData.receiptDate)}} </strong></li>
+          </ul>
+        </div>
+        <div class="vd_items">
+          <h6>Sale Info</h6>
+          <ul class="list-unstyled">
+            <li>Sale Type: <strong> {{saleData?.customerSaleType}} </strong></li>
+            <li>Currency: <strong> {{saleData?.saleCurrency}}</strong></li>
+            <li>Total Sale Value: <strong> {{saleData?.saleValue}} </strong></li>
+            <li>
+          </ul>
+        </div>
+        <div class="vd_items">
+          <h6>Sales Details</h6>
+          <ul class="list-unstyled row">
+            <li class="col-md-6">Customer Name: <strong> {{saleData?.customerName}} </strong></li>
+            <li class="col-md-6">Customer Address: <strong> {{saleData?.customerAddress}} </strong></li>
+            <li class="col-md-6">Document Type: <strong> {{saleData?.customerIdType}}</strong></li>
+            <li class="col-md-6">Document Number: <strong>{{saleData?.customerIdNumber}}</strong></li>
+            <li class="col-md-6">Document Country Issue: <strong> {{saleData?.customerIdCtyIssue}} </strong></li>
+            <li class="col-md-6">Customer Nationality: <strong> {{saleData?.customerNationality}} </strong></li>
+            <li class="col-md-6">Country of Residency: <strong> {{saleData?.countryOfResidency}} </strong></li>
+
+          </ul>
+        </div>
+        <div class="vd_items">
+          <h6>Transport</h6>
+          <ul class="list-unstyled row">
+            <li class="col-md-6">Transport ID: <strong> {{saleData?.customerTransportId}}</strong></li>
+            <li class="col-md-6">Vessel Name: <strong> {{saleData?.vesselName}} </strong></li>
+            <li class="col-md-6">Departure Date: <strong> {{getDate(saleData?.departure)}} </strong></li>
+            <li class="col-md-6">Departure Port: <strong> {{saleData?.portDeparture}}</strong></li>
+          </ul>
+        </div>
+        <div class="vd_items">
+          <h6>Product</h6>
+          <ul class="list-unstyled row">
+            <li class="col-md-3">Product ID: <strong>121565 </strong></li>
+            <li class="col-md-3">Description: <strong>LCD</strong></li>
+            <li class="col-md-3">Quantity <strong>20</strong></li>
+            <li class="col-md-3">Price: <strong>20USD</strong></li>
+            <li class="col-md-3">Product ID: <strong>121565 </strong></li>
+            <li class="col-md-3">Description: <strong>AC</strong></li>
+            <li class="col-md-3">Quantity <strong>20</strong></li>
+            <li class="col-md-3">Price: <strong>20USD</strong></li>
+            <li class="col-md-3">Product ID: <strong>121565 </strong></li>
+            <li class="col-md-3">Description: <strong>Remort</strong></li>
+            <li class="col-md-3">Quantity <strong>20</strong></li>
+            <li class="col-md-3">Price: <strong>20USD</strong></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div class="btn_group text-center">
+        <button class="btn btn-md btn-primary" data-dismiss="modal" aria-label="Close" (click)="closeModal()"> Okay
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End -->

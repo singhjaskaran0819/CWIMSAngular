@@ -14,13 +14,17 @@ export class ReassignPermissionsComponent implements OnInit {
   userid;
   roles;
   role;
-  roleId
+  roleId;
+  roleType;
   constructor(private modalService: ModalService, private formBuilder: FormBuilder, private userService: UserService) { }
 
   ngOnInit(): void {
-    this.getUserDefinedRole();
+
     this.initForm();
     this.reassignRoleForm.patchValue({ role: this.roleId })
+    if (this.roleType) {
+      this.getUserDefinedRole();
+    }
   }
 
   initForm() {
@@ -30,8 +34,8 @@ export class ReassignPermissionsComponent implements OnInit {
   }
 
   getUserDefinedRole() {
-    this.userService.getOrCreateRole().subscribe((res) => {
-      this.roles = res.data;
+    this.userService.getRolesBasedOnType({ "type": this.roleType }).subscribe((res) => {
+      this.roles = res.data.rows;
     })
   }
   get controls() {

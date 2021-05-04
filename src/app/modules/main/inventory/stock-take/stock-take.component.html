@@ -1,2 +1,241 @@
-<br>
-<h2>Coming Soon</h2>
+<div class="page-wrapper">
+  <div class="page-breadcrumb">
+    <div class="row align-items-center">
+      <div class="col-md-12 align-self-center">
+        <ol class="list-unstyled d-flex align-items-center breadcrumb">
+          <li class="breadcrumb-item">
+            <h3 class="page-title"><a [routerLink]="'/main/inventory/list'">Inventory</a></h3>
+          </li>
+          <li class="breadcrumb-item">
+            <a [routerLink]="'/main/inventory/stock-take-list'">Stock take</a>
+          </li>
+          <li class="breadcrumb-item">
+            Edit
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <!-- Breadcrumb -->
+
+  <div class="stoke_take bg-white">
+    <form [formGroup]="form" autocomplete="off">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="wl_group">
+            <div class="form-row">
+              <div class="col-sm-6">
+                <label>Warehouse</label>
+                <div class="form-group">
+                  <!-- <select class="form-control">
+                  <option>Select Wearhouse</option>
+                </select> -->
+                  <select class="form-control" [disabled]="isEdit" formControlName="warehouseCode"
+                    (change)="onSelectWarehouse($event)">
+                    <option selected disabled value="">Select Warehouse</option>
+                    <option *ngFor="let warehouse of warehouseList" value={{warehouse.code}}>{{ warehouse?.name }}
+                    </option>
+                  </select>
+                  <div class="input-errors"
+                    *ngIf="submitted && !editItemFlag && form.controls.warehouseCode.errors?.required"> Please
+                    select warehouse.
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="form-row"> -->
+              <div class="col-sm-6">
+                <label>Location</label>
+                <div class="form-group mb-0">
+                  <select class="form-control" formControlName="locationCode"
+                    [ngClass]="warehouseSelected ? '' : 'disableField'" (change)="onSelectLocation($event)">
+                    <option disabled selected value="">Select Location</option>
+                    <option *ngFor="let item of locations" value={{item?.code}}>{{item?.name}}</option>
+                  </select>
+                  <div class="input-errors"
+                    *ngIf="submitted && !editItemFlag && form.controls.locationCode.errors?.required"> Please
+                    select location.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="pq_group">
+            <div class="form-row">
+              <div class="col-md-4">
+                <label>Product Id</label>
+                <div class="form-group">
+                  <input class="form-control"
+                    [ngClass]="(form.controls.locationCode.value || editItemFlag) ? '' : 'disableField'"
+                    formControlName="productCode" id="search-text" aria-describedby="search-text"
+                    placeholder="Search product id" (input)="searchProductId($event)" (paste)="searchProductId($event)">
+
+                  <ul *ngIf="productsArray?.length > 0" class="list-group list-group-flush data-cell">
+                    <li class="list-group-item" *ngFor="let item of productsArray " (click)="selectedProductId(item)">
+                      {{item.productID}}
+                    </li>
+                  </ul>
+                  <!-- <div class="input-errors" *ngIf="productSearchFlag && !productSelectedFlag">
+                    Product Id not found. Please enter details manually.
+                  </div> -->
+                  <div class=" input-errors" *ngIf="submitted && form.controls.productCode.errors?.required"> Please
+                    enter a product id.
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-8">
+                <label>Description</label>
+                <div class="form-group">
+                  <!-- && productSelectedFlag -->
+                  <input type="text" title="form.controls.description.value"
+                    [class]="form.controls.productCode.valid && productSelectedFlag  ? 'form-control' : 'form-control disableField'"
+                    formControlName="description" />
+                  <div class="input-errors" *ngIf="submitted && form.controls.description.errors?.required">
+                    Please enter description.
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <label>Sub Location</label>
+                <div class="form-group mb-0">
+                  <input type="text"
+                    [class]="form.controls.productCode.valid && productSelectedFlag  ? 'form-control' : 'form-control disableField'"
+                    formControlName="subLocation" />
+                </div>
+              </div>
+              <div class="col-md-4">
+                <label>Quantity</label>
+                <div class="form-group">
+                  <input type="number"
+                    [class]="form.controls.productCode.valid && productSelectedFlag  ? 'form-control' : 'form-control disableField'"
+                    formControlName="stockTakeQuantity" />
+                  <div class="input-errors" *ngIf="submitted && form.controls.stockTakeQuantity.errors?.required">
+                    Please enter quantity.
+                  </div>
+                  <div class="input-errors"
+                    *ngIf="(submitted && !form.controls.stockTakeQuantity.errors?.required) && form.controls.stockTakeQuantity.errors?.pattern">
+                    Quantity must be greater than zero.
+                  </div>
+                </div>
+              </div>
+
+              <!-- </div> -->
+              <!-- <div class="form-row"> -->
+              <div class="col-12 col-md-2 text-center">
+                <label class="d-none d-md-block">&nbsp;</label>
+                <div class="form-group">
+                  <button class="btn btn-md btn-primary mr-2" *ngIf="!editItemFlag" (click)="addStockTakeItems()">
+                    ADD
+                  </button>
+                  <button class="btn btn-md btn-primary" *ngIf="editItemFlag" (click)="updateStockTakeItem()">
+                    UPDATE
+                  </button>
+
+                  <!-- [ngClass]="(form.controls.productCode.invalid || form.controls.stockTakeQuantity.invalid)? 'disableButton': '' " -->
+                </div>
+              </div>
+              <!-- </div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 text-center">
+          <div class="btn_group mt-3">
+            <button [disabled]="stockTakeItemsList.length == 0" class="btn btn-md btn-primary"
+              [ngClass]="totalRecords>0? '': 'disableButton' " (click)="generateVarianceReport()">Generate
+              Report</button>
+            <button class="btn btn-md btn-outline-primary" (click)="cancel()">Cancel</button>
+          </div>
+        </div>
+      </div>
+
+    </form>
+  </div>
+
+  <!-- End Stoke Take -->
+
+  <div class="stoke_list_group mt-4">
+    <div class="form-row justify-content-end">
+      <div class="col-md-4">
+        <div class="form-group">
+          <input type="search" placeholder="Search items" class="form-control" (input)="searchStockTakeItems($event)"
+            [(ngModel)]="searchKeyForStockTakeItems" />
+        </div>
+      </div>
+    </div>
+
+
+    <div class="stoke_list">
+      <div class="table-responsive">
+        <table class="table custom_table">
+          <thead class="">
+            <tr>
+              <th> Product Id</th>
+              <th> Description</th>
+              <th> Stock Take Quantity </th>
+              <th> Warehouse </th>
+              <th> Location</th>
+              <th> Sub Location </th>
+              <th> Inventory status </th>
+              <th> Action </th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngIf="stockTakeItemsList.length>0; else no_data">
+              <tr *ngFor="let item of stockTakeItemsList; let i = index">
+                <td> {{item?.productID }} </td>
+                <td> {{item?.description }} </td>
+                <td> {{item?.qty }} </td>
+                <td> {{item?.warehouseCode }} </td>
+                <td> {{item?.locationCode }} </td>
+                <td> {{item?.subLocation ? item?.subLocation: '-' }} </td>
+                <td>{{item?.inventoryItemStatus == 0 ? 'NOT_FOUND' : 'EXISTS' }}</td>
+                <td>
+                  <div class="d-flex">
+                    <span class="pointer cursorPointer mr-2"><img src="../assets/img/icons/delete_icon.svg" alt=""
+                        (click)="deleteItem(item)" /></span>
+                    <span class="pointer cursorPointer"><img src="../assets/img/icons/edit_icon.svg" alt=""
+                        (click)="editItem(item)" /></span>
+                  </div>
+                </td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div *ngIf="stockTakeItemsList?.length > 0"
+      class="w-100 d-flex align-items-center flex-md-row flex-column justify-content-md-between justify-content-center flex-wrap pagination_block">
+      <div class="d-flex align-items-center row_count">
+        <span class="mb-0 ">No. of Rows</span>
+        <select (change)="onLimitChange($event)" [(ngModel)]="selected_limit" name="selectRows">
+          <option value="10" selected>10</option>
+          <option value="20">20</option>
+          <option value="30">30</option>
+        </select>
+      </div>
+
+      <app-pagination [page]="page" (pageChangeEvent)="pageChanged($event)" [collectionSize]="totalRecords"
+        [pageSize]="selected_limit" #appPagination>
+      </app-pagination>
+    </div>
+
+  </div>
+
+</div>
+
+<ng-template #no_data>
+  <tr>
+    <td colspan="12">
+      <div class="no-record">
+        No record found
+      </div>
+    </td>
+  </tr>
+</ng-template>

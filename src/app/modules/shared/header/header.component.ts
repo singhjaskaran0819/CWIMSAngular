@@ -46,6 +46,7 @@ export class HeaderComponent implements OnInit {
       this.profilePic = this.userDetails?.profilePicture;
       this.roleCode = this.userDetails?.userrole?.id;
       sessionStorage.setItem('warehouseCode', this.userDetails?.warehouse?.code)
+      sessionStorage.setItem('roleType', this.userDetails?.userrole?.type)
       sessionStorage.setItem('roleNature', this.userDetails?.userrole?.nature)
     })
   }

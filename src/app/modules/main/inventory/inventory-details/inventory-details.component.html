@@ -1,2 +1,104 @@
-<br>
-<h2>Coming Soon</h2>
+<div class="modal-content" *ngIf="!groupItemsFlag">
+  <div class="modal_div">
+    <!-- <form> -->
+    <div class="card-body">
+      <div class="header-title text-center">
+        <h5>Full Details</h5>
+      </div>
+      <div class="data_list_view">
+        <div class="d_items d-flex justify-content-between">
+          <span class="l_title">Location</span>
+          <strong>{{details?.warehouselocation?.name? details?.warehouselocation?.name: '-' | titlecase}}</strong>
+        </div>
+        <div class="d_items d-flex justify-content-between">
+          <span class="l_title">Year</span>
+          <strong>{{details?.year? details?.year: '-'}}</strong>
+        </div>
+        <div class="d_items d-flex justify-content-between">
+          <span class="l_title">Number</span>
+          <strong>{{ details?.number? details?.number: '-' }}</strong>
+        </div>
+        <div class="d_items d-flex justify-content-between">
+          <span class="l_title">Serial</span>
+          <strong>{{ details?.serial? details?.serial: '-' }}</strong>
+        </div>
+        <div class="d_items d-flex justify-content-between">
+          <span class="l_title">Warehouse</span>
+          <strong>{{details?.warehouselocation?.warehouse?.name ? details?.warehouselocation?.warehouse?.name:
+            '-'}}</strong>
+        </div>
+        <!-- <div class="d_items d-flex justify-content-between">
+          <span class="l_title">Status</span>
+          <strong> {{details?.status | titlecase}} </strong>
+        </div> -->
+        <div class="d_items d-flex justify-content-between">
+          <span class="l_title">Custom Value</span>
+          <strong>{{ details?.customsValue? details?.customsValue: '-' }}</strong>
+        </div>
+        <div class="d_items d-flex justify-content-between">
+          <span class="l_title">Tariff Code</span>
+          <strong>{{ details?.tariffCode? details?.tariffCode: '-' }}</strong>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="modal-content" *ngIf="groupItemsFlag">
+  <div class="modal_div">
+    <!-- <form> -->
+    <div class="card-body">
+      <div class="header-title text-center">
+        <h5>Group Item Details</h5>
+      </div>
+      <div class="data_list_view">
+        <div class="d_items d-flex justify-content-between">
+          <span class="l_title">Product Id</span>
+          <strong>{{groupItemDetails?.productCode}}
+            <!-- <span class="badge badge-success ml-2">20</span> -->
+          </strong>
+        </div>
+        <div class="d_items d-flex justify-content-between">
+          <span class="l_title">Description</span>
+          <strong>{{ groupItemDetails?.description }}</strong>
+        </div>
+        <div class="d_items d-flex justify-content-between">
+          <span class="l_title"> Total Sets </span>
+          <strong>{{groupItemDetails?.numberOfCombos}}</strong>
+        </div>
+        <div class="d_items d-flex justify-content-between">
+          <span class="l_title">Location</span>
+          <strong>{{groupItemDetails?.locationCode}}</strong>
+        </div>
+        <div class="table-responsive">
+          <h6 class="d_items px-3 gd_title"> Items Description </h6>
+          <table class="table custom_table text-center">
+            <thead>
+              <tr>
+                <th>Product Code</th>
+                <th>Description</th>
+                <th>Quantity Per Set</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of groupItemDetails?.items">
+                <td>{{item?.inventory?.productID}}</td>
+                <td>{{item?.inventory?.description}}</td>
+                <td>{{item?.qty}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="modal-footer">
+  <div class="btn_group text-center">
+    <button class="btn btn-md btn-primary" (click)="closeModal()">Okay</button>
+  </div>
+</div>

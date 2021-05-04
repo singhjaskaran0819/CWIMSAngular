@@ -1,2 +1,537 @@
-<br>
-<h2>Coming Soon</h2>
+<div class="page-wrapper">
+
+    <div class="page-breadcrumb">
+        <div class="d-flex justify-content-between align-items-center flex-md-row flex-column-reverse">
+            <ol class="list-unstyled d-flex align-items-center breadcrumb">
+                <li class="breadcrumb-item">
+                    <h3 class="page-title">Standard Report</h3>
+                </li>
+            </ol>
+            <div class="d-flex justify-content-end top_btns position-relative">
+                <button class="btn btn-md btn-primary" data-target="#newReport" data-toggle="modal">New Report</button>
+                <button class="btn btn-sm btn-primary" onclick="filter();" id="sort" style="display:none;">
+                    <i><img src="../../../../../assets/img/icons/sorting_icon.svg" alt="" /></i>
+                </button>
+                <div class="search_filter filter-sm" id="search_filter" style="display: none;">
+                    <h6 class="f_title">Category</h6>
+                    <ul class="list-unstyled catgory_list">
+                        <li>
+                            <div class="radio_box">
+                                <input type="radio" id="test1" name="radio-group" />
+                                <label for="test1">Sale type</label>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="radio_box">
+                                <input type="radio" id="test2" name="radio-group" />
+                                <label for="test2">Stoke Report</label>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="radio_box">
+                                <input type="radio" id="test3" name="radio-group" />
+                                <label for="test3">Export Report</label>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="d-flex justify-content-center btn-control">
+                        <button class="btn btn-md btn-outline-primary" onclick="filterClose();">Cancel</button>
+                        <button class="btn btn-md btn-primary" onclick="filterClose();">Apply Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb -->
+
+    <div class="inventory_tab">
+        <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <a class="active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
+                    aria-controls="nav-home" aria-selected="true" onclick="sorthide();">All Reports</a>
+                <a class="" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
+                    aria-controls="nav-profile" aria-selected="false" onclick="sortVisible();">Pending Report</a>
+            </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                <div class="table-responsive">
+                    <table class="table custom_table">
+                        <thead>
+                            <tr>
+                                <th>Report Name</th>
+                                <th>Report Description</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Stock report by location</td>
+                                <td>Date-to-Date sales by Warehouse Company</td>
+                                <td><button class="btn btn-sm btn-primary" data-toggle="modal"
+                                        data-target="#criteria">Add Criteria</button></td>
+                            </tr>
+                            <tr class="even" data-toggle="modal" data-target="#criteria">
+                                <td>Stock report by warehouse</td>
+                                <td>Date-to-Date sales by Warehouse grouped by Warehouse Company</td>
+                                <td><button class="btn btn-sm btn-primary" data-toggle="modal"
+                                        data-target="#criteria">Add Criteria</button></td>
+                            </tr>
+                            <tr data-toggle="modal" data-target="#criteria">
+                                <td>Sales report by warehouse</td>
+                                <td>Date-to-Date sales by Warehouse Company</td>
+                                <td><button class="btn btn-sm btn-primary" data-toggle="modal"
+                                        data-target="#criteria">Add Criteria</button></td>
+                            </tr>
+                            <tr class="even">
+                                <td>Export verification by departure date</td>
+                                <td>Date-to-Date sales by Warehouse Company</td>
+                                <td><button class="btn btn-sm btn-primary" data-toggle="modal"
+                                        data-target="#criteria">Add Criteria</button></td>
+                            </tr>
+                            <tr data-toggle="modal" data-target="#criteria">
+                                <td>Stock report by warehouse</td>
+                                <td>Date-to-Date sales by Warehouse Company</td>
+                                <td><button class="btn btn-sm btn-primary">Add Criteria</button></td>
+                            </tr>
+                            <tr class="even">
+                                <td>Stock report by location</td>
+                                <td>List of items sold by port of departure grouped by vessel/flight number</td>
+                                <td><button class="btn btn-sm btn-primary" data-toggle="modal"
+                                        data-target="#criteria">Add Criteria</button></td>
+                            </tr>
+                            <tr>
+                                <td>Stock report by location</td>
+                                <td>Date-to-Date sales by Warehouse Company</td>
+                                <td><button class="btn btn-sm btn-primary" data-toggle="modal"
+                                        data-target="#criteria">Add Criteria</button></td>
+                            </tr>
+                            <tr class="even">
+                                <td>Export verification by departure date</td>
+                                <td>List of items sold by port of departure grouped by vessel/flight number</td>
+                                <td><button class="btn btn-sm btn-primary" data-toggle="modal"
+                                        data-target="#criteria">Add Criteria</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- End Table Listing -->
+            </div>
+            <!-- End tab 1 -->
+
+            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+
+                <div class="table-responsive">
+                    <table class="table custom_table">
+                        <thead>
+                            <tr>
+                                <th>Rep. Code</th>
+                                <th>Assigned</th>
+                                <th>Opr. Name</th>
+                                <th>Category</th>
+                                <th>Purpose</th>
+                                <th>Report Description</th>
+                                <th>Date</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Re123</td>
+                                <td>John Antony</td>
+                                <td>Rob Jaskson</td>
+                                <td>Sale Type</td>
+                                <td>For Knowledge</td>
+                                <td>Lorem Ipsum Dolor sit Ames</td>
+                                <td>04-12-2020 </td>
+                                <td>
+                                    <div class="dropdown dots_btn" id="Div1">
+                                        <button class="btn-transparent p-0 dropdown-toggle" type="button"
+                                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false">
+                                            <img src="../../../../../assets/img/icons/dots_icons.svg" alt="" />
+                                        </button>
+                                        <div class="dropdown-menu approval_btn" aria-labelledby="dropdownMenuButton">
+                                            <a class="dropdown-item" href="#" onclick="switchVisible();"><i
+                                                    class="mr-1"><img src="../../../../../assets/img/icons/accept_icon.svg"
+                                                        alt="" /></i> Approve</a>
+                                            <a class="dropdown-item" href="#"><i class="mr-1"><img
+                                                        src="../../../../../assets/img/icons/reject_icon.svg" alt="" /></i>
+                                                Reject</a>
+                                        </div>
+                                    </div>
+
+                                    <button id="Div2" class="btn btn-sm btn-primary" data-target="#assign"
+                                        data-toggle="modal" style="display:none;">Assign</button>
+                                </td>
+                            </tr>
+                            <tr class="even">
+                                <td>Re123</td>
+                                <td>John Antony</td>
+                                <td>Rob Jaskson</td>
+                                <td>Sale Type</td>
+                                <td>For Knowledge</td>
+                                <td>Lorem Ipsum Dolor sit Ames</td>
+                                <td>04-12-2020 </td>
+                                <td>
+                                    <div class="dropdown dots_btn" id="Div1">
+                                        <button class="btn-transparent p-0 dropdown-toggle" type="button"
+                                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false">
+                                            <img src="../../../../../assets/img/icons/dots_icons.svg" alt="" />
+                                        </button>
+                                        <div class="dropdown-menu approval_btn" aria-labelledby="dropdownMenuButton">
+                                            <a class="dropdown-item" href="#" onclick="switchVisible();"><i
+                                                    class="mr-1"><img src="../../../../../assets/img/icons/accept_icon.svg"
+                                                        alt="" /></i> Approve</a>
+                                            <a class="dropdown-item" href="#"><i class="mr-1"><img
+                                                        src="../../../../../assets/img/icons/reject_icon.svg" alt="" /></i>
+                                                Reject</a>
+                                        </div>
+                                    </div>
+
+                                    <button id="Div2" class="btn btn-sm btn-primary" data-target="#assign"
+                                        data-toggle="modal" style="display:none;">Assign</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Re123</td>
+                                <td>John Antony</td>
+                                <td>Rob Jaskson</td>
+                                <td>Sale Type</td>
+                                <td>For Knowledge</td>
+                                <td>Lorem Ipsum Dolor sit Ames</td>
+                                <td>04-12-2020 </td>
+                                <td>
+                                    <div class="dropdown dots_btn" id="Div1">
+                                        <button class="btn-transparent p-0 dropdown-toggle" type="button"
+                                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false">
+                                            <img src="../../../../../assets/img/icons/dots_icons.svg" alt="" />
+                                        </button>
+                                        <div class="dropdown-menu approval_btn" aria-labelledby="dropdownMenuButton">
+                                            <a class="dropdown-item" href="#" onclick="switchVisible();"><i
+                                                    class="mr-1"><img src="../../../../../assets/img/icons/accept_icon.svg"
+                                                        alt="" /></i> Approve</a>
+                                            <a class="dropdown-item" href="#"><i class="mr-1"><img
+                                                        src="../../../../../assets/img/icons/reject_icon.svg" alt="" /></i>
+                                                Reject</a>
+                                        </div>
+                                    </div>
+
+                                    <button id="Div2" class="btn btn-sm btn-primary" data-target="#assign"
+                                        data-toggle="modal" style="display:none;">Assign</button>
+                                </td>
+                            </tr>
+                            <tr class="even">
+                                <td>Re123</td>
+                                <td>John Antony</td>
+                                <td>Rob Jaskson</td>
+                                <td>Sale Type</td>
+                                <td>For Knowledge</td>
+                                <td>Lorem Ipsum Dolor sit Ames</td>
+                                <td>04-12-2020 </td>
+                                <td>
+                                    <div class="dropdown dots_btn" id="Div1">
+                                        <button class="btn-transparent p-0 dropdown-toggle" type="button"
+                                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false">
+                                            <img src="../../../../../assets/img/icons/dots_icons.svg" alt="" />
+                                        </button>
+                                        <div class="dropdown-menu approval_btn" aria-labelledby="dropdownMenuButton">
+                                            <a class="dropdown-item" href="#" onclick="switchVisible();"><i
+                                                    class="mr-1"><img src="../../../../../assets/img/icons/accept_icon.svg"
+                                                        alt="" /></i> Approve</a>
+                                            <a class="dropdown-item" href="#"><i class="mr-1"><img
+                                                        src="../../../../../assets/img/icons/reject_icon.svg" alt="" /></i>
+                                                Reject</a>
+                                        </div>
+                                    </div>
+
+                                    <button id="Div2" class="btn btn-sm btn-primary" data-target="#assign"
+                                        data-toggle="modal" style="display:none;">Assign</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Re123</td>
+                                <td>John Antony</td>
+                                <td>Rob Jaskson</td>
+                                <td>Sale Type</td>
+                                <td>For Knowledge</td>
+                                <td>Lorem Ipsum Dolor sit Ames</td>
+                                <td>04-12-2020 </td>
+                                <td>
+                                    <div class="dropdown dots_btn" id="Div1">
+                                        <button class="btn-transparent p-0 dropdown-toggle" type="button"
+                                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false">
+                                            <img src="../../../../../assets/img/icons/dots_icons.svg" alt="" />
+                                        </button>
+                                        <div class="dropdown-menu approval_btn" aria-labelledby="dropdownMenuButton">
+                                            <a class="dropdown-item" href="#" onclick="switchVisible();"><i
+                                                    class="mr-1"><img src="../../../../../assets/img/icons/accept_icon.svg"
+                                                        alt="" /></i> Approve</a>
+                                            <a class="dropdown-item" href="#"><i class="mr-1"><img
+                                                        src="../../../../../assets/img/icons/reject_icon.svg" alt="" /></i>
+                                                Reject</a>
+                                        </div>
+                                    </div>
+
+                                    <button id="Div2" class="btn btn-sm btn-primary" data-target="#assign"
+                                        data-toggle="modal" style="display:none;">Assign</button>
+                                </td>
+                            </tr>
+                            <tr class="even">
+                                <td>Re123</td>
+                                <td>John Antony</td>
+                                <td>Rob Jaskson</td>
+                                <td>Sale Type</td>
+                                <td>For Knowledge</td>
+                                <td>Lorem Ipsum Dolor sit Ames</td>
+                                <td>04-12-2020 </td>
+                                <td>
+                                    <div class="dropdown dots_btn" id="Div1">
+                                        <button class="btn-transparent p-0 dropdown-toggle" type="button"
+                                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false">
+                                            <img src="../../../../../assets/img/icons/dots_icons.svg" alt="" />
+                                        </button>
+                                        <div class="dropdown-menu approval_btn" aria-labelledby="dropdownMenuButton">
+                                            <a class="dropdown-item" href="#" onclick="switchVisible();"><i
+                                                    class="mr-1"><img src="../../../../../assets/img/icons/accept_icon.svg"
+                                                        alt="" /></i> Approve</a>
+                                            <a class="dropdown-item" href="#"><i class="mr-1"><img
+                                                        src="../../../../../assets/img/icons/reject_icon.svg" alt="" /></i>
+                                                Reject</a>
+                                        </div>
+                                    </div>
+
+                                    <button id="Div2" class="btn btn-sm btn-primary" data-target="#assign"
+                                        data-toggle="modal" style="display:none;">Assign</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Re123</td>
+                                <td>John Antony</td>
+                                <td>Rob Jaskson</td>
+                                <td>Sale Type</td>
+                                <td>For Knowledge</td>
+                                <td>Lorem Ipsum Dolor sit Ames</td>
+                                <td>04-12-2020 </td>
+                                <td>
+                                    <div class="dropdown dots_btn" id="Div1">
+                                        <button class="btn-transparent p-0 dropdown-toggle" type="button"
+                                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false">
+                                            <img src="../../../../../assets/img/icons/dots_icons.svg" alt="" />
+                                        </button>
+                                        <div class="dropdown-menu approval_btn" aria-labelledby="dropdownMenuButton">
+                                            <a class="dropdown-item" href="#" onclick="switchVisible();"><i
+                                                    class="mr-1"><img src="../../../../../assets/img/icons/accept_icon.svg"
+                                                        alt="" /></i> Approve</a>
+                                            <a class="dropdown-item" href="#"><i class="mr-1"><img
+                                                        src="../../../../../assets/img/icons/reject_icon.svg" alt="" /></i>
+                                                Reject</a>
+                                        </div>
+                                    </div>
+
+                                    <button id="Div2" class="btn btn-sm btn-primary" data-target="#assign"
+                                        data-toggle="modal" style="display:none;">Assign</button>
+                                </td>
+                            </tr>
+                            <tr class="even">
+                                <td>Re123</td>
+                                <td>John Antony</td>
+                                <td>Rob Jaskson</td>
+                                <td>Sale Type</td>
+                                <td>For Knowledge</td>
+                                <td>Lorem Ipsum Dolor sit Ames</td>
+                                <td>04-12-2020 </td>
+                                <td>
+                                    <div class="dropdown dots_btn" id="Div1">
+                                        <button class="btn-transparent p-0 dropdown-toggle" type="button"
+                                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false">
+                                            <img src="../../../../../assets/img/icons/dots_icons.svg" alt="" />
+                                        </button>
+                                        <div class="dropdown-menu approval_btn" aria-labelledby="dropdownMenuButton">
+                                            <a class="dropdown-item" href="#" onclick="switchVisible();"><i
+                                                    class="mr-1"><img src="../../../../../assets/img/icons/accept_icon.svg"
+                                                        alt="" /></i> Approve</a>
+                                            <a class="dropdown-item" href="#"><i class="mr-1"><img
+                                                        src="../../../../../assets/img/icons/reject_icon.svg" alt="" /></i>
+                                                Reject</a>
+                                        </div>
+                                    </div>
+
+                                    <button id="Div2" class="btn btn-sm btn-primary" data-target="#assign"
+                                        data-toggle="modal" style="display:none;">Assign</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- End Table Listing -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Assign Modal-->
+<div class="modal fade" id="assign" tabindex="-1" role="dialog" aria-labelledby="assign" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal_div">
+                <form action="">
+                    <div class="card-body">
+                        <div class="header-title text-center">
+                            <h5>Assign Report</h5>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-12">
+                                <label>Name</label>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="" />
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <label>Role</label>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="" />
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <label>Description</label>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="" />
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <label>Deadline</label>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="btn_group text-center">
+                            <button class="btn btn-md btn-outline-primary" data-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-md btn-primary" data-dismiss="modal"
+                                onclick="dotVisible();">Assign</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Assign Modal -->
+
+<!-- criteria Modal-->
+<div class="modal fade" id="criteria" tabindex="-1" role="dialog" aria-labelledby="criteria" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal_div">
+                <form action="export-verification.html">
+                    <div class="card-body">
+                        <div class="header-title text-center">
+                            <h5>Criteria</h5>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-6">
+                                <label>Start Date</label>
+                                <div class="form-group">
+                                    <input type="date" class="form-control" placeholder="Start Date" />
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <label>End Date</label>
+                                <div class="form-group">
+                                    <input type="date" class="form-control" placeholder="End Date" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="col-6">
+                                <label>Warehouse Code</label>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="" />
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <label>Location Code</label>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="btn_group text-center">
+                            <button class="btn btn-md btn-outline-primary" data-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-md btn-primary">Generate</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Modal -->
+
+<!-- New Report Modal -->
+<div class="modal fade" id="newReport" tabindex="-1" role="dialog" aria-labelledby="newReport" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal_div">
+                <form rel="">
+                    <div class="card-body">
+                        <div class="header-title text-center">
+                            <h5>Create New Report</h5>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <label>Report Code</label>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="JH_89" />
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <label>Report Description</label>
+                                <div class="form-group">
+                                    <textarea class="form-control" placeholder="" rows="3"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <label>Report Description</label>
+                                <div id="drop_file_zone" ondrop="upload_file(event)" ondragover="return false">
+                                    <div id="drag_upload_file">
+                                        <i><img src="../../../../../assets/img/icons/upload_icon.svg" alt="" /></i>
+                                        <p>
+                                            Drag and Drop here
+                                            <br />
+                                            or
+                                        </p>
+                                        <div class="input_file">
+                                            <input type="file" id="selectfile" />
+                                            <label>Browse file</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="btn_group text-center">
+                            <button class="btn btn-md btn-outline-primary" data-dismiss="modal">Cancel</button>
+                            <button class="btn btn-md btn-primary" data-dismiss="modal">Send</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Modal -->

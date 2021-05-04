@@ -13,7 +13,7 @@ export class PaginationComponent implements OnInit {
   rotate = true;
   ellipses = true;
   boundaryLinks = true;
-  @Input() collectionSize;
+  @Input() collectionSize= 120;
   @Input() page = 1;
   @Input() pageSize = 20;
 

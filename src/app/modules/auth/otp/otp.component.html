@@ -8,17 +8,25 @@
                     Warehouse Inventory<br />
                     Management System</h2>
             </div>
+            <!-- action="/officer/dashboard.html" method="post" -->
             <form class="form-box">
                 <div class="box_title">
                     <h3 class="text-center">Enter OTP</h3>
                     <p class="mb-md-5">Please enter code sent to your email</p>
                 </div>
                 <div class="d-flex">
+                    <!-- #ngOtpInput -->
                     <ng-otp-input #ngOtpInput (onInputChange)="onOtpChange($event)" [config]="config"></ng-otp-input>
                 </div>
+                <div class="col-12" *ngIf="otpSent && counter>0">
+                    <p> Your otp will expire in {{counter | formatTime}} minutes.</p>
+                </div>
+                <div class="col-12" *ngIf="counter==0">
+                    <p> Your otp has expired. Click on resend otp to get a new one.</p>
+                </div>
 
-                <div class="mt-2 cursorPointer">
-                    <a (click)="resendOtp()" class="font-weight-bold">Resend Code?</a>
+                <div class="mt-2 cursorPointer" *ngIf="counter==0">
+                    <a (click)="resendOtp()" class="font-weight-bold">Resend otp?</a>
                 </div>
 
                 <div class="row">

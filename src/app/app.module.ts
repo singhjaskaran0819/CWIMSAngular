@@ -26,12 +26,21 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerModule } from 'ngx-spinner';
 // import { NgxCaptchaModule } from 'ngx-captcha';
 import { SpinnerComponent } from './common/spinner/spinner.component';
+import { BnNgIdleService } from 'bn-ng-idle';
+import { ComingSoonComponent } from './common/coming-soon/coming-soon.component';
+import { MainComponent } from './modules/main/main.component';
+
+
+// import { ApprovalStatusPipe } from './core/pipes/approval-status.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     NotFoundComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    ComingSoonComponent
+
+    // ApprovalStatusPipe
   ],
   imports: [
     BrowserModule,
@@ -55,6 +64,7 @@ import { SpinnerComponent } from './common/spinner/spinner.component';
     NgxSpinnerModule
   ],
   providers: [
+    BnNgIdleService,
     HttpService,
     {
       provide: HTTP_INTERCEPTORS,

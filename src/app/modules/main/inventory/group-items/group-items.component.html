@@ -1,2 +1,90 @@
-<br>
-<h2>Coming Soon</h2>
+<!-- Stock Take Modal -->
+<div class="modal-content">
+  <div class="modal_div">
+    <form [formGroup]="groupItemsForm">
+      <div class="card-body" id="tableToModify">
+        <div class="header-title text-center mb-4">
+          <h5 class="mb-2">Group Items</h5>
+          <p>You are going to group (pack) the selected entries together into a new entry having the following
+            details:</p>
+        </div>
+        <div class="form-row">
+          <div class="col-6">
+            <label>Product Code</label>
+            <div class="form-group">
+              <input type="text" formControlName="productCode" class="form-control" placeholder="" />
+              <div class="input-errors" *ngIf="submitted && controls?.productCode?.errors "> Product Code can't be
+                empty.
+              </div>
+            </div>
+          </div>
+
+          <div class="col-6">
+            <label>Description</label>
+            <div class="form-group">
+              <input type="text" formControlName="description" class="form-control" placeholder="" />
+              <div class="input-errors" *ngIf="submitted &&  controls?.description?.errors"> Description can't be empty.
+              </div>
+            </div>
+          </div>
+          <!-- <div class="input-errors"
+            *ngIf="submitted && (controls?.productCode?.errors || controls?.description?.errors)"> Product Id and
+            Description can't be empty </div> -->
+        </div>
+        <div class="form-row">
+          <div class="col-6">
+            <label> Group Quantity </label>
+            <div class="form-group">
+              <input type="number" (keypress)="($event.charCode >= 48 && $event.charCode < 58)"
+                formControlName="groupQty" class="form-control" placeholder="" />
+              <div class="input-errors" *ngIf="submitted && controls?.groupQty?.errors?.required"> Group quantity can't
+                be empty.
+              </div>
+              <div class="input-errors"
+                *ngIf="submitted && !controls?.groupQty?.errors?.required && controls.groupQty?.errors?.pattern ">
+                Group Quantity can't be 0 or less than 0.</div>
+            </div>
+          </div>
+        </div>
+        <!-- </div> -->
+
+        <div class="form-row">
+          <div class="col-12">
+            <label>Quantity Per Set</label>
+
+            <div class="group_items ">
+              <div class="row">
+                <!-- <div > -->
+                <div class="col-md-6" *ngFor="let item of selectedProducts; let i = index">
+                  <div class="d-flex align-items-center">
+                    <div class="form-group">
+                      <label> {{ item.productId }}</label>
+                      <input type="number" (keypress)="($event.charCode >= 48 && $event.charCode < 58)"
+                        class="form-control" [(ngModel)]="item.quantity" [ngModelOptions]="{standalone: true}"
+                        (change)="quantityOfItemsChanged()" />
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <div class="input-errors" *ngIf="submitted && emptyQuantity"> Please enter quantity for all items. </div>
+            <div class="input-errors" *ngIf="submitted && quantityLessThanZero"> Quantity of any item can't be less than
+              0 or 0. </div>
+            <div class="input-errors" *ngIf="submitted && quantityLess && !emptyQuantity "> Kindly check the quantities
+              of each item. It
+              can't be greater than the remaining quantity. </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <div class="btn_group text-center">
+          <button class="btn btn-md btn-outline-primary" (click)="cancelGrouping()">Cancel</button>
+          <button class="btn btn-md btn-primary" (click)="applyGrouping()">Apply</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<!-- End Stock Take -->

@@ -30,9 +30,14 @@
                                     </h6>
                                     <span> {{userDetails?.userrole?.title | titlecase}}</span>
                                 </div>
-                                <span class="badge status_badge"
+                                <span *ngIf="!userDetails?.isDeleted && !userDetails?.isSuspended"
+                                    class="badge status_badge"
                                     [ngClass]="userDetails?.status =='1' ?'badge-success': (userDetails?.status =='2' ? 'badge-danger': 'badge-secondary')">{{userDetails?.status
                                     | approvalStatus | titlecase}}</span>
+                                <span *ngIf="userDetails?.isDeleted && !userDetails?.isSuspended"
+                                    class="badge status_badge badge-dark">Deleted</span>
+                                <span *ngIf="!userDetails?.isDeleted && userDetails?.isSuspended"
+                                    class="badge status_badge badge-secondary">Suspended</span>
                             </div>
                         </div>
                     </div>
@@ -65,13 +70,18 @@
                                         <span>{{ userDetails?.phoneNumber }}</span>
                                     </div>
                                 </div>
-
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Email</label>
+                                        <span>{{ userDetails?.email }}</span>
+                                    </div>
+                                </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label>Address</label>
-                                        <span>{{ userDetails?.street | titlecase }}, {{ userDetails?.city | titlecase
-                                            }}, {{
-                                            userDetails?.country | titlecase }}</span>
+                                        <span> {{ userDetails?.street | titlecase }}, {{ userDetails?.city | titlecase
+                                            }}, {{ userDetails?.country | titlecase }} - {{
+                                            userDetails?.postalCode }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -88,7 +98,8 @@
                                 <!-- <div class="col-8"><label>Company</label></div> -->
                             </div>
                             <div class="row">
-                                <div class="col-4"><span> {{ userDetails?.warehouse?.name }}</span></div>
+                                <div class="col-4"><span> {{ userDetails?.warehouse?.name ?
+                                        userDetails?.warehouse?.name: '-' }}</span></div>
                                 <!-- <div class="col-8"><span>SLU01, ABV12, HR123, JHF45</span></div> -->
                             </div>
                         </div>

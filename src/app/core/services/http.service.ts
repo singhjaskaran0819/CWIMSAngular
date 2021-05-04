@@ -14,6 +14,11 @@ export class HttpService {
     // "authorization": sessionStorage.getItem("token")
   });
 
+  headersForMultiPartForm = new HttpHeaders({
+    'Content-Type': 'multipart/form-data'
+  })
+
+
   constructor(private httpClient: HttpClient) {
     this.handleError = this.handleError.bind(this)
   }
@@ -30,17 +35,32 @@ export class HttpService {
 
   public getData(apiPath: string, data?: any) {
     let url = this.API_SERVER;
-    return this.httpClient.get<any>(`${url}${apiPath}`, { params: data })
+    if (apiPath.includes('get-messages')) {
+      return this.httpClient.get<any>(`${this.API_SERVER}/v1/declaration/get-messages`, { params: data });
+    } else {
+      return this.httpClient.get<any>(`${url}${apiPath}`, { ...(data && { params: data }) })
+    }
   }
 
-  public postData(apiPath: string, data?: any) {
+  public postData(apiPath: string, data?: any, params?: any) {
     if (apiPath.includes('forgot-password')) {
       return this.httpClient.post<any>(`${this.API_SERVER}/v1/user/forgot-password`, data);
     }
+    else if (apiPath.includes('reply-to-message')) {
+      return this.httpClient.post<any>(`${this.API_SERVER}/v1/declaration/reply-to-message`, data);
+    }
     else {
-      return this.httpClient.post<any>(`${this.API_SERVER}${apiPath}`, data);
+      return this.httpClient.post<any>(`${this.API_SERVER}${apiPath}`, data, { params: params });
     }
 
+  }
+
+  public postUploadData(apiPath: string, data?: any) {
+    return this.httpClient.post<any>(`${this.API_SERVER}${apiPath}`, data, {
+      headers: new HttpHeaders({
+        'Accept': 'multipart/form-data'
+      })
+    });
   }
 
   public patchData(apiPath: string, data?: any, params?: HttpParams) {
@@ -49,8 +69,7 @@ export class HttpService {
     }), catchError(this.handleError));
   }
 
-  public putData(apiPath: string, data?: any) {
-
+  public putData(apiPath: string, data?: any, params?: HttpParams) {
     if (apiPath.includes("reset-password")) {
       return this.httpClient.put<any>(`${this.API_SERVER}/v1/user/reset-password`, data).pipe(catchError(this.handleError));
     } else if (apiPath.includes("updateUser")) {
@@ -58,7 +77,7 @@ export class HttpService {
     }
     else {
       const url = `${this.API_SERVER}${apiPath}`;
-      return this.httpClient.put<any>(url, data);
+      return this.httpClient.put<any>(url, data, { params: params });
     }
   }
 

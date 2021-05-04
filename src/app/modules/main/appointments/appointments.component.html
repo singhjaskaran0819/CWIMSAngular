@@ -1,2 +1,102 @@
-<br>
-<h2>Coming Soon</h2>
+<div class="page-wrapper">
+
+    <div class="page-breadcrumb">
+        <div class="d-flex justify-content-between align-items-center flex-md-row flex-column-reverse">
+            <ol class="list-unstyled d-flex align-items-center breadcrumb">
+                <li class="breadcrumb-item">
+                    <h3 class="page-title">Appointment</h3>
+                </li>
+            </ol>
+        </div>
+    </div>
+    <!-- Breadcrumb -->
+
+    <div class="panel_box">
+
+        <div class="table-responsive">
+            <table class="table custom_table">
+                <thead>
+                    <tr>
+                        <th>Assigned</th>
+                        <th>Location</th>
+                        <th>Purpose</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td>Company1</td>
+                        <td>Examiner green lane cargo</td>
+                        <td>04-12-2020 </td>
+                        <td>11Am</td>
+                        <td>
+                            <div class="dropdown dots_btn" id="Div1">
+                                <button class="btn-transparent p-0 dropdown-toggle" type="button"
+                                    id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">
+                                    <img src="../assets/img/icons/dots_icons.svg" alt="" />
+                                </button>
+                                <div class="dropdown-menu approval_btn" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="#" onclick="switchApproved();"><i class="mr-1"><img
+                                                src="../assets/img/icons/accept_icon.svg" alt="" /></i> Approve</a>
+                                    <a class="dropdown-item" href="#" onclick="switchReject();"><i class="mr-1"><img
+                                                src="../assets/img/icons/reject_icon.svg" alt="" /></i> Reject</a>
+                                </div>
+                            </div>
+                            <button id="accept" class="badge badge-success status_badge"
+                                style="display:none;">Approved</button>
+                            <button id="reject" class="badge badge-danger status_badge"
+                                style="display:none;">Rejected</button>
+                        </td>
+                    </tr>
+                    <tr class="even">
+                        <td>John Antony</td>
+                        <td>Company1</td>
+                        <td>Examiner green lane cargo</td>
+                        <td>04-12-2020 </td>
+                        <td>11Am</td>
+                        <td><button id="accept" class="badge badge-success status_badge">Approved</button></td>
+                    </tr>
+                    <tr>
+                        <td>David Jake</td>
+                        <td>Company1</td>
+                        <td>Examiner green lane cargo</td>
+                        <td>04-12-2020 </td>
+                        <td>11Am</td>
+                        <td><button id="reject" class="badge badge-danger status_badge">Rejected</button></td>
+                    </tr>
+                    <tr class="even">
+                        <td>Jhone</td>
+                        <td>Company1</td>
+                        <td>Examiner green lane cargo</td>
+                        <td>04-12-2020 </td>
+                        <td>11Am</td>
+                        <td><button id="accept" class="badge badge-success status_badge">Approved</button></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Company1</td>
+                        <td>Examiner green lane cargo</td>
+                        <td>04-12-2020 </td>
+                        <td>11Am</td>
+                        <td><button id="reject" class="badge badge-danger status_badge">Rejected</button></td>
+                    </tr>
+                    <tr class="even">
+                        <td></td>
+                        <td>Company1</td>
+                        <td>Examiner green lane cargo</td>
+                        <td>04-12-2020 </td>
+                        <td>11Am</td>
+                        <td>
+                            <button id="reject" class="badge badge-danger status_badge">Rejected</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- End Table Listing -->
+    </div>
+</div>

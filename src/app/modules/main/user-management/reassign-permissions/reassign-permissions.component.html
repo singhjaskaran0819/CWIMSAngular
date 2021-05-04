@@ -21,12 +21,32 @@
         </div>
       </div>
     </div>
-
+      <!-- 
+      <div class="row">
+        <div class="col-12">
+          <label>First Name</label>
+          <div class="form-group">
+            <input type="text" formControlName="firstName" name="firstName" id="firstName" class="form-control" />
+            <div class="input-errors"
+              *ngIf="(submitted || controls.firstName?.touched) && controls.firstName?.errors?.required">
+              First Name is required
+            </div>
+            <div class=" input-errors"
+              *ngIf="(submitted || controls.firstName?.touched) && controls.firstName?.errors?.pattern">
+              First Name can contain only alphabets
+            </div>
+            <div class="input-errors"
+              *ngIf="(submitted || controls.firstName?.touched) && !controls.firstName?.errors?.pattern && controls.firstName?.errors?.maxlength">
+              First name can contain only 15 characters
+            </div>
+          </div>
+        </div>
+      </div> -->
     <div class="modal-footer">
       <div class="btn_group text-center">
-        <button class="btn btn-md btn-outline-primary" (click)="cancel()">Cancel</button>
-        <button typ="button" (click)="submit()" class="btn btn-md btn-primary">Submit</button>
+          <button class="btn btn-md btn-outline-primary" (click)="cancel()">Cancel</button>  
+          <button typ="button" (click)="submit()" class="btn btn-md btn-primary">Submit</button>        
       </div>
     </div>
   </form>
-</div>
+ </div>

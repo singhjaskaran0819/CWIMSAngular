@@ -1,3 +1,5 @@
+<!-- <div class="modal fade" id="userDetail" tabindex="-1" role="dialog" aria-labelledby="userDetail">
+	  <div class="modal-dialog modal-dialog-centered" role="document"> -->
 <div class="modal-content">
   <div class="modal_div">
     <button type="button" class="close" (click)="close()"><img src="../assets/img/icons/close_icon.svg"
@@ -5,7 +7,7 @@
 
     <div class="card-body">
       <div class="header-title text-center">
-        <h5>Detail</h5>
+        <h5>Details</h5>
       </div>
       <div class="data_list_view">
         <div class="d_items d-flex justify-content-between">
@@ -14,7 +16,16 @@
         </div>
         <div class="d_items d-flex justify-content-between">
           <span class="l_title">Role</span>
-          <strong>{{ userDetails?.role | userRole | titlecase }}</strong>
+          <strong>{{ userDetails?.userrole?.title | titlecase }}</strong>
+          <!-- <select class="form-control" aria-expanded="true" [(ngModel)]="role" required>
+            <option disabled selected> </option>
+        
+            <option *ngFor="let role of roles" value={{role.id}}>{{role.title | titlecase }}</option>
+          </select> -->
+        </div>
+        <div class="d_items d-flex justify-content-between">
+          <span class="l_title">email</span>
+          <strong>{{userDetails?.email}}</strong>
         </div>
         <div class="d_items d-flex justify-content-between">
           <span class="l_title">Phone Number</span>
@@ -24,14 +35,15 @@
           <span class="l_title">Warehouse Code</span>
           <strong>{{ userDetails?.warehouseCode}}</strong>
         </div>
-        <div class="d_items d-flex justify-content-between">
+        <!-- <div class="d_items d-flex justify-content-between">
           <span class="l_title">Position</span>
           <strong>{{userDetails?.position | userPosition:userDetails?.role | titlecase }}</strong>
-        </div>
+        </div> -->
         <div class="d_items d-flex justify-content-between">
           <span class="l_title">Address</span>
-          <strong> {{ userDetails?.addressLine1 | titlecase }} {{ userDetails?.city | titlecase }} {{
-            userDetails?.country | titlecase }} </strong>
+          <strong> {{ userDetails?.street | titlecase }}, {{ userDetails?.city | titlecase }}, {{
+            userDetails?.country | titlecase }} - {{
+            userDetails?.postalCode }} </strong>
         </div>
       </div>
     </div>
@@ -45,3 +57,5 @@
 
   </div>
 </div>
+<!-- </div>
+	</div> -->

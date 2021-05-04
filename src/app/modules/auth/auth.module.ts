@@ -12,7 +12,12 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { OtpComponent } from './otp/otp.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { NgxCaptchaModule } from 'ngx-captcha';
+import { EditInformationComponent } from './edit-information/edit-information.component';
+import { PendingApprovalComponent } from './pending-approval/pending-approval.component';
 // import { RecaptchaModule, RecaptchaFormsModule } from "ng-recaptcha";
+import { FormatTimePipe } from '../../core/pipes/format-time.pipe';
+
+import { otpGuard } from '../../core/guards/auth-guard';
 
 const route: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -20,7 +25,9 @@ const route: Routes = [
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'reset-password/:id', component: ResetPasswordComponent },
   { path: 'sign-up', component: SignUpComponent },
-  { path: 'otp', component: OtpComponent }
+  { path: 'otp', canActivate: [otpGuard], component: OtpComponent },
+  { path: 're-ge-veri', component: PendingApprovalComponent },
+  { path: 'edit/:userId', component: EditInformationComponent }
 ]
 
 @NgModule({
@@ -29,7 +36,10 @@ const route: Routes = [
     ForgotPasswordComponent,
     ResetPasswordComponent,
     OtpComponent,
-    SignUpComponent
+    SignUpComponent,
+    EditInformationComponent,
+    PendingApprovalComponent,
+    FormatTimePipe
   ],
   imports: [
     CommonModule,
@@ -49,6 +59,7 @@ const route: Routes = [
     ResetPasswordComponent
   ],
   providers: [
+    otpGuard
     // LoaderService,
     // ToastMessageService
   ]

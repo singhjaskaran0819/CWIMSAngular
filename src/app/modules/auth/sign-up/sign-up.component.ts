@@ -43,11 +43,11 @@ export class SignUpComponent implements OnInit {
   isLoggedIn;
   role;
   hideWarehouse = false;
+  countryIso = CountryISO.Barbados;
   constructor(private router: Router, private formBuilder: FormBuilder, private authService: AuthService) { }
 
   ngOnInit(): void {
     this.submitted = false;
-
     this.countries = countriesNames.all();
     this.getWarehouseList();
     this.getRoles();
@@ -72,6 +72,7 @@ export class SignUpComponent implements OnInit {
       email: ['', [Validators.required, Validators.pattern(REGEX.EMAIL), Validators.maxLength(70)]],
       password: ['', [Validators.required, Validators.pattern(REGEX.PASSWORD), Validators.maxLength(15)]],
       recaptcha: ['', Validators.required]
+      // recaptcha: ['']
     });
   }
 
@@ -97,9 +98,8 @@ export class SignUpComponent implements OnInit {
 
   selectRole(event) {
     this.hideWarehouse = false;
-
+    // this.signUpForm.patchValue({ position: '' })
     this.signUpForm.patchValue({ warehouseCode: '' })
-
     if (this.signUpForm.value.role.toUpperCase() == "3" || this.signUpForm.value.role.toUpperCase() == "4") {
       // this.userPositions = this.operatorPositions;
       // this.signUpForm.get('position').enable();
@@ -122,13 +122,13 @@ export class SignUpComponent implements OnInit {
     }
 
     this.roleCode = event.target.value;
-
   }
 
   selectCountry(event) {
   }
 
   countryChange(event) {
+    this.countryIso = event.iso2;
   }
 
   selectedCountry;
@@ -190,15 +190,19 @@ export class SignUpComponent implements OnInit {
       "postalCode": this.signUpForm.value.zipCode,
       "warehouseCode": this.signUpForm.value.warehouseCode,
       "profilePicture": this.url,
+      "countryIso": this.countryIso,
       "password": this.signUpForm.value.password
     }
     if (data.warehouseCode == "") {
       delete data.warehouseCode;
     }
+
     this.authService.signUp(data).subscribe((res) => {
       // sessionStorage.setItem("token", res.data);
-      sessionStorage.setItem("roleCode", this.roleCode);
       sessionStorage.setItem("email", this.signUpForm.value.email)
+      this.authService.changeOtpSent(true);
+      sessionStorage.setItem("roleCode", this.roleCode);
+
       this.router.navigateByUrl('/auth/otp');
     })
   }

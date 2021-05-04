@@ -65,16 +65,16 @@ export const SIDEBAR_ITEMS =
                 {
                     icon: 'assets/img/icons/create_sale_icon.svg',
                     name: 'Create New Sales',
-                    htmlName: 'create',
+                    htmlName: 'create-new-sale',
                     accessAllowed: false,
-                    link: '/main/sale/salesmain'
+                    link: '/main/sale/create'
                 },
                 {
                     icon: 'assets/img/icons/list_sale_icon.svg',
                     name: 'List of Sales',
                     htmlName: 'list-sales',
                     accessAllowed: false,
-                    link: '/main/sale/detailed-list'
+                    link: '/main/sale/list'
                 }
             ]
         },
@@ -168,7 +168,7 @@ export const SIDEBAR_ITEMS =
             children: [
                 {
                     icon: 'assets/img/icons/listUser_icon.svg',
-                    name: 'List of User',
+                    name: 'List of Users',
                     htmlName: 'list-of-user',
                     accessAllowed: false,
                     link: '/main/user/list'
@@ -188,6 +188,20 @@ export const SIDEBAR_ITEMS =
             link: '/main/appointments',
             accessAllowed: false,
             htmlName: "appointment"
+        },
+        {
+            icon: 'assets/img/icons/listUser_icon.svg',
+            name: 'Logs',
+            htmlName: 'logs',
+            accessAllowed: false,
+            link: '/main/logs'
+        },
+        {
+            icon: 'assets/img/icons/listUser_icon.svg',
+            name: 'Error Logs',
+            htmlName: 'error-logs',
+            accessAllowed: false,
+            link: '/main/error-logs'
         }
 
     ]

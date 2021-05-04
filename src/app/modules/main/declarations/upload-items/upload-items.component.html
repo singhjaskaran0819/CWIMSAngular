@@ -1,0 +1,46 @@
+<!-- <div class="modal fade" id="UploadSale" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-md modal-dialog-centered" role="document"> -->
+<div class="modal-content">
+  <div class="modal_div">
+    <form [formGroup]="fileUploadForm">
+      <div class="card-body" id="tableToModify">
+        <div class="header-title text-center">
+          <h5>Upload Racked stock for</h5>
+          <h5>{{ this.details.office}} {{ this.details.year}} {{ this.details.serial}} {{ this.details.number}} </h5>
+
+        </div>
+        <!-- (onFileDropped)="onFileSelect($event)"  -->
+        <!-- <div draggable="true" id="drop_file_zone" (onFileDropped)="onFileSelect($event)"> -->
+        <div id="drop_file_zone">
+
+          <div id="drag_upload_file">
+            <!-- <i><img src="../assets/img/icons/upload_icon.svg" alt="" /></i>
+            <p>
+              Drag and Drop here
+              <br />
+              or
+            </p> -->
+            <!-- <input hidden type="file" #fileInput (change)="onFileSelect($event)"> -->
+            <div class="input_file">
+              <input type="file" id="selectfile" [multiple]="false" (change)="onFileSelect($event)"
+                formControlName="file" encType="multipart/form-data" accept=".json" />
+              <!-- , application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel -->
+              <label>Browse file</label>
+            </div>
+          </div>
+        </div>
+        <div> {{fileName}} </div>
+        <div *ngIf="docTypeWrong" class="input-errors"> Only excel and csv documents can be uploaded.</div>
+      </div>
+      <div class="modal-footer">
+        <div class="btn_group text-center">
+          <!-- <button class="btn btn-md btn-outline-primary" data-dismiss="modal" (click)="deleteAttachment()">Delete
+            Attachment</button> -->
+          <button class="btn btn-md btn-outline-primary" data-dismiss="modal" (click)="cancel()">Cancel</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<!-- </div>
+</div> -->

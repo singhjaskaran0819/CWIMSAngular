@@ -1,7 +1,7 @@
 @import '../../../../../assets/css/base.scss';
 
-.accordion-toggle>td{background:$blue-light-color1!important; position:$relative; cursor:$pointer; line-height: 1;}
-.accordion-toggle>td:after {
+.accordion-toggle>td{background:$white-color!important; position:$relative; cursor:$pointer; line-height: 1;}
+.accordion-toggle>td:after{
 	content:'';
 	background-image:url(../../../../../assets/img/icons/arrow_down.svg);
 	background-repeat:no-repeat;
@@ -9,20 +9,71 @@
 	height:12px;
 	width:14px;
 	position:$absolute;
-	right:30px;
+	right:20px;
 	top:32px;
 	display:$none;
 	@include transform(rotate(-180deg));	
 }
+
+.accordin_table {
+	&::after {
+		content:''; 
+		background-color:$white-color;
+		background-image:url(../../../../../assets/img/icons/arrow_down.svg);
+		background-repeat:no-repeat;
+		background-size:100%;
+		height:12px;
+		width:14px;
+		right:20px;
+		top:-31px; 
+		position:$absolute;
+		@include transform(rotate(0deg));
+	}
+}
+.accordin_row {
+	 td {
+		position: $relative;
+		&:last-child {
+			padding-right: 32px;
+			&::after {
+				content:''; 
+				background-image:url(../../../../../assets/img/icons/arrow_down.svg);
+				background-repeat:no-repeat;
+				background-size:100%;
+				height:12px;
+				width:14px;
+				right:20px;
+				top:22px; 
+				position:$absolute;
+				@include transform(rotate(-180deg));
+			}
+		}
+	}
+	&.show {
+		td {
+			&:last-child {
+				&::after{
+					@include transform(rotate(-180deg));
+					top:18px;
+				}
+			}
+		}
+	}
+}
+
 .table_scroll {
 	max-height: 130px;
 	overflow-y: auto;
 	overflow-x: $hidden;
+	.col {
+		word-break: break-word;
+	}
 }
 .table_header {	
-	padding:5px 0;
 	font-weight:$f-semibold; 
-	font-size: $f16;
+	color:$white-color;
+	font-size: $f12+3;
+	padding:0;
 	.row {
 		background:$blue-light-color5;
 	}
@@ -33,9 +84,9 @@
 }
  
 .select_disabled {
+    pointer-events: $none;
 	cursor: not-allowed;
     color: #cc9292;
-    pointer-events: none;
 }
 
 .table_scroll {
@@ -53,6 +104,29 @@
 		}
 	}
 }
-tr {
-	cursor: $pointer;
+// tr {
+// 	cursor: $pointer;
+// }
+.cursorEventsNone{
+	pointer-events: none;
+	cursor: not-allowed;
+}
+select {cursor: $pointer;}
+
+.accordin_table {
+	.table_header, .table_scroll {
+		background:$blue-light-color1;
+		padding: 10px;
+		margin: 5px;
+		.row {
+			margin:0;
+		}
+	}
+	.table_header {
+		margin-bottom:0;
+		padding-bottom: 0;
+	}
+	.table_scroll {
+		margin-top:0;
+	}
 }

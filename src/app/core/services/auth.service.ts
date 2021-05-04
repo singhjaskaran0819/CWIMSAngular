@@ -9,6 +9,7 @@ import { Router } from "@angular/router";
 export class AuthService {
 
   isLoggedIn = new BehaviorSubject(false);
+  otpSent = new BehaviorSubject(false);
 
   constructor(private httpService: HttpService, private router: Router) {
   }
@@ -19,6 +20,10 @@ export class AuthService {
 
   notLoggedIn() {
     this.isLoggedIn.next(false);
+  }
+
+  changeOtpSent(value) {
+    this.otpSent.next(value);
   }
 
   getWarehouseDetails() {
@@ -36,8 +41,8 @@ export class AuthService {
     return this.httpService.postData(APIS.IMAGE.PROFILE_PIC, data);
   }
 
-  signUp(data) {
-    return this.httpService.postData(APIS.AUTH.SIGN_UP, data);
+  signUp(data, queryParams?) {
+    return this.httpService.postData(APIS.AUTH.SIGN_UP, data, queryParams);
   }
 
   validateCaptcha(data) {
@@ -53,7 +58,7 @@ export class AuthService {
   }
 
   resetPassword(data) {
-    return this.httpService.putData(APIS.AUTH.FORGOT_PASSWORD, data);
+    return this.httpService.putData(APIS.AUTH.RESET_PASSWORD, data);
   }
 
   verifyOtp(data) {
@@ -64,7 +69,11 @@ export class AuthService {
     return this.httpService.postData(APIS.AUTH.RESEND_OTP, data);
   }
 
-  logout() {
-    return this.httpService.getData(APIS.AUTH.LOGOUT);
+  logout(data?) {
+    return this.httpService.getData(APIS.AUTH.LOGOUT, data);
+  }
+
+  getOtp(data?) {
+    return this.httpService.getData(APIS.AUTH.GET_OTP, data);
   }
 }

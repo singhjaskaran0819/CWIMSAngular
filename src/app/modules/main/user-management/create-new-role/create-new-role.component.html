@@ -1,3 +1,6 @@
+<!-- Start Create Role Modal -->
+<!-- <div class="modal fade" id="createRole" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document"> -->
 <div class="modal-content" *ngIf="roleId == undefined">
   <div class="modal_div">
     <div class="card-body">
@@ -14,8 +17,24 @@
             </div>
           </div>
         </div>
-        <ul class="list-unstyled chk_lists">
-          <li>
+        <div class="row">
+          <div class=" col-12 d-flex align-items-lg-center chk_items">
+            <label style="margin-right: 30px; ">Type</label>
+            <div class=" d-flex justify-content-start flex-wrap">
+              <input type="radio" style="margin-right: 10px; " name="type" id="customs" value="1"
+                (change)="roleTypeSelected($event)">
+              <label for="customs" style="margin-right: 30px; ">Customs</label>
+              <input type="radio" style="margin-right: 10px; " name="type" id="operator" value="2"
+                (change)="roleTypeSelected($event)">
+              <label for="operator" style="margin-right: 30px; ">Operator</label>
+              <input type="radio" style="margin-right: 10px; " name="type" id="admin" value="0"
+                (change)="roleTypeSelected($event)">
+              <label for="admin" style="margin-right: 10px; ">Admin</label>
+            </div>
+          </div>
+        </div>
+        <ul class="list-unstyled chk_lists" *ngIf="roleTypeFlag">
+          <li *ngIf="roleCode == '2'">
             <div class="d-flex align-items-lg-center chk_items">
               <label>Declaration</label>
               <div class="d-flex justify-content-start flex-wrap">
@@ -30,7 +49,7 @@
             <div class="d-flex align-items-lg-center chk_items">
               <label>Inventory</label>
               <div class="d-flex justify-content-start flex-wrap">
-                <div class="check-box">
+                <div class="check-box" *ngIf="roleCode == '2'">
                   <input type="checkbox" (change)="accessPermission('inventory','group-items', $event, 'list')">
                   <span class="check-mark"><span>Group Items</span></span>
                 </div>
@@ -42,9 +61,9 @@
                   <input type="checkbox" (change)="accessPermission('inventory','delete', $event, 'list')">
                   <span class="check-mark"><span>Delete</span></span>
                 </div>
-                <div class="check-box">
-                  <input type="checkbox"
-                    (change)="accessPermission('inventory','stock-take', $event, 'variance-report')">
+                <div class="check-box" *ngIf="roleCode == '1'">
+                  <input type="checkbox" [ngClass]=" disableCheckbox? 'disableCheckbox' : ''"
+                    (change)="accessPermission('inventory','stock-take', $event, 'list')">
                   <span class="check-mark"><span>Stoke Take</span></span>
                 </div>
               </div>
@@ -54,81 +73,101 @@
             <div class="d-flex align-items-lg-center chk_items">
               <label>Sales</label>
               <div class="d-flex justify-content-start flex-wrap">
-                <div class="check-box">
-                  <input type="checkbox" (change)="accessPermission('sales','create', $event)">
+                <div class="check-box" *ngIf="roleCode == '2'">
+                  <input type="checkbox"
+                    (change)="accessPermission('sales','create-new-sale', $event,'create-new-sale')">
                   <span class="check-mark"><span>Create Sale</span></span>
                 </div>
-                <div class="check-box">
-                  <input type="checkbox" (change)="accessPermission('sales','add-item', $event)">
-                  <span class="check-mark"><span>Add Item</span></span>
+                <div class="check-box" *ngIf="roleCode == '1'">
+                  <input type="checkbox" (change)="accessPermission('sales','return', $event, 'list-sales')">
+                  <span class="check-mark"><span>Return</span></span>
                 </div>
-                <div class="check-box">
-                  <input type="checkbox" (change)="accessPermission('sales','initiate-declaration', $event)">
+                <div class="check-box" *ngIf="roleCode == '1'">
+                  <input type="checkbox" [ngClass]=" disableCheckbox? 'disableCheckbox' : ''"
+                    (change)="accessPermission('sales','create-declaration', $event, 'list-sales')">
                   <span class="check-mark"><span>Initiate Declaration</span></span>
+                </div>
+                <div class="check-box" *ngIf="roleCode == '1'">
+                  <input type="checkbox" [ngClass]=" disableCheckbox? 'disableCheckbox' : ''"
+                    (change)="accessPermission('sales','edit-and-delete-sale', $event, 'list-sales')">
+                  <span class="check-mark"><span>Edit/Delete Sale</span></span>
+                </div>
+                <div class="check-box" *ngIf="roleCode == '0'">
+                  <input type="checkbox" [ngClass]=" disableCheckbox? 'disableCheckbox' : ''"
+                    (change)="accessPermission('sales','view', $event, 'list-sales')">
+                  <span class="check-mark"><span>View</span></span>
                 </div>
               </div>
             </div>
           </li>
-          <li>
+          <!-- <li *ngIf="roleCode == '2'">
             <div class="d-flex align-items-lg-center chk_items">
               <label>Scheduling</label>
               <div class="d-flex justify-content-start flex-wrap">
-                <div class="check-box">
+                <div class="check-box" *ngIf="roleCode == '2'">
                   <input type="checkbox" (change)="accessPermission('appointment','add-appointment', $event)">
                   <span class="check-mark"><span>Add Appointment</span></span>
                 </div>
               </div>
             </div>
-          </li>
+          </li> -->
           <li>
             <div class="d-flex align-items-lg-center chk_items">
               <label>Standard Report</label>
               <div class="d-flex justify-content-start flex-wrap">
-                <div class="check-box">
+                <div class="check-box" *ngIf="roleCode == '2'">
                   <input type="checkbox" (change)="accessPermission('standard-report','request-report', $event)">
                   <span class="check-mark"><span>Request Report</span></span>
                 </div>
-                <div class="check-box">
+                <div class="check-box" *ngIf="roleCode == '2'">
                   <input type="checkbox" (change)="accessPermission('standard-report','edit', $event)">
                   <span class="check-mark"><span>Edit</span></span>
                 </div>
-                <div class="check-box">
+                <div class="check-box" *ngIf="roleCode == '2'">
                   <input type="checkbox" (change)="accessPermission('standard-report','delete', $event)">
                   <span class="check-mark"><span>Delete</span></span>
+                </div>
+                <div class="check-box" *ngIf="roleCode == '0' || roleCode == '1'">
+                  <input type="checkbox" (change)="accessPermission('standard-report','new-report', $event)">
+                  <span class="check-mark"><span>Create new report</span></span>
+                </div>
+                <div class="check-box" *ngIf="roleCode == '0' || roleCode == '1'">
+                  <input type="checkbox" (change)="accessPermission('standard-report','approve-reject', $event)">
+                  <span class="check-mark"><span>Approve/Reject Report</span></span>
                 </div>
               </div>
             </div>
           </li>
-          <li>
+          <li *ngIf="roleCode == '1'">
             <div class="d-flex align-items-lg-center chk_items">
               <label>Reports</label>
               <div class="d-flex justify-content-start flex-wrap">
-                <div class="check-box">
+                <div class="check-box" *ngIf="roleCode == '1'">
                   <input type="checkbox" (change)="accessPermission('reports','approve', $event)">
                   <span class="check-mark"><span>Approve</span></span>
                 </div>
-                <div class="check-box">
+                <div class="check-box" *ngIf="roleCode == '1'">
                   <input type="checkbox" (change)="accessPermission('reports','reject', $event)">
                   <span class="check-mark"><span>Reject</span></span>
                 </div>
               </div>
             </div>
           </li>
-          <li>
+          <li *ngIf="roleCode == '1' || roleCode == '0'">
             <div class="d-flex align-items-lg-center chk_items">
               <label>User Management</label>
               <div class="d-flex justify-content-start flex-wrap">
-                <div class="check-box">
+                <div class="check-box" *ngIf="roleCode == '0' || roleCode=='1'">
                   <input type="checkbox"
                     (change)="accessPermission('user-management','approve-reject-user', $event,'list-of-user')">
                   <span class="check-mark"><span>Approve/ Reject User</span></span>
                 </div>
-                <div class="check-box">
+                <div class="check-box" *ngIf="roleCode == '1' || roleCode == '0'">
                   <input type="checkbox"
                     (change)="accessPermission('user-management','delete-user', $event,'list-of-user')">
                   <span class="check-mark"><span>Delete User</span></span>
                 </div>
-                <div class="check-box">
+                <div class="check-box" *ngIf="roleCode == '1' || roleCode == '0'">
                   <input type="checkbox"
                     (change)="accessPermission('user-management','suspend-user', $event,'list-of-user')">
                   <span class="check-mark"><span>Suspend User</span></span>
@@ -136,7 +175,7 @@
               </div>
             </div>
           </li>
-          <li>
+          <li *ngIf="roleCode == '1' || roleCode == '0'">
             <div class="d-flex align-items-lg-center chk_items">
               <label>Risk Management</label>
               <div class="d-flex justify-content-start flex-wrap">
@@ -192,7 +231,7 @@
           </div>
         </div>
         <ul class="list-unstyled chk_lists">
-          <li>
+          <li *ngIf="roleCode == '1'">
             <div class="d-flex align-items-lg-center chk_items">
               <label>Declaration</label>
               <div class="d-flex justify-content-start flex-wrap">
@@ -208,7 +247,7 @@
             <div class="d-flex align-items-lg-center chk_items">
               <label>Inventory</label>
               <div class="d-flex justify-content-start flex-wrap">
-                <div class="check-box">
+                <div class="check-box" *ngIf="roleCode == '2'">
                   <input type="checkbox" [(ngModel)]="groupItems"
                     [checked]="checkIfExits('inventory','group-items','list')"
                     (change)="accessPermission('inventory','group-items', $event, 'list')">
@@ -226,10 +265,9 @@
                     (change)="accessPermission('inventory','delete', $event, 'list')">
                   <span class="check-mark"><span>Delete</span></span>
                 </div>
-                <div class="check-box">
-                  <input type="checkbox" [checked]="checkIfExits('inventory','stock-take','variance-report')"
-                    [(ngModel)]="stockTake"
-                    (change)="accessPermission('inventory','stock-take', $event, 'variance-report')">
+                <div class="check-box" *ngIf="roleCode == '1'">
+                  <input type="checkbox" [checked]="checkIfExits('inventory','stock-take','list')"
+                    [(ngModel)]="stockTake" (change)="accessPermission('inventory','stock-take', $event, 'list')">
                   <span class="check-mark"><span>Stoke Take</span></span>
                 </div>
               </div>
@@ -239,22 +277,33 @@
             <div class="d-flex align-items-lg-center chk_items">
               <label>Sales</label>
               <div class="d-flex justify-content-start flex-wrap">
-                <div class="check-box">
-                  <input type="checkbox" [checked]="checkIfExits('sales','create')"
-                    (change)="accessPermission('sales','create', $event)">
+                <div class="check-box" *ngIf="roleCode=='2'">
+                  <input type="checkbox" [checked]="checkIfExits('sales','create-new-sale','create-new-sale')"
+                    (change)="accessPermission('sales','create-new-sale', $event)">
                   <span class="check-mark"><span>Create Sale</span></span>
                 </div>
-                <div class="check-box">
-                  <input type="checkbox" [checked]="checkIfExits('sales','add-item')"
-                    (change)="accessPermission('sales','add-item', $event)">
-                  <span class="check-mark"><span>Add Item</span></span>
+                <div class="check-box" *ngIf="roleCode=='officer'">
+                  <input type="checkbox" [checked]="checkIfExits('sales','return', 'list-sales')"
+                    (change)="accessPermission('sales','return', $event)">
+                  <span class="check-mark"><span>Return</span></span>
                 </div>
-                <div class="check-box">
-                  <input type="checkbox" [checked]="checkIfExits('sales','initiate-declaration')"
-                    (change)="accessPermission('sales','initiate-declaration', $event)">
+                <div class="check-box" *ngIf="roleCode=='officer'">
+                  <input type="checkbox" [checked]="checkIfExits('sales','create-declaration', 'list-sales')"
+                    (change)="accessPermission('sales','create-declaration', $event)">
                   <span class="check-mark"><span>Initiate Declaration</span></span>
                 </div>
+                <div class="check-box" *ngIf="roleCode=='officer'">
+                  <input type="checkbox" [checked]="checkIfExits('sales','edit-and-delete-sale', 'list-sales')"
+                    (change)="accessPermission('sales','edit-and-delete-sale', $event)">
+                  <span class="check-mark"><span>Edit/Delete Sale</span></span>
+                </div>
+                <!-- <div class="check-box" *ngIf = "roleCode=='admin'">
+                  <input type="checkbox" [checked]="checkIfExits('sales','view', 'list-sales')"
+                    (change)="accessPermission('sales','view', $event)">
+                  <span class="check-mark"><span>View</span></span>
+                </div> -->
               </div>
+
             </div>
           </li>
           <li>
@@ -273,21 +322,35 @@
             <div class="d-flex align-items-lg-center chk_items">
               <label>Standard Report</label>
               <div class="d-flex justify-content-start flex-wrap">
-                <div class="check-box">
+                <div class="check-box" *ngIf="roleCode == '2'">
                   <input type="checkbox" [checked]="checkIfExits('standard-report','request-report')"
                     (change)="accessPermission('standard-report','request-report', $event)">
                   <span class="check-mark"><span>Request Report</span></span>
                 </div>
-                <div class="check-box">
+                <div class="check-box" *ngIf="roleCode == '2'">
                   <input type="checkbox" [checked]="checkIfExits('standard-report','edit')"
                     (change)="accessPermission('standard-report','edit', $event)">
                   <span class="check-mark"><span>Edit</span></span>
                 </div>
-
+                <div class="check-box" *ngIf="roleCode == '2'">
+                  <input type="checkbox" [checked]="checkIfExits('standard-report','delte')"
+                    (change)="accessPermission('standard-report','delete', $event)">
+                  <span class="check-mark"><span>Delete</span></span>
+                </div>
+                <div class="check-box" *ngIf="roleCode == '0' || roleCode == '1'">
+                  <input type="checkbox" [checked]="checkIfExits('standard-report','new-report')"
+                    (change)="accessPermission('standard-report','new-report', $event)">
+                  <span class="check-mark"><span>Create new report</span></span>
+                </div>
+                <div class="check-box" *ngIf="roleCode == '0' || roleCode == '1'">
+                  <input type="checkbox" [checked]="checkIfExits('standard-report','approve-reject')"
+                    (change)="accessPermission('standard-report','approve-reject', $event)">
+                  <span class="check-mark"><span>Approve/Reject Report</span></span>
+                </div>
               </div>
             </div>
           </li>
-          <li>
+          <!-- <li>
             <div class="d-flex align-items-lg-center chk_items">
               <label>Reports</label>
               <div class="d-flex justify-content-start flex-wrap">
@@ -303,12 +366,12 @@
                 </div>
               </div>
             </div>
-          </li>
+          </li> -->
           <li>
             <div class="d-flex align-items-lg-center chk_items">
               <label>User Management</label>
               <div class="d-flex justify-content-start flex-wrap">
-                <div class="check-box">
+                <div class="check-box" *ngIf="roleCode == '0' || roleCode=='1'">
                   <input type="checkbox"
                     [checked]="checkIfExits('user-management','approve-reject-user','list-of-user')"
                     (change)="accessPermission('user-management','approve-reject-user', $event,'list-of-user')">
@@ -368,7 +431,7 @@
       <div class="btn_group text-center">
         <button class="btn btn-md btn-outline-primary" (click)="cancel()">Cancel</button>
         <button class="btn btn-md btn-primary" (click)="updateRole()">Update</button>
-
+        <!-- <button class="btn btn-md btn-primary" (click)="createRole()">Create</button> -->
       </div>
     </div>
   </div>

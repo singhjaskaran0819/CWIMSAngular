@@ -6,7 +6,10 @@
       <h3 class="page-title">Create New Sale</h3>
 
       <div class="d-flex justify-content-end top_btns">
-        <button class="btn btn-md btn-primary" data-toggle="modal" data-target="#UploadSale">Upload Sales</button>
+        <!-- <button class="btn btn-md btn-primary" data-toggle="modal" (click)="uploadSales()">Upload Sales</button> -->
+        <button *ngIf="productsTabSelected" class="btn btn-md btn-primary" data-toggle="modal" (click)="addItem()">Add
+          Item</button>
+
       </div>
     </div>
   </div>
@@ -16,176 +19,343 @@
 
     <nav>
       <div class="nav nav-tabs" id="nav-tab" role="tablist">
-        <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
-          aria-controls="nav-home" aria-selected="true">General Segment</a>
-        <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
-          aria-controls="nav-profile" aria-selected="false">Product(s) Sold</a>
+        <!-- data-toggle="tab" href="#general" -->
+        <!-- (click)="tabChanged('general')"  aria-selected="generalInfoTabSelected"-->
+        <a class="nav-item nav-link " [ngClass]="generalInfoTabSelected? 'active': ''" id="general-tab" role="tab"
+          aria-controls="general">General
+          Segment</a>
+
+        <!--data-toggle="tab"  href="#products-sold"-->
+        <!-- (click)="tabChanged('products')"  aria-selected="productsTabSelected"-->
+        <a class="nav-item nav-link " [ngClass]="productsTabSelected? 'active': ''" id="products-sold-tab" role="tab"
+          aria-controls="products-sold">Product(s)
+          Sold</a>
+
       </div>
     </nav>
 
     <div class="tab-content" id="nav-tabContent">
-      <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-        <div class="card card_box">
-          <h6>Recepit</h6>
-          <div class="card-body">
-            <div class="row">
-              <div class="col-md-6">
-                <label>Receipt Number <sup class="text-danger">*</sup></label>
-                <div class="form-group">
-                  <input type="text" class="form-control" placeholder="Identification No. of receipt" />
+      <div class="tab-pane fade " [class]="generalInfoTabSelected ? 'active show': ''" id="general" role="tabpanel"
+        aria-labelledby="general-tab">
+        <form [formGroup]="generalSaleInfoForm">
+          <div class="card card_box">
+            <h6>Receipt</h6>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-6">
+                  <!-- <sup class="text-danger">*</sup> -->
+                  <label>Receipt Number </label>
+                  <div class="form-group">
+                    <input type="text" class="form-control" formControlName="receiptNumber" />
+                    <div class="input-errors"
+                      *ngIf="(generalInfoFormSubmitted || controls.receiptNumber?.touched || receiptNumberFlag) && controls.receiptNumber?.errors?.required">
+                      Receipt Number is required
+                    </div>
+                    <div class="input-errors"
+                      *ngIf="(generalInfoFormSubmitted || controls.receiptNumber?.touched || receiptNumberFlag) && controls.receiptNumber?.errors?.pattern && !controls.receiptNumber?.errors?.required">
+                      Receipt Number should contain only alphbets and numbers.
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div class="col-md-6">
-                <label>Receipt Date <sup class="text-danger">*</sup></label>
-                <div class="form-group">
-                  <input type="date" class="form-control" placeholder="Date the receipt was generated" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card card_box">
-          <h6>Sale Info</h6>
-          <div class="card-body">
-            <div class="row">
-              <div class="col-md-4 col-sm-6">
-                <label>Sale Type <sup class="text-danger">*</sup></label>
-                <div class="form-group">
-                  <select class="form-control">
-                    <option>Types of sale conducted</option>
-                  </select>
-                </div>
-              </div>
-              <div class="col-md-4 col-sm-6">
-                <label>Currency</label>
-                <div class="form-group">
-                  <select class="form-control">
-                    <option>Types of sale conducted</option>
-                  </select>
-                </div>
-              </div>
-              <div class="col-md-4 col-sm-6">
-                <label>Total Sale Value</label>
-                <div class="form-group">
-                  <select class="form-control">
-                    <option>Total dollar amount of sale</option>
-                  </select>
+                <div class="col-md-6">
+                  <label>Receipt Date </label>
+                  <div class="form-group">
+                    <input type="date" class="form-control" [minDate]="minDate" [maxDate]="minDate"
+                      formControlName="receiptDate" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()" />
+                    <div class="input-errors"
+                      *ngIf="(generalInfoFormSubmitted || controls.receiptDate?.touched) && controls.receiptDate?.errors?.required">
+                      Receipt date is required
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div class="card card_box">
-          <h6>Sales Detail</h6>
-          <div class="card-body">
-            <div class="row">
-              <div class="col-md-6">
-                <label>Customer Name</label>
-                <div class="form-group">
-                  <input type="text" class="form-control" placeholder="Customer making the purchase" />
+          <div class="card card_box">
+            <h6>Sale Info</h6>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-4 col-sm-6">
+                  <label>Sale Type </label>
+                  <div class="form-group">
+                    <select class="form-control" formControlName="saleType" (change)="saleTypeChange($event)">
+                      <option selected></option>
+                      <option *ngFor="let saleType of saleTypeDropdown" value={{saleType?.id}}>
+                        {{saleType?.customerSaleType}}
+                      </option>
+                    </select>
+                    <div class="input-errors"
+                      *ngIf="(generalInfoFormSubmitted || controls.saleType?.touched) && controls.saleType?.errors?.required">
+                      Sale type is required
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div class="col-md-6">
-                <label>Customer Address</label>
-                <div class="form-group">
-                  <input type="text" class="form-control" placeholder="Address of sale customer" />
+                <div class="col-md-4 col-sm-6">
+                  <label>Currency</label>
+                  <div class="form-group">
+                    <select class="form-control" formControlName="currency">
+                      <option selected></option>
+                      <option *ngFor="let currency of currencyDropdown" value="currency?.id"> {{currency?.saleCurrency}}
+                      </option>
+                    </select>
+                    <div class="input-errors"
+                      *ngIf="(generalInfoFormSubmitted || controls.currency?.touched) && controls.currency?.errors?.required">
+                      Currency is required
+                    </div>
+                  </div>
                 </div>
-              </div>
-
-              <div class="col-md-4 col-sm-6">
-                <label>Document Type</label>
-                <div class="form-group">
-                  <select class="form-control">
-                    <option>Customer Identification type</option>
-                  </select>
-                </div>
-              </div>
-              <div class="col-md-4 col-sm-6">
-                <label>Document Number</label>
-                <div class="form-group">
-                  <select class="form-control">
-                    <option>Customer ID number</option>
-                  </select>
-                </div>
-              </div>
-              <div class="col-md-4 col-sm-6">
-                <label>Document Country Issue</label>
-                <div class="form-group">
-                  <select class="form-control">
-                    <option>Country ID was issued</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="col-md-6">
-                <label>Customer Nationality</label>
-                <div class="form-group">
-                  <select class="form-control">
-                    <option>Nationality of customer</option>
-                  </select>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <label>Country of Residency</label>
-                <div class="form-group">
-                  <select class="form-control">
-                    <option>Country Customer resides</option>
-                  </select>
+                <div class="col-md-4 col-sm-6">
+                  <label>Total Sale Value</label>
+                  <div class="form-group">
+                    <!-- <select class="form-control">
+                      <option>Total dollar amount of sale</option>
+                    </select> -->
+                    <input type="number" class="form-control" formControlName="totalSaleValue" />
+                    <div class="input-errors"
+                      *ngIf="(generalInfoFormSubmitted || controls.totalSaleValue?.touched) && controls.totalSaleValue?.errors?.required">
+                      Total sale value is required
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div class="card card_box">
-          <h6>Transport</h6>
-          <div class="card-body">
-            <div class="row">
-              <div class="col-md-6">
-                <label>Transport ID </label>
-                <div class="form-group">
-                  <input type="text" class="form-control" placeholder="ID of transport vessel" />
+          <div class="card card_box">
+            <h6>Sales Detail</h6>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-6">
+                  <label>Customer Name</label>
+                  <div class="form-group">
+                    <input type="text" class="form-control" formControlName="customerName" />
+                    <div class="input-errors"
+                      *ngIf="(generalInfoFormSubmitted || controls.customerName?.touched) && controls.customerName?.errors?.required">
+                      Customer Name is required
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div class="col-md-6">
-                <label>Vessel Name</label>
-                <div class="form-group">
-                  <input type="text" class="form-control" placeholder="Name of transport vessel" />
+                <div class="col-md-6">
+                  <label>Customer Address</label>
+                  <div class="form-group">
+                    <input type="text" class="form-control" formControlName="customerAddress" />
+                    <div class="input-errors"
+                      *ngIf="(generalInfoFormSubmitted || controls.customerAddress?.touched) && controls.customerAddress?.errors?.required">
+                      Customer's Address is required
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div class="col-md-6">
-                <label>Departure Date</label>
-                <div class="form-group">
-                  <input type="date" class="form-control" placeholder="Customer departure date" />
+
+                <div class="col-md-4 col-sm-6">
+                  <label>Document Type</label>
+                  <div class="form-group">
+                    <select class="form-control" formControlName="documentType">
+                      <option selected></option>
+                      <option> Driving Licence</option>
+                      <!-- <option *ngFor="let documentType of documentTypeDropdown" value=" documentType.id">
+                        {{documentType?.document_type}} </option> -->
+                    </select>
+                    <div class="input-errors"
+                      *ngIf="(generalInfoFormSubmitted || controls.documentType?.touched) && controls.documentType?.errors?.required">
+                      Customer's Identification is required
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div class="col-md-6">
-                <label>Departure Port</label>
-                <div class="form-group">
-                  <select class="form-control">
-                    <option>Port of customer departure</option>
-                  </select>
+                <div class="col-md-4 col-sm-6">
+                  <label>Document Number</label>
+                  <div class="form-group">
+                    <!-- <select class="form-control" formControlName="documentNumber">
+                      <option>Customer ID number</option>
+                    </select> -->
+                    <input type="text" class="form-control" formControlName="documentNumber" />
+                    <div class="input-errors"
+                      *ngIf="(generalInfoFormSubmitted || controls.documentNumber?.touched) && controls.documentNumber?.errors?.required">
+                      Document number is required
+                    </div>
+                    <div class="input-errors"
+                      *ngIf="(generalInfoFormSubmitted || controls.documentNumber?.touched) && !controls.documentNumber?.errors?.required && controls.documentNumber?.errors?.pattern">
+                      Document number should contain only alphabets and numbers
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                  <label>Document Country Issue</label>
+                  <div class="form-group">
+                    <select class="form-control" formControlName="documentCountryIssue">
+                      <option selected></option>
+                      <option *ngFor="let country of allCountries" value="country.name"> {{country.name}} </option>
+                    </select>
+                    <div class="input-errors"
+                      *ngIf="(generalInfoFormSubmitted || controls.documentCountryIssue?.touched) && controls.documentCountryIssue?.errors?.required">
+                      Id issuing country is required
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <label>Customer Nationality</label>
+                  <div class="form-group">
+                    <select class="form-control" formControlName="customerNationality">
+                      <option selected></option>
+                      <option *ngFor="let nationality of nationalityDropdown" value="nationality"> {{nationality}}
+                      </option>
+                    </select>
+                    <div class="input-errors"
+                      *ngIf="(generalInfoFormSubmitted || controls.customerNationality?.touched) && controls.customerNationality?.errors?.required">
+                      Customer's nationality is required
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label>Country of Residency</label>
+                  <div class="form-group">
+                    <select class="form-control" formControlName="residingCountry">
+                      <option selected></option>
+                      <option *ngFor="let country of allCountries" value="country.name"> {{country.name}} </option>
+                    </select>
+                    <div class="input-errors"
+                      *ngIf="(generalInfoFormSubmitted || controls.residingCountry?.touched) && controls.residingCountry?.errors?.required">
+                      Customer's residing country is required
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <div class="btn_group">
-              <button class="btn btn-md btn-primary">Next</button>
-              <button class="btn btn-md btn-primary">Submit</button>
-              <button class="btn btn-md btn-primary" data-toggle="modal" data-target="#saleSaved">Save</button>
+
+          <div class="card card_box">
+            <h6>Transport</h6>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-6">
+                  <label>Transport ID </label>
+                  <div class="form-group">
+                    <input type="text" class="form-control" formControlName="transportId" />
+                    <div class="input-errors"
+                      *ngIf="(generalInfoFormSubmitted || controls.transportId?.touched) && controls.transportId?.errors?.required">
+                      Transport Id is required
+                    </div>
+                    <div class="input-errors"
+                      *ngIf="(generalInfoFormSubmitted || controls.transportId?.touched) && !controls.transportId?.errors?.required && controls.transportId?.errors?.pattern">
+                      Transport Id should contain only alphabets and numbers
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label>Vessel Name</label>
+                  <div class="form-group">
+                    <input type="text" class="form-control" formControlName="vesselName" />
+                    <div class="input-errors"
+                      *ngIf="(generalInfoFormSubmitted || controls.vesselName?.touched) && controls.vesselName?.errors?.required">
+                      Vessel Name is required
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label>Departure Date</label>
+                  <div class="form-group">
+                    <input type="date" class="form-control" formControlName="departureDate" [minDate]="minDate"
+                      ngbDatepicker #d1="ngbDatepicker" (click)="d1.toggle()" />
+                    <div class="input-errors"
+                      *ngIf="(generalInfoFormSubmitted || controls.departureDate?.touched) && controls.departureDate?.errors?.required">
+                      Departure date is required
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label>Departure Port</label>
+                  <div class="form-group">
+                    <select class="form-control" formControlName="departurePort">
+                      <option selected></option>
+                      <option *ngFor=" let departurePort of departurePortDropdown" value="depaturePort.id">
+                        {{departurePort.depaturePort}} </option>
+                    </select>
+                    <div class="input-errors"
+                      *ngIf="(generalInfoFormSubmitted || controls.departurePort?.touched) && controls.departurePort?.errors?.required">
+                      Departure Port is required
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+          <div class="row">
+
+            <div class="col-md-12">
+              <div class="btn_group">
+                <button class="btn btn-md btn-primary" data-toggle="tab"
+                  (click)="next()">Next</button>
+                <!-- <button class="btn btn-md btn-primary" (click)="submitGeneralInfo()">Submit</button> -->
+                <!-- <button class="btn btn-md btn-primary" data-toggle="modal" (click)="saveGeneralInfo()">Save</button> -->
+              </div>
+            </div>
+          </div>
+        </form>
       </div>
       <!-- End tab 1 -->
-
-      <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-        <div class="card card_box">
+      <!-- role="tabpanel"  -->
+      <!-- <div class="tab-pane fade" id="products-sold" aria-labelledby="products-sold-tab"> -->
+      <div class="tab-pane fade " id="products-sold" [class]="productsTabSelected ? 'active show': ''" role="tabpanel"
+        aria-labelledby="products-sold-tab">
+        <form [formGroup]="productsInfoForm">
+          <div formArrayName="products" class="position-relative">
+            <div class="card card_box">
+              <div class="card-body">
+                <div class="form-row" id="rowToClone"
+                  *ngFor="let item of productsInfoForm.controls.products['controls']; let i=index" [formGroupName]="i">
+                  <div class="row">
+                    <div class="col-md-3">
+                      <label>Product ID </label>
+                      <div class="form-group">
+                        <input type="text" class="form-control" formControlName="productID" />
+                        <div class="input-errors"
+                          *ngIf="(productsInfoFormSubmitted || controls1.productID?.touched) && controls1.productID?.errors?.required">
+                          Product Id is required
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <label>Commercial Description</label>
+                      <div class="form-group">
+                        <input type="text" class="form-control" formControlName="description" />
+                        <div class="input-errors"
+                          *ngIf="(productsInfoFormSubmitted || controls1.description?.touched) && controls1.description?.errors?.required">
+                          Commercial description is required
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-2">
+                      <label>Quantity</label>
+                      <div class="form-group">
+                        <input type="number" class="form-control" formControlName="quantity" />
+                        <div class="input-errors"
+                          *ngIf="(productsInfoFormSubmitted || controls1.quantity?.touched) && controls1.quantity?.errors?.required">
+                          Qunatity is required
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <label>Sale Value</label>
+                      <div class="form-group">
+                        <input type="number" class="form-control" formControlName="saleValue" />
+                        <div class="input-errors"
+                          *ngIf="(productsInfoFormSubmitted || controls1.saleValue?.touched) && controls1.saleValue?.errors?.required">
+                          Sale value is required
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-1 col-1">
+                      <div class="remove_row" *ngIf="i>0 ">
+                        <img src="../../../../../assets/img/icons/delete_icon.svg" alt="" width="20"
+                          (click)="deleteRow(i)" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="card card_box">
           <div class="card-body">
             <div class="row">
               <div class="col-md-3">
@@ -214,45 +384,18 @@
               </div>
             </div>
           </div>
-        </div>
-        <div class="card card_box">
-          <div class="card-body">
+        </div> -->
             <div class="row">
-              <div class="col-md-3">
-                <label>Product ID </label>
-                <div class="form-group">
-                  <input type="text" class="form-control" placeholder="46465HHKJ" />
-                </div>
-              </div>
-              <div class="col-md-3">
-                <label>Commercial Description</label>
-                <div class="form-group">
-                  <input type="text" class="form-control" placeholder="It’s good product" />
-                </div>
-              </div>
-              <div class="col-md-3">
-                <label>Quantity</label>
-                <div class="form-group">
-                  <input type="number" class="form-control" placeholder="12" />
-                </div>
-              </div>
-              <div class="col-md-3">
-                <label>Sale Value</label>
-                <div class="form-group">
-                  <input type="number" class="form-control" placeholder="25" />
+              <div class="col-md-12">
+                <div class="btn_group">
+                  <button class="btn btn-md btn-outline-primary" data-toggle="tab" href="#general"
+                    aria-controls="general" (click)="previous()">Previous</button>
+                  <button class="btn btn-md btn-primary" (click)="submitSaleProducts()">Submit</button>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <div class="btn_group">
-              <button class="btn btn-md btn-outline-primary">Previous</button>
-              <button class="btn btn-md btn-primary">Submit</button>
-            </div>
-          </div>
-        </div>
+        </form>
       </div>
       <!-- End tab 2 -->
     </div>
@@ -261,46 +404,7 @@
 </div>
 
 <!-- Upload Sale Modal -->
-<div class="modal fade" id="UploadSale" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog modal-md modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal_div">
-        <form action="">
-          <div class="card-body" id="tableToModify">
-            <div class="header-title text-center">
-              <h5>Upload Sale</h5>
-            </div>
-            <div id="drop_file_zone" ondrop="upload_file(event)" ondragover="return false">
-              <div id="drag_upload_file">
-                <i><img src="../assets/img/icons/upload_icon.svg" alt="" /></i>
-                <p>
-                  Drag and Drop here
-                  <br />
-                  or
-                </p>
-                <div class="input_file">
-                  <input type="file" id="selectfile" />
-                  <label>Browse file</label>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <div class="btn_group text-center">
-              <button class="btn btn-md btn-outline-primary" data-dismiss="modal">Cancel</button>
-              <button class="btn btn-md btn-primary" data-dismiss="modal">Upload</button>
-
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- End -->
-
-<!-- Upload Sale Modal -->
-<div class="modal fade" id="saleSaved" tabindex="-1" role="dialog" aria-hidden="true">
+<!-- <div class="modal fade" id="saleSaved" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal_div text-center">
@@ -311,11 +415,11 @@
         </div>
         <div class="modal-footer">
           <div class="btn_group text-center">
-            <a href="sales-lists.html" class="btn btn-md btn-primary">Okay</a>
+            <a class="btn btn-md btn-primary">Okay</a>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+</div> -->
 <!-- End -->

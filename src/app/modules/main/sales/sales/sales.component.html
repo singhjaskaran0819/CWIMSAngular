@@ -1,2 +1,211 @@
-<br>
-<h2>Coming Soon</h2>
+<div class="page-wrapper">
+
+  <div class="page-breadcrumb">
+    <div class="d-flex justify-content-between align-items-center flex-md-row flex-column-reverse">
+
+      <h3 class="page-title">Sales</h3>
+
+      <div class="d-flex justify-content-end top_btns">
+
+        <div class="search_filter_btn">
+          <button class="btn btn-sm btn-primary" onclick="filter();"><i><img src="../assets/img/icons/filter_icon.svg"
+                alt="" /></i></button>
+          <!-- Start Search Filter -->
+          <div class="search_filter" id="search_filter" style="display:none;">
+            <h6 class="f_title">Filters</h6>
+            <!-- Warecode Filter -->
+            <div class="warecode_filter">
+              <div class="d-flex align-items-center filter_items">
+                <label>Warehouse Code</label>
+                <div class="in_group">
+                  <select class="form-control">
+                    <option></option>
+                  </select>
+                </div>
+              </div>
+              <div class="filter_search">
+                <input type="search" placeholder="Search" class="form-control" />
+              </div>
+              <div class="wear_list">
+                <div class="wearlist_items check-box">
+                  <input type="checkbox" />
+                  <span class="check-mark"><span>Equals</span></span>
+                </div>
+                <div class="wearlist_items check-box">
+                  <input type="checkbox" />
+                  <span class="check-mark"><span>Not Equal</span></span>
+                </div>
+                <div class="wearlist_items check-box">
+                  <input type="checkbox" />
+                  <span class="check-mark"><span>Contains Substring</span></span>
+                </div>
+                <div class="wearlist_items check-box">
+                  <input type="checkbox" />
+                  <span class="check-mark"><span>Start With</span></span>
+                </div>
+                <div class="wearlist_items check-box">
+                  <input type="checkbox" />
+                  <span class="check-mark"><span>Ends With</span></span>
+                </div>
+                <div class="wearlist_items check-box">
+                  <input type="checkbox" />
+                  <span class="check-mark"><span>Empty</span></span>
+                </div>
+                <div class="wearlist_items check-box">
+                  <input type="checkbox" />
+                  <span class="check-mark"><span>Non Empty</span></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="filter_block">
+              <div class="filter_list">
+                <div class="d-flex align-items-center filter_items">
+                  <label>Company</label>
+                  <div class="in_group">
+                    <select class="form-control">
+                      <option>Company</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center filter_items">
+                  <label>Company Name</label>
+                  <div class="in_group">
+                    <select class="form-control">
+                      <option></option>
+                    </select>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center filter_items">
+                  <label>Telephone</label>
+                  <div class="in_group">
+                    <select class="form-control">
+                      <option></option>
+                    </select>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center filter_items">
+                  <label>Address</label>
+                  <div class="in_group">
+                    <select class="form-control">
+                      <option></option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="d-flex justify-content-center btn-control">
+              <button class="btn btn-md btn-outline-primary" onclick="filterClose();">Cancel</button>
+              <button class="btn btn-md btn-primary" onclick="filterClose();">Apply Search</button>
+            </div>
+          </div>
+          <!-- End Search Filter -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Breadcrumb -->
+
+  <div class="table-responsive">
+    <table class="table custom_table">
+      <thead>
+        <tr>
+          <th>Warehouse Name</th>
+          <th>Warehouse Code</th>
+          <th>Warehouse Locations</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr (click)="openDetail(1)">
+          <td>WHOUSE1</td>
+          <td>WH1234</td>
+          <td>HR71C</td>
+        </tr>
+        <!--Accordition-->
+        <tr class="accordion-toggle" id="accordion1" *ngIf="detailId==1">
+          <td colspan="4" style="padding-top:0; padding-bottom: 0;">
+            <div class="accordin_table">
+              <div class="table_header">
+                <div class="row">
+                  <div class="col col-2"><span class="c_name">Receipt Number</span>
+                  </div>
+                  <div class="col col-3">Company Code</div>
+                  <div class="col col-2">Sale Type</div>
+                  <div class="col col-2">Sale Currency</div>
+                  <div class="col col-3">Departure Date</div>
+                </div>
+              </div>
+
+              <div class="table_scroll infinte-scroll-div" infiniteScroll [infiniteScrollDistance]="6"
+                [infiniteScrollThrottle]="100" (scrolled)="onScroll()" [scrollWindow]="false">
+                <ng-container>
+                  <div class="row">
+                    <div class="col col-2">location.name</div>
+                    <div class="col col-3">location.code</div>
+                    <div class="col col-2">location.telephone</div>
+                    <div class="col col-2">location.street</div>
+                    <div class="col col-3">Date data</div>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <!--End accordition-->
+        <tr class="even" (click)="openDetail(2)">
+          <td>WHOUSE2</td>
+          <td>WH1234</td>
+          <td>DFD44</td>
+        </tr>
+        <!--Accordition-->
+        <tr class="accordion-toggle" id="accordion1" *ngIf="detailId==2">
+          <td colspan="4" style="padding-top:0; padding-bottom: 0;">
+            <div class="accordin_table">
+              <div class="table_header">
+                <div class="row">
+                  <div class="col col-2"><span class="c_name">Receipt Number</span>
+                  </div>
+                  <div class="col col-3">Company Code</div>
+                  <div class="col col-2">Sale Type</div>
+                  <div class="col col-2">Sale Currency</div>
+                  <div class="col col-3">Departure Date</div>
+                </div>
+              </div>
+              <div class="table_scroll infinte-scroll-div" infiniteScroll [infiniteScrollDistance]="6"
+                [infiniteScrollThrottle]="100" (scrolled)="onScroll()" [scrollWindow]="false">
+                <ng-container>
+                  <div class="row">
+                    <div class="col col-2">location.name</div>
+                    <div class="col col-3">location.code</div>
+                    <div class="col col-2">location.telephone</div>
+                    <div class="col col-2">location.street</div>
+                    <div class="col col-3">Date data</div>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <!--End accordition-->
+      </tbody>
+    </table>
+  </div>
+  <!-- End Table Listing -->
+  <!--Pagination start-->
+  <div
+    class="d-flex align-items-center flex-md-row flex-column justify-content-md-between justify-content-center flex-wrap pagination_block">
+    <div class="d-flex align-items-center row_count">
+      <span class="mb-0 ">No. of Rows</span>
+      <select (change)="onLimitChange($event)" [(ngModel)]="selected_limit" name="selectRows">
+        <option value="10" selected>10</option>
+        <option value="20">20</option>
+        <option value="30">30</option>
+      </select>
+    </div>
+    <app-pagination [page]="page" (pageChangeEvent)="pageChanged($event)" [collectionSize]="totalRecords"
+      [pageSize]="selected_limit" #appPagination>
+    </app-pagination>
+  </div>
+  <!--End-->
+
+</div>

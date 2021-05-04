@@ -3,6 +3,16 @@
     <div class="box_title text-center">
       <h4>Add New User</h4>
 
+      <!-- <div class="profile_avtar">
+            <div class="p_pic">
+              <img src="../../../../assets/img/placeholder_pic.svg" *ngIf="!imageUrl" alt="Profile Pic" class="" />
+              <img alt="Profile Pic" [src]="imageUrl" *ngIf="imageUrl" class="profilePicHeight" />
+            </div>
+            <div class="upload-image">
+              <span class="plus_sign ">+</span>
+              <input class="file-upload cursorPointer" type="file" accept="image/*" (change)="onSelectFile($event)" />
+            </div>
+          </div> -->
     </div>
 
     <div class="row">
@@ -20,6 +30,24 @@
         </div>
       </div>
     </div>
+
+    <!-- <div class="row">
+      <div class="col-12">
+        <label>Position</label>
+        <div class="form-group">
+    <select class="form-control" aria-expanded="true" formControlName="position" (change)="selectPosition($event)"
+      required>
+      <option disabled selected> </option>
+      <option *ngFor="let position of userPositions" value={{position}}> {{position |
+        titlecase }}
+      </option>
+    </select>
+    <div class="input-errors" *ngIf="(submitted || controls.position?.touched) && controls.position?.errors?.required">
+      Position is required
+    </div>
+</div>
+</div>
+</div> -->
     <div class="row">
       <div class="col-12">
         <label>First Name</label>
@@ -175,7 +203,7 @@
       </div>
     </div>
 
-    <div class="row">
+    <div class="row" *ngIf="!hideWarehouse">
       <div class="col-12">
         <label>Warehouse Code</label>
         <div class="form-group">
@@ -184,14 +212,14 @@
             <option disabled selected> </option>
             <option *ngFor="let list of warehouseList" [value]="list.code">{{list.name }}</option>
           </select>
-          <!-- <div class="input-errors"
+          <div class="input-errors"
             *ngIf="(submitted || controls.warehouseCode?.touched) && controls.warehouseCode?.errors?.required">
             Warehouse code is required
-          </div> -->
+          </div>
         </div>
       </div>
     </div>
-    <div class="row">
+    <!-- <div class="row">
       <div class="col-12">
         <label>Password</label>
         <div class="form-group">
@@ -216,7 +244,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <div class="row">
       <div class="col-12">

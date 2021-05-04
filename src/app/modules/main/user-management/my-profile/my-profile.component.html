@@ -68,7 +68,7 @@
                                         <div *ngIf="
                                     formForProfile.controls['firstName'].hasError('required') &&
                                     formForProfile.controls['firstName'].touched && edit" class="text-danger">
-                                            Please enter first name.
+                                            Please enter first name
                                         </div>
                                     </div>
                                 </div>
@@ -79,16 +79,36 @@
                                             [readOnly]='!edit'>
                                         <div *ngIf="formForProfile.controls['lastName'].hasError('required') && 
                                         formForProfile.controls['lastName'].touched && edit" class="text-danger">
-                                            Please enter last name.
+                                            Please enter last name
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label>Email</label>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" formControlName="email"
+                                            [readOnly]='!edit'>
+                                        <div *ngIf="formForProfile.controls['email'].hasError('required') && 
+                                        formForProfile.controls['email'].touched && edit" class="text-danger">
+                                            Please enter email
+                                        </div>
+                                        <div class="input-errors"
+                                            *ngIf="controls.email?.touched && controls.email?.errors?.pattern">
+                                            Enter a valid email
+                                        </div>
+                                        <div class="input-errors"
+                                            *ngIf="controls.email?.touched && !controls.email?.errors?.pattern && controls.email?.errors?.maxlength">
+                                            Email can contain only 70 characters
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <label>Mobile</label>
                                     <div class="form-group">
-                                        <input type="number" class="form-control" formControlName="phoneNumber"
-                                            placeholder="+9115054991" [readOnly]='!edit'>
-                                        <div *ngIf="
+                                        <input type="text" class="form-control" [(ngModel)]=" phoneNumber" *ngIf='!edit'
+                                            [readOnly]='!edit' [ngModelOptions]="{standalone: true}">
+                                        <!--   <div *ngIf="
                                             formForProfile.controls['phoneNumber'].hasError('required') &&
                                             formForProfile.controls['phoneNumber'].touched && edit"
                                             class="text-danger">
@@ -99,6 +119,25 @@
                                             formForProfile.controls['phoneNumber'].touched && edit"
                                             class="text-danger">
                                             Please enter valid mobile number.
+                                        </div> -->
+                                        <ngx-intl-tel-input [preferredCountries]="preferredCountries"
+                                            [enableAutoCountrySelect]="false" [enablePlaceholder]="true"
+                                            [searchCountryFlag]="true"
+                                            [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+                                            [selectFirstCountry]="false" [selectedCountryISO]="selectedCountryISO"
+                                            [maxLength]="15" [tooltipField]="TooltipLabel.Name" [phoneValidation]="true"
+                                            [separateDialCode]="separateDialCode"
+                                            [numberFormat]="PhoneNumberFormat.National" name="phoneNumber"
+                                            formControlName="phoneNumber" (change)="phoneNumberChange($event)"
+                                            (countryChange)="countryChange($event)" *ngIf='edit'>
+                                        </ngx-intl-tel-input>
+                                        <div class="input-errors"
+                                            *ngIf="( formForProfile.controls.phoneNumber?.touched) && formForProfile.controls.phoneNumber?.errors?.required && edit">
+                                            Phone number is required
+                                        </div>
+                                        <div class="input-errors"
+                                            *ngIf=" formForProfile.controls.phoneNumber?.touched && formForProfile.controls.phoneNumber?.status=='INVALID' && !formForProfile.controls.phoneNumber?.errors?.validatePhoneNumber?.valid && !formForProfile.controls.phoneNumber?.errors?.required">
+                                            Enter a valid phone number
                                         </div>
                                     </div>
                                 </div>
@@ -110,7 +149,7 @@
                                         <div *ngIf="
                                         formForProfile.controls['street'].hasError('required') &&
                                         formForProfile.controls['street'].touched && edit" class="text-danger">
-                                            Please enter street.
+                                            Please enter street
                                         </div>
                                     </div>
                                 </div>
@@ -122,7 +161,7 @@
                                         <div *ngIf="
                                         formForProfile.controls['city'].hasError('required') &&
                                         formForProfile.controls['city'].touched && edit" class="text-danger">
-                                            Please enter city.
+                                            Please enter city
                                         </div>
                                     </div>
                                 </div>
@@ -134,7 +173,7 @@
                                         <div *ngIf="
                                         formForProfile.controls['postalCode'].hasError('required') &&
                                         formForProfile.controls['postalCode'].touched && edit" class="text-danger">
-                                            Please enter postal code.
+                                            Please enter postal code
                                         </div>
                                     </div>
                                 </div>
@@ -146,7 +185,7 @@
                                         <div *ngIf="
                                     formForProfile.controls['country'].hasError('required') &&
                                     formForProfile.controls['country'].touched && edit" class="text-danger">
-                                            Please enter postal country.
+                                            Please enter postal country
                                         </div>
                                     </div>
 
@@ -172,19 +211,25 @@
                                 <div *ngIf="
                             updatePassword.controls['oldPassword'].hasError('required') && submitNewPassword"
                                     class="text-danger">
-                                    Please enter old password.
+                                    Please enter old password
                                 </div>
-
+                                <!-- <div *ngIf="
+                            updatePassword.controls['oldPassword'].hasError('pattern') &&
+                            updatePassword.controls['oldPassword'].touched" class="text-danger">
+                                    Please enter valid password <small>Your pasword must contain one uppercase
+                                        ,lowercase,number & speicial case letter</small>
+                                </div> -->
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-3">
                             <label>New Password</label>
                             <div class="form-group">
-                                <input type="password" class="form-control" formControlName="newPassword" />
+                                <input type="password" class="form-control" formControlName="newPassword"
+                                    maxlength='15' />
                                 <div *ngIf="
                             updatePassword.controls['newPassword'].hasError('required') && submitNewPassword "
                                     class="text-danger">
-                                    Please enter new password.
+                                    Please enter new password
                                 </div>
                                 <div *ngIf="
                             updatePassword.controls['newPassword'].hasError('pattern') && submitNewPassword"
@@ -201,7 +246,7 @@
                                 <div *ngIf="
                             updatePassword.controls['confirmPassword'].hasError('required') && submitNewPassword"
                                     class="text-danger">
-                                    Please confirm new password.
+                                    Please confirm new password
                                 </div>
                                 <div *ngIf="
                             updatePassword.controls['confirmPassword'].hasError('pattern') && submitNewPassword"

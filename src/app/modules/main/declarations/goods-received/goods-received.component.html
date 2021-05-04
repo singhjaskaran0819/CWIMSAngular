@@ -1,2 +1,206 @@
-<br>
-<h2>Coming Soon</h2>
+<div class="page-wrapper">
+
+    <div class="page-breadcrumb">
+        <div class="d-flex justify-content-between align-items-center flex-md-row flex-column-reverse">
+
+            <h3 class="page-title">Good Received</h3>
+
+            <div class="search_filter_btn">
+                <button class="btn btn-sm btn-primary" (click)="filter()"><i><img
+                            src="../assets/img/icons/filter_icon.svg" alt="" /></i></button>
+                <div class="search_filter" id="search_filter" style="display:none;">
+                    <h6 class="f_title">Filters</h6>
+                    <button class="btn btn-md btn-outline-primary float-right"
+                        style="right: 10px;position: absolute;height: 40px;top: 10px;padding-top: 8px;"
+                        (click)="clearFilters()">Clear</button>
+                    <div class="filter_block">
+                        <div class="filter_list">
+                            <div class="d-flex align-items-center filter_items">
+                                <label>Location</label>
+                                <div class="in_group">
+                                    <select class="form-control" [(ngModel)]="searchFilter.location"
+                                        (change)="addSearchFilterKey('location',$event)">
+                                        <option value="">Select location</option>
+                                        <option *ngFor="let location of filterData?.locationData"
+                                            [value]="location?.code">
+                                            {{location?.name}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center filter_items">
+                                <label>Serial</label>
+                                <div class="in_group">
+                                    <select class="form-control" [(ngModel)]="searchFilter.serial"
+                                        (change)="addSearchFilterKey('serial',$event)">
+                                        <option value="">Select serial</option>
+                                        <option *ngFor="let serial of filterData?.serialData" [value]="serial">
+                                            {{serial}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center filter_items">
+                                <label>Status</label>
+                                <div class="in_group">
+                                    <select class="form-control" [(ngModel)]="searchFilter.status"
+                                        (change)="addSearchFilterKey('status',$event)">
+                                        <option value="">Select status</option>
+                                        <option *ngFor="let status of filterData?.statusData"
+                                            [value]="status?.statusCode">
+                                            {{status?.statusTitle}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center filter_items">
+                                <label>Assessment Number</label>
+                                <div class="in_group">
+                                    <select class="form-control" [(ngModel)]="searchFilter.number"
+                                        (change)="addSearchFilterKey('number',$event)">
+                                        <option value="">Select Assessment Number</option>
+                                        <option *ngFor="let item of filterData?.numberData" [value]="item">
+                                            {{item}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center filter_items">
+                                <label>Year</label>
+                                <div class="in_group">
+                                    <select class="form-control" [(ngModel)]="searchFilter.year"
+                                        (change)="addSearchFilterKey('year',$event)">
+                                        <option value="">Select year</option>
+                                        <option *ngFor="let year of filterData?.yearData" [value]="year">{{year}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center filter_items">
+                                <label> Date Received </label>
+                                <div class="in_group">
+                                    <input type="date" class="form-control" [(ngModel)]="date" [maxDate]="maxDate"
+                                        ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-center btn-control">
+                        <button class="btn btn-md btn-outline-primary" (click)="cancelSearch()">Cancel</button>
+                        <button class="btn btn-md btn-primary" (click)="applySearch()">Apply Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table custom_table table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        <span class="c_name">Timestamp <div class="sorting">
+                                <i (click)="sorting('createdAt', 1)"
+                                    [class]="active_class === 'createdAt1' ? 'active' : ''"><img
+                                        src="/assets/img/icons/arw_up.png" alt="sort" /></i>
+                                <i (click)="sorting('createdAt', -1)"
+                                    [class]="active_class === 'createdAt-1' ? 'active' : ''"><img
+                                        src="/assets/img/icons/arw_down.png" alt="sort" /></i>
+                            </div>
+                        </span>
+                    </th>
+                    <th>Warehouse <div class="sorting"><i (click)="sorting('warehouse', 1)"
+                                [class]="active_class === 'warehouse1' ? 'active' : ''"><img
+                                    src="/assets/img/icons/arw_up.png" alt="sort" /></i>
+                            <i (click)="sorting('warehouse', -1)"
+                                [class]="active_class === 'warehouse1-1' ? 'active' : ''"><img
+                                    src="/assets/img/icons/arw_down.png" alt="sort" /></i>
+                        </div>
+                    </th>
+                    <th>Office<div class="sorting"><i (click)="sorting('office', 1)"
+                                [class]="active_class === 'office1' ? 'active' : ''"><img
+                                    src="/assets/img/icons/arw_up.png" alt="sort" /></i>
+                            <i (click)="sorting('office', -1)"
+                                [class]="active_class === 'office-1' ? 'active' : ''"><img
+                                    src="/assets/img/icons/arw_down.png" alt="sort" /></i>
+                        </div>
+                    </th>
+                    <th>Year<div class="sorting"><i (click)="sorting('year', 1)"
+                                [class]="active_class === 'year1' ? 'active' : ''"><img
+                                    src="/assets/img/icons/arw_up.png" alt="sort" /></i>
+                            <i (click)="sorting('year', -1)" [class]="active_class === 'year-1' ? 'active' : ''"><img
+                                    src="/assets/img/icons/arw_down.png" alt="sort" /></i>
+                        </div>
+                    </th>
+                    <th>Serial<div class="sorting"><i (click)="sorting('serial', 1)"
+                                [class]="active_class === 'serial1' ? 'active' : ''"><img
+                                    src="/assets/img/icons/arw_up.png" alt="sort" /></i>
+                            <i (click)="sorting('serial', -1)"
+                                [class]="active_class === 'serial-1' ? 'active' : ''"><img
+                                    src="/assets/img/icons/arw_down.png" alt="sort" /></i>
+                        </div>
+                    </th>
+                    <th>Number<div class="sorting"><i (click)="sorting('number', 1)"
+                                [class]="active_class === 'number1' ? 'active' : ''"><img
+                                    src="/assets/img/icons/arw_up.png" alt="sort" /></i>
+                            <i (click)="sorting('number', -1)"
+                                [class]="active_class === 'number-1' ? 'active' : ''"><img
+                                    src="/assets/img/icons/arw_down.png" alt="sort" /></i>
+                        </div>
+                    </th>
+                    <th>Status</th>
+                    <th>Custom Value</th>
+                    <th> Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngIf="goodsData?.length>0; else no_data">
+                    <!-- (click)="navigateToGoodsDetails(item.id)"  class="cursorPointer" -->
+                    <tr [ngClass]="i%2==0? 'even': ''" *ngFor="let item of goodsData; let i = index">
+                        <td>{{parseTimeString(item?.createdAt)}}</td>
+                        <td>{{item?.warehouselocation?.warehouse?.code}}</td>
+                        <td>{{item?.office}}</td>
+                        <td>{{item?.year}}</td>
+                        <td>{{item?.serial}}</td>
+                        <td>{{item?.number}}</td>
+                        <td> <span class="d-flex">{{getStatus(item?.status) | titlecase }}</span></td>
+
+                        <!-- <td><span class="d-flex">Rejected <i class="ml-2"><img src="../assets/img/icons/info_icon.svg"
+                            alt="" width="16" /></i></span></td> -->
+                        <td>{{item?.totalCustomsValue}}</td>
+                        <td>
+                            <img src="../assets/img/icons/view_icon.svg" class="cursorPointer" title="View" alt=""
+                                width="20" (click)="navigateToGoodsDetails(item)" />
+                            <img *ngIf="item.status== 3 &&  roleType==1 && checkPermission('delete-declaration')"
+                                src="../assets/img/icons/delete_icon.svg" class="cursorPointer deleteIconDecl"
+                                title="Delete" alt="" width="20" (click)="deleteDeclaration(i, item.id)" />
+                        </td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </div>
+    <div
+        class="d-flex align-items-center flex-md-row flex-column justify-content-md-between justify-content-center flex-wrap pagination_block">
+        <div class="d-flex align-items-center row_count">
+            <span class="mb-0 ">No. of Rows</span>
+            <select (change)="onLimitChange($event)" [(ngModel)]="selected_limit" name="selectRows">
+                <option value="10" selected>10</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+            </select>
+        </div>
+
+        <app-pagination [page]="page" (pageChangeEvent)="pageChanged($event)" [collectionSize]="totalRecords"
+            [pageSize]="selected_limit" #appPagination>
+        </app-pagination>
+    </div>
+</div>
+
+<ng-template #no_data>
+    <tr>
+        <td colspan="9">
+            <div class="no-record">
+                No record found
+            </div>
+        </td>
+    </tr>
+</ng-template>

@@ -12,7 +12,7 @@ export class SpinnerService{
         this.spinner.show(undefined,
             {
               type: 'square-jelly-box',
-              size: 'large',
+              size: 'medium',
               bdColor: 'rgba(12, 11, 11, 0.849)',
               color: 'white',
               fullScreen: true

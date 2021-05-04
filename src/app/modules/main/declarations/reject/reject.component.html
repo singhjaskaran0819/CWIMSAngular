@@ -1,2 +1,35 @@
-<br>
-<h2>Coming Soon</h2>
+<!-- Reject Modal -->
+<!-- <div class="modal fade" id="RejectModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document"> -->
+<div class="modal-content">
+  <div class="modal_div">
+    <form [formGroup]="rejectForm">
+      <div class="card-body">
+        <div class="header-title text-center">
+          <h5>Reject</h5>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <label>Reason?</label>
+            <div class="form-group">
+              <textarea class="form-control" placeholder="Write reason here ….." rows="4"
+                formControlName="rejectionReason"></textarea>
+              <div class="input-errors" *ngIf="submitted && controls?.rejectionReason?.errors?.required"> Please enter
+                the reason for rejection. </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="btn_group text-center">
+          <button class="btn btn-md btn-outline-primary" (click)="cancel()">Cancel</button>
+          <button class="btn btn-md btn-primary" (click)="reject()">Reject</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<!-- </div>
+</div> -->
+<!-- End Reject Modal -->

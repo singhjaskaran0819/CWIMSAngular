@@ -11,6 +11,23 @@
             <form class="form-box" [formGroup]="loginForm" (submit)="signIn()">
                 <h2 class="text-center">Sign In</h2>
 
+                <!-- <div class="row">
+                    <div class="col-12">
+                        <label>Select Role</label>
+                        <div class="form-group">
+                            <select class="form-control" aria-expanded="true" formControlName="role"
+                                (change)="selectRole($event)" required>
+                                <option disabled selected> </option>
+                                <option *ngFor="let role of roles" value={{role}}>{{role | titlecase }}</option>
+                            </select>
+                            <div class="input-errors"
+                                *ngIf="(submitted || controls.role?.touched )&& controls.role?.errors?.required">
+                                Role is required
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+
                 <div class="row">
                     <div class="col-12">
                         <label>Email</label>
@@ -48,14 +65,15 @@
                 </div>
                 <div class="row">
                     <div class="col-12">
-                        <div class="form-group text-right cursorPointer">
-                            <a (click)="forgotPassword()">Forgot Password?</a>
+                        <div class="form-group text-right">
+                            <a class="m-1 cursorPointer" (click)="forgotPassword()">Forgot Password?</a>
+                            <!-- / <a class="m-1 cursorPointer" (click)="pendingApproval()">Pending approval?</a> -->
                         </div>
                     </div>
                 </div>
+
                 <div class="row captcha_row">
                     <div class="col-12 ">
-                        <!-- <div class="d-flex align-items-start justify-content-between captcha_field"> -->
                         <div class="form-group set_width">
                             <ngx-recaptcha2 [size]="'normal'" class="g-recaptcha"
                                 (success)="handleSuccessRecaptcha($event)" [siteKey]="siteKey"

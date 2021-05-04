@@ -1,2 +1,303 @@
-<br>
-<h2>Coming Soon</h2>
+<!-- <app-sales-list-operator *ngIf="role=='3'|| role=='4'"></app-sales-list-operator>
+<app-sales-list-officer *ngIf="role=='5' || role=='6'"></app-sales-list-officer> -->
+
+<!-- ######################   officer   ##################### -->
+
+<div class="page-wrapper" *ngIf="!returnItemFlag">
+
+  <div class="page-breadcrumb">
+    <div class="d-flex justify-content-between align-items-center flex-md-row flex-column-reverse">
+
+      <h3 class="page-title">List Of Sale</h3>
+
+      <div class="d-flex justify-content-end top_btns">
+        <a class="btn btn-md btn-primary" (click)="returnItem()">Return</a>
+        <!-- data-toggle="modal" data-target="#CreateDeclaration" -->
+        <button class="btn btn-md btn-primary" (click)="openInitiateDeclaration()">Initiate
+          Declaration</button>
+
+        <!-- Start Search Filter -->
+        <div class="search_filter_btn">
+          <button class="btn btn-sm btn-primary" (click)="filterSales()"><i><img
+                src="../assets/img/icons/filter_icon.svg" alt="" /></i></button>
+          <div class="search_filter" id="search_filter" style="display:none;">
+            <h6 class="f_title">Filters</h6>
+            <!-- Warecode Filter -->
+            <!-- <div class="warecode_filter">
+              <div class="d-flex align-items-center filter_items">
+                <label>Warehouse Code</label>
+                <div class="in_group">
+                  <select class="form-control">
+                    <option></option>
+                  </select>
+                </div>
+              </div>
+              <div class="filter_search">
+                <input type="search" placeholder="Search" class="form-control" />
+              </div>
+              <div class="wear_list">
+                <div class="wearlist_items check-box">
+                  <input type="checkbox" />
+                  <span class="check-mark"><span>Equals</span></span>
+                </div>
+              </div>
+            </div> -->
+
+            <div class="filter_block">
+              <div class="filter_list">
+                <div class="d-flex align-items-center filter_items">
+                  <label>Country Of Residency</label>
+                  <div class="in_group">
+                    <select class="form-control" (change)="addSearchFilterKey('countryOfResidency',$event)">
+                      <option selected></option>
+                      <option *ngFor="let country of countryOfResidencyData" value={{country}}> {{country}} </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center filter_items">
+                  <label>Currency</label>
+                  <div class="in_group">
+                    <select class="form-control" (change)="addSearchFilterKey('saleCurrency',$event)">
+                      <option selected></option>
+                      <option *ngFor="let currency of currencyData" value={{currency.id}}> {{currency?.saleCurrency}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center filter_items">
+                  <label>Document Type</label>
+                  <div class="in_group">
+                    <select class="form-control" (change)="addSearchFilterKey('customerIdType',$event)">
+                      <option selected></option>
+                      <option *ngFor="let document of documentTypeData" value={{document.id}}>
+                        {{document?.customerIdType}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center filter_items">
+                  <label>Sale Type</label>
+                  <div class="in_group">
+                    <select class="form-control" (change)="addSearchFilterKey('customerSaleType',$event)">
+                      <option selected></option>
+                      <option *ngFor="let saleType of saleTypeData" value={{saleType.id}}> {{saleType?.saleType}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <!-- <div class="d-flex align-items-center filter_items">
+                  <label>Sale Type</label>
+                  <div class="in_group">
+                    <select class="form-control" (change)="addSearchFilterKey('customerSaleType',$event)">
+                      <option selected></option>
+                      <option *ngFor="let saleType of saleTypeData" value={{saleType.id}}> {{saleType?.saleType}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center filter_items">
+                  <label>Sale Type</label>
+                  <div class="in_group">
+                    <select class="form-control" (change)="addSearchFilterKey('customerSaleType',$event)">
+                      <option selected></option>
+                      <option *ngFor="let saleType of saleTypeData" value={{saleType.id}}> {{saleType?.saleType}}
+                      </option>
+                    </select>
+                  </div>
+                </div> -->
+              </div>
+            </div>
+            <div class="d-flex justify-content-center btn-control">
+              <button class="btn btn-md btn-outline-primary" (click)="filterClose()">Cancel</button>
+              <button class="btn btn-md btn-primary" (click)="applySearch()">Apply Search</button>
+            </div>
+          </div>
+          <!-- End Search Filter -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Breadcrumb -->
+
+  <div class="table-responsive">
+    <table class="table custom_table">
+      <thead>
+        <tr>
+          <th>Receipt Number</th>
+          <th>Customer Name</th>
+          <th>Sale Type</th>
+          <th>Sale Currency</th>
+          <th>Status</th>
+          <th class="text-right">Departure Date</th>
+          <th *ngIf="roleType=='2'">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngIf="allSales?.length>0; else no_data">
+          <tr *ngFor="let sale of allSales" (click)="goToDetails(sale)" [ngClass]="roleType=='1'? 'cursorPointer': ''">
+            <td><span class="view_tag" data-toggle="modal" data-target="#fullDetail"> {{sale?.receiptNumber}} </span>
+            </td>
+            <td>{{sale?.customerName}}</td>
+            <td>{{sale?.customerSaleType}}</td>
+            <td>{{sale?.saleCurrency}}</td>
+            <td>{{sale?.status}}</td>
+            <td class="text-right">{{getDate(sale?.departure)}}</td>
+            <td *ngIf="roleType=='2'" [ngClass]="roleType=='2'? 'cursorPointer': ''">
+              <div class="dropdown dots_btn">
+                <button class="btn-transparent p-0 dropdown-toggle" type="button" id="dropdownMenuButton"
+                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <img src="../assets/img/icons/dots_icons.svg" alt="" />
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item" (click)="editSale()"><i class="mr-3"><img
+                        src="../assets/img/icons/edit_icon.svg" alt="" /></i>
+                    Edit</a>
+                  <a class="dropdown-item" (click)="deleteSale()"><i class="mr-3"><img
+                        src="../assets/img/icons/delete_icon.svg" alt="" /></i>
+                    Delete</a>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+  <!-- End Table Listing -->
+</div>
+
+<!--Pagination start-->
+<div *ngIf="!returnItemFlag && allSales?.length>0"
+  class="d-flex align-items-center flex-md-row flex-column justify-content-md-between justify-content-center flex-wrap pagination_block">
+  <div class="d-flex align-items-center row_count">
+    <span class="mb-0 ">No. of Rows</span>
+    <select (change)="onLimitChange($event)" [(ngModel)]="selected_limit" name="selectRows">
+      <option value="10" selected>10</option>
+      <option value="20">20</option>
+      <option value="30">30</option>
+    </select>
+  </div>
+  <app-pagination [page]="page" (pageChangeEvent)="pageChanged($event)" [collectionSize]="totalRecords"
+    [pageSize]="selected_limit" #appPagination>
+  </app-pagination>
+</div>
+<!--End-->
+
+<!-- ######################################### -->
+
+<div class="page-wrapper" *ngIf="returnItemFlag">
+
+  <div class="page-breadcrumb">
+    <div class="d-flex justify-content-between align-items-center flex-md-row flex-column-reverse">
+
+      <ol class="list-unstyled d-flex align-items-center breadcrumb">
+        <li class="breadcrumb-item">
+          <h3 class="page-title"><a class="cursorPointer" (click)="goToList()">List of Sale</a></h3>
+        </li>
+        <li class="breadcrumb-item active">Return</li>
+      </ol>
+
+    </div>
+  </div>
+  <!-- Breadcrumb -->
+
+  <div class="card card_box">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-4 col-sm-6">
+          <label>Receipt Number</label>
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="" />
+            <span class="bg-success badge-status d-none">Verified</span>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-6">
+          <label>Date of Sale</label>
+          <div class="form-group">
+            <input type="date" class="form-control" placeholder="" />
+            <span class="bg-danger badge-status">Not Verified</span>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-6">
+          <label>Sale Type</label>
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="" />
+            <span class="bg-success badge-status">Verified</span>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <label>Sale Type</label>
+          <div class="form-group">
+            <select class="form-control">
+              <option>121555</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label>Sale Type</label>
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="" />
+            <span class="bg-danger badge-status">Not Verified</span>
+          </div>
+        </div>
+
+        <div class="col-md-12 text-center mt-3">
+          <button class="btn btn-md btn-primary" (click)="confirmReturn()">Confirm</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="table_block">
+    <h5 class="page-title my-3">Product Description</h5>
+    <div class="table-responsive">
+      <table class="table custom_table">
+        <thead>
+          <tr>
+            <th>Product ID</th>
+            <th>Description</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>12565</td>
+            <td>LCD</td>
+            <td>20</td>
+            <td>20USD</td>
+            <td>
+              <div class="action_btn">
+                <i><img src="../assets/img/icons/edit_icon.svg" alt="" width="20" /></i>
+              </div>
+            </td>
+          </tr>
+          <tr class="even">
+            <td>12566</td>
+            <td>LCD</td>
+            <td>20</td>
+            <td>20USD</td>
+            <td>
+              <div class="action_btn">
+                <i><img src="../assets/img/icons/edit_icon.svg" alt="" width="20" /></i>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- End Table Listing -->
+  </div>
+</div>
+
+<ng-template #no_data>
+  <tr>
+    <td colspan="7">
+      <div class="no-record">
+        No record found
+      </div>
+    </td>
+  </tr>
+</ng-template>

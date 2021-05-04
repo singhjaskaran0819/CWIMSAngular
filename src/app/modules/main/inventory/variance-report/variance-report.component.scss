@@ -1,0 +1,16 @@
+.custome_drop {
+  // min-width: 210px;
+  max-width: 180px;
+  box-shadow: 0 0 0 rgba(0,0,0,.3);
+  .btn {
+    margin:0 0 7px!important;
+    height: auto;
+    &:last-child {
+      margin-bottom: 0!important;
+    }
+  }
+}
+
+.row_background {
+  filter: contrast(0.7);
+}

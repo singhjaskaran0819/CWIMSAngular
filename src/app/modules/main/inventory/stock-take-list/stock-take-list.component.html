@@ -1,0 +1,174 @@
+<div class="page-wrapper">
+
+    <div class="page-breadcrumb">
+        <div class="d-flex justify-content-between align-items-center flex-md-row flex-column-reverse">
+            <ol class="list-unstyled d-flex align-items-center breadcrumb">
+                <li class="breadcrumb-item">
+                    <h3 class="page-title"><a [routerLink]="'/main/inventory/list'">Inventory</a></h3>
+                </li>
+                <li class="breadcrumb-item"> Stock Take </li>
+                <li class="breadcrumb-item active">List</li>
+            </ol>
+
+            <div class="d-flex justify-content-end top_btns">
+                <button class="btn btn-md btn-primary" data-toggle="modal" (click)="addStock()">Add Stock</button>
+
+                <div class="search_filter_btn">
+                    <button class="btn btn-sm btn-primary" (click)="showFilter()"><i><img
+                                src="../assets/img/icons/filter_icon.svg" alt="" /></i></button>
+                    <!-- Start Search Filter -->
+                    <div class="search_filter" id="search_filter" style="display:none;">
+                        <div class="row">
+                            <h6 class="f_title" style="position: relative; margin-left: 30px;">Filters</h6>
+                            <button class="btn btn-md btn-outline-primary float-right"
+                                style="right: 10px;position: absolute;height: 40px;top: 10px;padding-top: 8px;"
+                                (click)="clearFilters()">Clear</button>
+                        </div>
+                        <div class="filter_block">
+                            <div class="filter_list">
+                                <div class="d-flex align-items-center filter_items">
+                                    <label>Location</label>
+                                    <div class="in_group">
+                                        <select class="form-control" [(ngModel)]="filter_locationData"
+                                            (change)="onSelectFilter('locationCode', $event)">
+                                            <option value='' disabled> Select location </option>
+                                            <option *ngFor="let item of filters?.locationData" [value]="item.code">
+                                                {{item.name}} </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center filter_items">
+                                    <label>Year</label>
+                                    <div class="in_group">
+                                        <select class="form-control" [(ngModel)]="filter_year"
+                                            (change)="onSelectFilter('year', $event)">
+                                            <option value='' disabled> Select year </option>
+                                            <option *ngFor="let item of filters?.yearData" [value]="item">
+                                                {{item}} </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center btn-control">
+                            <button class="btn btn-md btn-outline-primary" (click)="cancelSearch()">Cancel</button>
+                            <button class="btn btn-md btn-primary" (click)="applyFilters()">Apply Search</button>
+                        </div>
+                    </div>
+                    <!-- End Search Filter -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb -->
+
+    <div class="mt-3">
+        <div class="table-responsive">
+            <table class="table custom_table">
+                <thead>
+                    <tr>
+                        <th>Locations
+                            <div class="sorting">
+                                <i (click)="sorting('locationCode', 1)"
+                                    [class]="active_class === 'locationCode1' ? 'active' : ''"><img
+                                        src="/assets/img/icons/arw_up.png" alt="sort" /></i>
+                                <i (click)="sorting('locationCode', -1)"
+                                    [class]="active_class === 'locationCode-1' ? 'active' : ''"><img
+                                        src="/assets/img/icons/arw_down.png" alt="sort" /></i>
+                            </div>
+                        </th>
+                        <!-- <th>Sub Location -->
+                        <!-- <div class="sorting">
+                                <i (click)="sorting('locationCode', 1)"
+                                    [class]="active_class === 'locationCode1' ? 'active' : ''"><img
+                                        src="/assets/img/icons/arw_up.png" alt="sort" /></i>
+                                <i (click)="sorting('locationCode', -1)"
+                                    [class]="active_class === 'locationCode-1' ? 'active' : ''"><img
+                                        src="/assets/img/icons/arw_down.png" alt="sort" /></i>
+                            </div> -->
+                        <!-- </th> -->
+                        <th>Serial
+                            <div class="sorting">
+                                <i (click)="sorting('serial', 1)"
+                                    [class]="active_class === 'serial1' ? 'active' : ''"><img
+                                        src="/assets/img/icons/arw_up.png" alt="sort" /></i>
+                                <i (click)="sorting('serial', -1)"
+                                    [class]="active_class === 'serial-1' ? 'active' : ''"><img
+                                        src="/assets/img/icons/arw_down.png" alt="sort" /></i>
+                            </div>
+                        </th>
+                        <th>Year
+                            <div class="sorting">
+                                <i (click)="sorting('year', 1)" [class]="active_class === 'year1' ? 'active' : ''"><img
+                                        src="/assets/img/icons/arw_up.png" alt="sort" /></i>
+                                <i (click)="sorting('year', -1)"
+                                    [class]="active_class === 'year-1' ? 'active' : ''"><img
+                                        src="/assets/img/icons/arw_down.png" alt="sort" /></i>
+                            </div>
+                        </th>
+                        <th>Status </th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngIf="stockTakeList.length>0; else no_data">
+                        <tr *ngFor="let item of stockTakeList; let i = index">
+                            <td>{{item.locationCode}}</td>
+                            <!-- <td>{{item.subLocation || '-'}}</td> -->
+                            <td>{{item.serial}}</td>
+                            <td>{{item.year}}</td>
+                            <td>{{item.varianceReportAlreadyGenerated ? 'VARIANCE_REPORT_GENERATED' : '-'}}</td>
+                            <td>
+                                <div class="dropdown dots_btn" id="Div1">
+                                    <button [disabled]="item.status == 3"
+                                        [ngStyle]="{'cursor': item.status == 3 ? 'not-allowed': 'pointer'}"
+                                        class="btn-transparent p-0 dropdown-toggle" type="button"
+                                        id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false">
+                                        <img src="../assets/img/icons/dots_icons.svg" alt="" />
+                                    </button>
+                                    <div class="dropdown-menu approval_btn" aria-labelledby="dropdownMenuButton">
+                                        <ng-container *ngIf="item.status != 3">
+                                            <a *ngIf="!item.varianceReportAlreadyGenerated" class="dropdown-item"
+                                                (click)="editStocktake(item.serial)">Edit</a>
+                                        </ng-container>
+                                        <a *ngIf="!item.varianceReportAlreadyGenerated" class="dropdown-item"
+                                            (click)="generateVarianceReport(item.serial)">Generate Variance Report</a>
+                                        <a *ngIf="item.status != 3" class="dropdown-item"
+                                            (click)="permanentCloseStocktake(item.serial)">Permanently Closure</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<div *ngIf="stockTakeList?.length > 0"
+    class="w-100 d-flex align-items-center flex-md-row flex-column justify-content-md-between justify-content-center flex-wrap pagination_block">
+    <div class="d-flex align-items-center row_count">
+        <span class="mb-0 ">No. of Rows</span>
+        <select (change)="onLimitChange($event)" [(ngModel)]="selected_limit" name="selectRows">
+            <option value="10" selected>10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+        </select>
+    </div>
+
+    <app-pagination [page]="page" (pageChangeEvent)="pageChanged($event)" [collectionSize]="totalRecords"
+        [pageSize]="selected_limit" #appPagination></app-pagination>
+</div>
+
+<ng-template #no_data>
+    <tr>
+        <td colspan="12">
+            <div class="no-record">
+                No record found
+            </div>
+        </td>
+    </tr>
+</ng-template>

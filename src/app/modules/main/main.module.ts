@@ -46,15 +46,13 @@ import { VarianceReportComponent } from './inventory/variance-report/variance-re
 import { UserListComponent } from './user-management/user-list/user-list.component';
 import { UserDetailComponent } from './user-management/user-detail/user-detail.component';
 import { MyProfileComponent } from './user-management/my-profile/my-profile.component';
+import { EditUserComponent } from './user-management/edit-user/edit-user.component';
 import { BlockUserComponent } from './user-management/block-user/block-user.component';
-import { InventoryListOperatorComponent } from './inventory/inventory-list-operator/inventory-list-operator.component';
-import { InventoryListOfficerComponent } from './inventory/inventory-list-officer/inventory-list-officer.component';
-import { InventoryListAdminComponent } from './inventory/inventory-list-admin/inventory-list-admin.component';
 import { GroupItemsComponent } from './inventory/group-items/group-items.component';
 import { GroupedItemsListComponent } from './inventory/grouped-items-list/grouped-items-list.component';
 import { UserRolePipe } from 'src/app/core/pipes/user-role.pipe';
 import { ApprovalStatusPipe } from 'src/app/core/pipes/approval-status.pipe';
-
+import { DatePipe } from 'src/app/core/pipes/date.pipe';
 import { UserPositionPipe } from 'src/app/core/pipes/user-position.pipe';
 import { AccessPermissionComponent } from './user-management/access-permission/access-permission.component';
 import { ApproveUserComponent } from './user-management/approve-user/approve-user.component';
@@ -64,6 +62,19 @@ import { AddNewUserComponent } from './user-management/add-new-user/add-new-user
 import { ReassignPermissionsComponent } from './user-management/reassign-permissions/reassign-permissions.component';
 import { ManageRolesComponent } from './user-management/manage-roles/manage-roles.component';
 import { ViewRolePermissionsComponent } from './user-management/view-role-permissions/view-role-permissions.component';
+import { RackItemsComponent } from './declarations/rack-items/rack-items.component';
+import { UploadItemsComponent } from './declarations/upload-items/upload-items.component';
+import { ComingSoonComponent } from 'src/app/common/coming-soon/coming-soon.component';
+import { UploadSaleComponent } from './sales/upload-sale/upload-sale.component';
+import { LogsComponent } from './logs/logs.component';
+import { NgxFileDropModule } from 'ngx-file-drop';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import { environment } from '../../../environments/environment';
+import { EditStockTakeComponent } from './inventory/edit-stock-take/edit-stock-take.component';
+import { StockTakeListComponent } from './inventory/stock-take-list/stock-take-list.component';
+import { ErrorLogsComponent } from './error-logs/error-logs.component';
+
+const config: SocketIoConfig = { url: environment.apiUrl, options: {} };
 
 const route: Routes = [
   {
@@ -81,9 +92,11 @@ const route: Routes = [
       {
         path: 'sale',
         children: [
-          { path: 'sales', component: SalesComponent },
-          { path: 'create', component: CreateSalesComponent },
-          { path: 'detailed-list', component: SalesListComponent }
+          { path: 'sales', component: ComingSoonComponent },
+          // { path: 'create', component: CreateSalesComponent },
+          // { path: 'list', component: SalesListComponent }
+          { path: 'create', component: ComingSoonComponent },
+          { path: 'list', component: ComingSoonComponent }
         ]
       },
       { path: 'dashboard', component: DashboardComponent },
@@ -92,34 +105,39 @@ const route: Routes = [
         children: [
           { path: 'list', component: InventoryComponent },
           { path: 'variance-report', component: VarianceReportComponent },
+          { path: 'stock-take', component: StockTakeComponent },
+          { path: 'stock-take/edit/:serial', component: StockTakeComponent },
+          { path: 'stock-take-list', component: StockTakeListComponent },
           { path: 'grouped-items', component: GroupedItemsListComponent }
         ]
       },
-      { path: 'appointments', component: AppointmentsComponent },
-      { path: 'analytics', component: AnalyticsComponent },
-      { path: 'reports', component: StandardReportsComponent },
+      { path: 'appointments', component: ComingSoonComponent },
+      { path: 'analytics', component: ComingSoonComponent },
+      { path: 'reports', component: ComingSoonComponent },
+      { path: 'logs', component: LogsComponent },
+      { path: 'error-logs', component: ErrorLogsComponent },
       {
         path: 'risk-management',
         children: [
           {
             path: 'risk-criteria',
             children: [
-              { path: 'criteria', component: RiskCriteriaComponent },
-              { path: 'list-of-criteria', component: ListOfCriteriaComponent }
+              { path: 'criteria', component: ComingSoonComponent },
+              { path: 'list-of-criteria', component: ComingSoonComponent }
             ]
           },
           {
             path: 'target',
             children: [
-              { path: 'target-list', component: TargetListComponent },
-              { path: 'list-of-target', component: ListOfTargetComponent }
+              { path: 'target-list', component: ComingSoonComponent },
+              { path: 'list-of-target', component: ComingSoonComponent }
             ]
           },
           {
             path: 'report',
             children: [
-              { path: 'risk-report', component: RiskReportComponent },
-              { path: 'list-of-findings', component: ListOfFindingsComponent }
+              { path: 'risk-report', component: ComingSoonComponent },
+              { path: 'list-of-findings', component: ComingSoonComponent }
             ]
           }
         ]
@@ -130,7 +148,6 @@ const route: Routes = [
           { path: 'list', component: UserListComponent },
           // { path: 'list/:id', component: UserDetailComponent }  ManageRolesComponent
           { path: 'roles', component: ManageRolesComponent }
-
         ]
       },
       {
@@ -145,6 +162,7 @@ const route: Routes = [
   declarations: [
     WarehouseLocationsComponent,
     DashboardComponent,
+    ErrorLogsComponent,
     AnalyticsComponent,
     DeclarationsComponent,
     GoodsReceivedComponent,
@@ -179,13 +197,13 @@ const route: Routes = [
     UserListComponent,
     UserDetailComponent,
     MyProfileComponent,
-    BlockUserComponent, InventoryListOperatorComponent,
-    InventoryListOfficerComponent,
-    InventoryListAdminComponent,
+    EditUserComponent,
+    BlockUserComponent,
     GroupItemsComponent,
     GroupedItemsListComponent,
     UserRolePipe,
     ApprovalStatusPipe,
+    DatePipe,
     UserPositionPipe,
     AccessPermissionComponent,
     ApproveUserComponent,
@@ -194,7 +212,13 @@ const route: Routes = [
     AddNewUserComponent,
     ReassignPermissionsComponent,
     ManageRolesComponent,
-    ViewRolePermissionsComponent
+    ViewRolePermissionsComponent,
+    RackItemsComponent,
+    UploadItemsComponent,
+    UploadSaleComponent,
+    LogsComponent,
+    EditStockTakeComponent,
+    StockTakeListComponent
   ],
   imports: [
     CommonModule,
@@ -207,7 +231,8 @@ const route: Routes = [
     RouterModule.forChild(route),
     InfiniteScrollModule,
     NgMultiSelectDropDownModule.forRoot(),
-
+    NgxFileDropModule,
+    SocketIoModule.forRoot(config)
   ],
   providers: [
     loggedInGuard,
